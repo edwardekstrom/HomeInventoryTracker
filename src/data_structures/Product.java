@@ -2,8 +2,7 @@ package data_structures;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
+import java.util.TreeMap;
 /**
  * @author Capchu
  * This class is for storing objects
@@ -17,7 +16,7 @@ public class Product {
 	private Integer _shelfLife;
 	private Integer _threeMonthSupply;
 	private List<ProductContainer> _containersList;
-	private Map<ProductContainer, String> _containersMap;
+	private TreeMap<ProductContainer, String> _containersTree;
 	
 	/**
 	 * @param _creationDate
@@ -130,7 +129,7 @@ public class Product {
 	/**
 	 * @return the _containersMap
 	 */
-	public Map<ProductContainer, String> getContainersMap() {
-		return _containersMap;
+	public TreeMap<ProductContainer, String> getContainersTree() {
+		return _containersTree;
 	}
 }
