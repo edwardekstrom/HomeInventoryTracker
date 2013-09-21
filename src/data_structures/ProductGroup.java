@@ -5,7 +5,8 @@ import java.util.TreeMap;
 
 /**\
  * @author Capchu
- * An implementation of ProductContainer to organize products into groups
+ * Composite: An implementation of ProductContainer 
+ * to organize products into groups
  */
 public class ProductGroup implements ProductContainer{
 
