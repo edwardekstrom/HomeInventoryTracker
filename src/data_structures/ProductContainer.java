@@ -2,7 +2,6 @@ package data_structures;
 
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * @author Capchu
@@ -18,7 +17,7 @@ public interface ProductContainer {
 	/**
 	 * @return the a Map of products
 	 */
-	public TreeMap<Product, String> getProductTree();
+	public Map<Product, String> getProductMap();
 	
 	/**
 	 * @return the a List of items
@@ -28,5 +27,5 @@ public interface ProductContainer {
 	/**
 	 * @return the a Map of products
 	 */
-	public TreeMap<Item, String> getItemTree();
+	public Map<Item, String> getItemMap();
 }

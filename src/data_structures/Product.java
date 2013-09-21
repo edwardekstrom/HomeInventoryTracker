@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import java.util.TreeMap;
 /**
  * @author Capchu
  * This class is for storing objects
@@ -18,7 +17,7 @@ public class Product {
 	private Integer _shelfLife;
 	private Integer _threeMonthSupply;
 	private List<ProductContainer> _containersList;
-	private TreeMap<ProductContainer, String> _containersTree;
+	private Map<ProductContainer, String> _containersMap;
 	
 	/**
 	 * @param _creationDate
@@ -131,7 +130,7 @@ public class Product {
 	/**
 	 * @return the _containersMap
 	 */
-	public TreeMap<ProductContainer, String> getContainersTree() {
-		return _containersTree;
+	public Map<ProductContainer, String> getContainersMap() {
+		return _containersMap;
 	}
 }

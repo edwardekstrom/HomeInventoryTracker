@@ -2,7 +2,6 @@ package data_structures;
 
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class ProductGroup implements ProductContainer{
 
@@ -13,7 +12,7 @@ public class ProductGroup implements ProductContainer{
 	}
 
 	@Override
-	public TreeMap<Product, String> getProductTree() {
+	public Map<Product, String> getProductMap() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -25,7 +24,7 @@ public class ProductGroup implements ProductContainer{
 	}
 
 	@Override
-	public TreeMap<Item, String> getItemTree() {
+	public Map<Item, String> getItemMap() {
 		// TODO Auto-generated method stub
 		return null;
 	}
