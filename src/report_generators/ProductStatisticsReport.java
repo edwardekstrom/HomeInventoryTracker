@@ -2,7 +2,6 @@ package report_generators;
 
 import java.util.List;
 
-import data_structures.Product;
 import data_structures.ProductGroup;
 
 public class ProductStatisticsReport implements Report {

@@ -1,20 +1,16 @@
 package data_structures;
 
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 /**\
- * 
- * 
  * @author Capchu
- *An interface for StorageUnits and ProductGroups. These objects can “contain”
-  Products and Items, and are referred to generically as “product containers”.
+ * An implementation of ProductContainer for storage spaces
  */
 public class StorageUnit implements ProductContainer{
 
 	/**
-	 * @return A Unmodifiable List of Products this StorageUnit contains.
+	 * @return An Unmodifiable List of Products this StorageUnit contains.
 	 */
 	@Override
 	public List<Product> getProductList() {
@@ -23,7 +19,7 @@ public class StorageUnit implements ProductContainer{
 	}
 
 	/**
-	 * @return A Unmodifiable Tree of Products this StorageUnit contains.
+	 * @return An Unmodifiable Tree of Products this StorageUnit contains.
 	 */
 	@Override
 	public TreeMap<Product, String> getProductTree() {
@@ -32,7 +28,7 @@ public class StorageUnit implements ProductContainer{
 	}
 
 	/**
-	 * @return A Unmodifiable List of Items this StorageUnit contains.
+	 * @return An Unmodifiable List of Items this StorageUnit contains.
 	 */
 	@Override
 	public List<Item> getItemList() {
@@ -41,7 +37,7 @@ public class StorageUnit implements ProductContainer{
 	}
 
 	/**
-	 * @return A Unmodifiable Map of Items this StorageUnit contains.
+	 * @return An Unmodifiable Map of Items this StorageUnit contains.
 	 */
 	@Override
 	public TreeMap<Item, String> getItemTree() {

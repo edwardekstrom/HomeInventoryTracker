@@ -5,7 +5,6 @@ package report_generators;
 
 import java.util.List;
 
-import data_structures.Item;
 import data_structures.ProductGroup;
 
 /**
