@@ -23,7 +23,7 @@ public class Barcode {
 	}
 
 	/**
-	 * @param _barcode the _barcode to set
+	 * @param barcode the _barcode to set
 	 * @return true if successful 
 	 */
 	public boolean set_barcode(String barcode) {
@@ -36,7 +36,7 @@ public class Barcode {
 	}
 
 	/**
-	 * @param _barcode the _barcode to set
+	 * @param barcode the _barcode to check
 	 * @return true if the barcode is valid 
 	 */
 	private boolean isValidBarcode(String barcode){
