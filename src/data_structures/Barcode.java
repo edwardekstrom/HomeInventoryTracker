@@ -12,7 +12,7 @@ public class Barcode {
 	 *  Creates an instance of Barcode with nothing set
 	 */
 	public Barcode(String barcode) {
-
+		_barcode = barcode;
 	}
 	
 	/**

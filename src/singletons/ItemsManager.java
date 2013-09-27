@@ -1,6 +1,7 @@
 package singletons;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import data_structures.Item;
@@ -59,5 +60,13 @@ public class ItemsManager {
 	 */
 	public void removeItem(Item item){
 		_allItemsList.remove(item);
+	}
+	
+	/**
+	 * Returns an unmodifiable all items list.
+	 * @return
+	 */
+	public List<Item> getUnmodifiableAllItemsList(){
+		return Collections.unmodifiableList(_allItemsList);
 	}
 }
