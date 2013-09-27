@@ -34,4 +34,30 @@ public class ItemsManager {
 		}
 		return _instance;
 	}
+	
+	/**
+	 * Returns true if you can add this item,
+	 * false otherwise.
+	 * @param item check this item to see if it can be added
+	 * @return true if the item can be added, false otherwise
+	 */
+	public boolean canAddItem(Item item){
+		return true;
+	}
+	
+	/**
+	 * Adds the item to the list of all items.
+	 * @param item the item to be added
+	 */
+	public void addItem(Item item){
+		_allItemsList.add(item);
+	}
+	
+	/**
+	 * Removes the item from the list of all items.
+	 * @param item the item to be removed
+	 */
+	public void removeItem(Item item){
+		_allItemsList.remove(item);
+	}
 }
