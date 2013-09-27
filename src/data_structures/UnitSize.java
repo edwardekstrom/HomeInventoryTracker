@@ -20,9 +20,9 @@ public class UnitSize {
 	 * Sets the unit and size
 	 * @return true if the set was successful
 	 */
-	public boolean setUnitSize(float amount, String unit){
+	public boolean setUnitSize(String amount, String unit){
 		if(isValidUnitAmount(amount, unit)){
-			_amount = amount;
+			_amount = Float.parseFloat(amount);
 			_unit = unit;
 			return true;
 		}else{
@@ -34,16 +34,36 @@ public class UnitSize {
 	 * Checks to see if the Unit and Amount are valid
 	 * @return true if valid
 	 */
-	private boolean isValidUnitAmount(float amount, String unit){
-		return true;
+	private boolean isValidUnitAmount(String amount, String unit){
+		if(isValidAmount(amount) && isValidUnit(unit)){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	/**
 	 * Checks to see if the Amount is valid, only to be used when the unit is already set
 	 * @return true if valid
 	 */
-	private boolean isValidAmount(float amount){
-		return true;
+	private boolean isValidAmount(String amount){
+		//float newAmount = -1;
+		try{
+			Float.parseFloat(amount);
+			return true;
+		}catch(NumberFormatException nfe){
+			return false;
+		}
+//		if(_unit.compareTo("count") == 0){
+//			if(newAmount != 1){
+//				return false;
+//			}else{
+//				return true;
+//			}
+//		}else{
+//			return true;
+//		}
+		
 	}
 	
 	/**
@@ -51,7 +71,16 @@ public class UnitSize {
 	 * @return true if valid
 	 */
 	private boolean isValidUnit(String unit){
-		return true;
+		if( (unit.compareTo("pounds") == 0) || (unit.compareTo("ounces") == 0) || 
+		    (unit.compareTo("grams") == 0) || (unit.compareTo("kilograms") == 0) ||
+		    (unit.compareTo("gallons") == 0) || (unit.compareTo("quarts") == 0) ||
+		    (unit.compareTo("pints") == 0) || (unit.compareTo("fluid ounces") == 0) ||
+		    (unit.compareTo("liters") == 0) || (unit.compareTo("count") == 0))
+		{	
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	/**
@@ -64,9 +93,9 @@ public class UnitSize {
 	/**
 	 * @param amount the _amount to set
 	 */
-	public boolean setAmount(float amount) {
+	public boolean setAmount(String amount) {
 		if(isValidAmount(amount)){
-			_amount = amount;
+			_amount = Float.parseFloat(amount);
 			return true;
 		}else{
 			return false;

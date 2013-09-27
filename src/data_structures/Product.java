@@ -34,7 +34,7 @@ public class Product {
 		_shelfLife = shelfLife;
 		_threeMonthSupply = threeMonthSupply;
 	}
-
+	
 	/**
 	 * @return the _creationDate
 	 */
@@ -56,12 +56,12 @@ public class Product {
 		return _barcode;
 	}
 
-	/**
-	 * @param _barcode the _barcode to set
-	 */
-	public void setBarcode(Barcode barcode) {
-		_barcode = barcode;
-	}
+//	/**
+//	 * @param _barcode the _barcode to set
+//	 */
+//	public void setBarcode(Barcode barcode) {
+//		_barcode = barcode;
+//	}
 
 	/**
 	 * @return the _description
