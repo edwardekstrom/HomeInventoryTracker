@@ -1,6 +1,7 @@
 package singletons;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import data_structures.Item;
@@ -62,5 +63,23 @@ public class ProductsManager {
 	 */
 	public void removeProduct(Product product){
 		_allProductsList.remove(product);
+	}
+	
+	/**
+	 * True if the list contains the product,
+	 * false otherwise.
+	 * @param product A product to check for
+	 * @return True if the list contains the product, false otherwise.
+	 */
+	public boolean containsProduct(Product product){
+		return _allProductsList.contains(product);
+	}
+	
+	/**
+	 * Returns an unmodifiable version of the allProductsList.
+	 * @return List unmodifiable all products list.
+	 */
+	public List<Product> getUnmodifiableList(){
+		return Collections.unmodifiableList(_allProductsList);
 	}
 }
