@@ -13,7 +13,8 @@ public class UnitSize {
 	 * Creates and instance not setting any values.
 	 */
 	public UnitSize() {
-		
+		_amount = 1;
+		_unit = "count";
 	}
 	
 	/**
@@ -43,31 +44,32 @@ public class UnitSize {
 	}
 	
 	/**
-	 * Checks to see if the Amount is valid, only to be used when the unit is already set
+	 * Checks to see if the Unit and Amount are valid
+	 * @return true if valid
+	 */
+	public boolean isCurrentlyValid(){
+		if(isValidAmount(_amount+"") && isValidUnit(_unit)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	/**
+	 * Checks to see if the Amount is valid
 	 * @return true if valid
 	 */
 	private boolean isValidAmount(String amount){
-		//float newAmount = -1;
 		try{
 			Float.parseFloat(amount);
 			return true;
 		}catch(NumberFormatException nfe){
 			return false;
-		}
-//		if(_unit.compareTo("count") == 0){
-//			if(newAmount != 1){
-//				return false;
-//			}else{
-//				return true;
-//			}
-//		}else{
-//			return true;
-//		}
-		
+		}		
 	}
 	
 	/**
-	 * Checks to see if the Unit is valid, only to be used when the amount is already set
+	 * Checks to see if the Unit is valid
 	 * @return true if valid
 	 */
 	private boolean isValidUnit(String unit){

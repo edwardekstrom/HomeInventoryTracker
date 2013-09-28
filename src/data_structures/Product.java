@@ -56,13 +56,6 @@ public class Product {
 		return _barcode;
 	}
 
-//	/**
-//	 * @param _barcode the _barcode to set
-//	 */
-//	public void setBarcode(Barcode barcode) {
-//		_barcode = barcode;
-//	}
-
 	/**
 	 * @return the _description
 	 */
@@ -101,8 +94,13 @@ public class Product {
 	/**
 	 * @param _shelfLife the _shelfLife to set
 	 */
-	public void setShelfLife(Integer shelfLife) {
-		_shelfLife = shelfLife;
+	public boolean setShelfLife(String shelfLife) {
+		if(isValidShelfLife(shelfLife)){
+			_shelfLife = Integer.parseInt(shelfLife);
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	/**
@@ -115,8 +113,13 @@ public class Product {
 	/**
 	 * @param _threeMonthSupply the _threeMonthSupply to set
 	 */
-	public void setThreeMonthSupply(Integer threeMonthSupply) {
-		_threeMonthSupply = threeMonthSupply;
+	public boolean setThreeMonthSupply(String threeMonthSupply) {
+		if(isValidThreeMonthSupply(threeMonthSupply)){
+			_threeMonthSupply = Integer.parseInt(threeMonthSupply);
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	/**
@@ -132,4 +135,40 @@ public class Product {
 	public TreeMap<ProductContainer, String> getContainersTree() {
 		return _containersTree;
 	}
+	
+	/**
+	 * @return true if the product is valid
+	 */
+	public boolean isValidProduct(){
+		if(isValidShelfLife(_shelfLife+"") && isValidThreeMonthSupply(_threeMonthSupply+"") && _size.isCurrentlyValid()){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	/**
+	 * @return true if the shelfLife is valid
+	 */
+	private boolean isValidShelfLife(String shelfLife){
+		try{
+			Integer.parseInt(shelfLife);
+			return true;
+		}catch(NumberFormatException nfe){
+			return false;
+		}
+	}
+	
+	/**
+	 * @return true if the shelfLife is valid
+	 */
+	private boolean isValidThreeMonthSupply(String threeMonthSupply){
+		try{
+			Integer.parseInt(threeMonthSupply);
+			return true;
+		}catch(NumberFormatException nfe){
+			return false;
+		}
+	}
+	
 }

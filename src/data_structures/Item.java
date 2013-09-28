@@ -37,12 +37,12 @@ public class Item {
 		return _product;
 	}
 
-	/**
-	 * @param _product the _product to set
-	 */
-	public void setProduct(Product product) {
-		_product = product;
-	}
+//	/**
+//	 * @param _product the _product to set
+//	 */
+//	public void setProduct(Product product) {
+//		_product = product;
+//	}
 
 	/**
 	 * @return the _barcode
@@ -51,12 +51,12 @@ public class Item {
 		return _barcode;
 	}
 
-	/**
-	 * @param _barcode the _barcode to set
-	 */
-	public void setBarcode(Barcode barcode) {
-		_barcode = barcode;
-	}
+//	/**
+//	 * @param _barcode the _barcode to set
+//	 */
+//	private void setBarcode(Barcode barcode) {
+//		_barcode = barcode;
+//	}
 
 	/**
 	 * @return the _entryDate
@@ -114,5 +114,8 @@ public class Item {
 		_container = container;
 	}
 	
+	public boolean canMove(){
+		return true;
+	}
 	
 }
