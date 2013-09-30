@@ -22,14 +22,22 @@ public class Item {
 	 * @param _expirationDate
 	 * @param _container
 	 */
-	public Item(Product product, Barcode barcode, Date entryDate, Date expirationDate, ProductContainer container) {
+	public Item(Product product, Barcode barcode, Date entryDate, ProductContainer container) {
 		_product = product;
 		_barcode = barcode;
 		_entryDate = entryDate;
-		_expirationDate = expirationDate;
+		setExpirationDate();
 		_container = container;
 	}
 
+	/**
+	 * 
+	 */
+	private boolean setExpirationDate() {
+		_expirationDate = new Date();
+		return true;
+	}
+	
 	/**
 	 * @return the _product
 	 */
@@ -37,26 +45,12 @@ public class Item {
 		return _product;
 	}
 
-//	/**
-//	 * @param _product the _product to set
-//	 */
-//	public void setProduct(Product product) {
-//		_product = product;
-//	}
-
 	/**
 	 * @return the _barcode
 	 */
 	public Barcode getBarcode() {
 		return _barcode;
 	}
-
-//	/**
-//	 * @param _barcode the _barcode to set
-//	 */
-//	private void setBarcode(Barcode barcode) {
-//		_barcode = barcode;
-//	}
 
 	/**
 	 * @return the _entryDate
@@ -68,8 +62,10 @@ public class Item {
 	/**
 	 * @param _entryDate the _entryDate to set
 	 */
-	public void setEntryDate(Date entryDate) {
+	public boolean setEntryDate(Date entryDate) {
 		_entryDate = entryDate;
+		setExpirationDate();
+		return true;
 	}
 
 	/**
@@ -82,8 +78,9 @@ public class Item {
 	/**
 	 * @param _exitTime the _exitTime to set
 	 */
-	public void setExitTime(Date exitTime) {
+	public boolean setExitTime(Date exitTime) {
 		_exitTime = exitTime;
+		return true;
 	}
 
 	/**
@@ -91,13 +88,6 @@ public class Item {
 	 */
 	public Date getExpirationDate() {
 		return _expirationDate;
-	}
-
-	/**
-	 * @param _expirationDate the _expirationDate to set
-	 */
-	public void setExpirationDate(Date expirationDate) {
-		_expirationDate = expirationDate;
 	}
 
 	/**
@@ -110,8 +100,9 @@ public class Item {
 	/**
 	 * @param _container the _container to set
 	 */
-	public void setContainer(ProductContainer container) {
+	public boolean setContainer(ProductContainer container) {
 		_container = container;
+		return true;
 	}
 	
 	public boolean canMove(){

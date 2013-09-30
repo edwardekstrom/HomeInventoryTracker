@@ -26,11 +26,11 @@ public class Product {
 	 * @param _shelfLife
 	 * @param _threeMonthSupply
 	 */
-	public Product(Date creationDate, Barcode barcode, String description, UnitSize size, Integer shelfLife, Integer threeMonthSupply) {
+	public Product(Date creationDate, Barcode barcode, String description, Integer shelfLife, Integer threeMonthSupply) {
 		_creationDate = creationDate;
 		_barcode = barcode;
 		_description = description;
-		_size = size;
+		_size = new UnitSize();
 		_shelfLife = shelfLife;
 		_threeMonthSupply = threeMonthSupply;
 	}
@@ -66,22 +66,37 @@ public class Product {
 	/**
 	 * @param _description the _description to set
 	 */
-	public void setDescription(String description) {
+	public boolean setDescription(String description) {
 		_description = description;
+		return true;
 	}
 
 	/**
-	 * @return the _size
+	 * @return the amount of _size
 	 */
-	public UnitSize getSize() {
-		return _size;
+	public float getSizeAmount() {
+		return _size.getAmount();
 	}
 
 	/**
-	 * @param _size the _size to set
+	 * @param String amount
 	 */
-	public void setSize(UnitSize size) {
-		_size = size;
+	public boolean setSizeAmount(String amount) {
+		return _size.setAmount(amount);
+	}
+	
+	/**
+	 * @return the unit of _size
+	 */
+	public String getSizeUnit() {
+		return _size.getUnit();
+	}
+
+	/**
+	 * @param String unit the unit to set for _size
+	 */
+	public boolean setSizeUnit(String unit) {
+		return _size.setUnit(unit);
 	}
 
 	/**

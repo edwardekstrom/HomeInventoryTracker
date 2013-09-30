@@ -17,31 +17,31 @@ public class UnitSize {
 		_unit = "count";
 	}
 	
-	/**
-	 * Sets the unit and size
-	 * @return true if the set was successful
-	 */
-	public boolean setUnitSize(String amount, String unit){
-		if(isValidUnitAmount(amount, unit)){
-			_amount = Float.parseFloat(amount);
-			_unit = unit;
-			return true;
-		}else{
-			return false;
-		}
-	}
+//	/**
+//	 * Sets the unit and size
+//	 * @return true if the set was successful
+//	 */
+//	public boolean setUnitSize(String amount, String unit){
+//		if(isValidUnitAmount(amount, unit)){
+//			_amount = Float.parseFloat(amount);
+//			_unit = unit;
+//			return true;
+//		}else{
+//			return false;
+//		}
+//	}
 	
-	/**
-	 * Checks to see if the Unit and Amount are valid
-	 * @return true if valid
-	 */
-	private boolean isValidUnitAmount(String amount, String unit){
-		if(isValidAmount(amount) && isValidUnit(unit)){
-			return true;
-		}else{
-			return false;
-		}
-	}
+//	/**
+//	 * Checks to see if the Unit and Amount are valid
+//	 * @return true if valid
+//	 */
+//	private boolean isValidUnitAmount(String amount, String unit){
+//		if(isValidAmount(amount) && isValidUnit(unit)){
+//			return true;
+//		}else{
+//			return false;
+//		}
+//	}
 	
 	/**
 	 * Checks to see if the Unit and Amount are valid
@@ -59,7 +59,10 @@ public class UnitSize {
 	 * Checks to see if the Amount is valid
 	 * @return true if valid
 	 */
-	private boolean isValidAmount(String amount){
+	public boolean isValidAmount(String amount){
+		if(_unit.equals("count")){
+			return false;
+		}
 		try{
 			Float.parseFloat(amount);
 			return true;
@@ -72,7 +75,7 @@ public class UnitSize {
 	 * Checks to see if the Unit is valid
 	 * @return true if valid
 	 */
-	private boolean isValidUnit(String unit){
+	public boolean isValidUnit(String unit){
 		if( (unit.compareTo("pounds") == 0) || (unit.compareTo("ounces") == 0) || 
 		    (unit.compareTo("grams") == 0) || (unit.compareTo("kilograms") == 0) ||
 		    (unit.compareTo("gallons") == 0) || (unit.compareTo("quarts") == 0) ||
@@ -117,6 +120,9 @@ public class UnitSize {
 	public boolean setUnit(String unit) {
 		if(isValidUnit(unit)){
 			_unit = unit;
+			if(unit.equals("count")){
+				_amount = 1;
+			}
 			return true;
 		}else{
 			return false;
