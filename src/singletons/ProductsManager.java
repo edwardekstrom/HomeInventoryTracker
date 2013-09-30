@@ -46,7 +46,7 @@ public class ProductsManager {
 	 * @return true if the product can be added, false otherwise.
 	 */
 	public boolean canAddProduct(Product product){
-		return true;
+		return !_allProductsList.contains(product);
 	}
 	
 	/**
