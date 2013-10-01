@@ -1,7 +1,6 @@
 package data_structures;
 
 import java.util.List;
-import java.util.TreeMap;
 
 /**
  * @author nRitchie
@@ -15,6 +14,8 @@ public abstract class ProductContainer {
 	private List<Item> _items;
 	private List<ProductGroup> _productGroups;
 	
+	protected StorageUnit _storageUnit;
+
 	/**
 	 * finds the productGroup with the item's product in it
 	 * adds an Item to the list of items in the productGroup
@@ -88,57 +89,101 @@ public abstract class ProductContainer {
 	 * 
 	 */
 	public void removeItem(Item item){
-		if(_items.contains(item)){
-			_items.remove(item);
-		}else{
-
-				this.productGroupWithProduct(item.getProduct()).removeItem(item);
-
-		}
+//		if(_items.contains(item)){
+//			_items.remove(item);
+//		}else{
+//			this.productGroupWithProduct(item.getProduct()).removeItem(item);
+//
+//		}
 		_items.remove(item);
 	}
 	
 	/**
 	 * 
 	 */
-	public void moveItem(Item item, StorageUnit storageUnit){
-		storageUnit.addItem(item);
+	public void moveItem(Item item, ProductContainer productContainer){
+		this.moveProduct(item.getProduct(), productContainer);
+		
+		productContainer.addItem(item);
 		this.removeItem(item);
 	}
 	
-	/**
-	 * 
-	 */
-	public void moveItem(Item item, ProductGroup productGroup){
-		/* TODO If the Item’s Product is already in a Product Container in
-			the Target Storage Unit
-				Move the Product and all associated Items from
-			their old Product Container to the Target Product Container
-		*/
-		StorageUnit targetStorageUnit = productGroup.getStorageUnit();
-		if(targetStorageUnit.containsProduct(item.getProduct())){
-			targetStorageUnit.moveProduct(item.getProduct(), productGroup);
-		}
-		
-		productGroup.addItem(item);
-		this.removeItem(item);
-	}
+//	/**
+//	 * 
+//	 */
+//	public void moveItem(Item item, ProductGroup productGroup){
+//		/* TODO If the Item’s Product is already in a Product Container in
+//			the Target Storage Unit
+//				Move the Product and all associated Items from
+//			their old Product Container to the Target Product Container
+//		*/
+//		StorageUnit targetStorageUnit = productGroup.getStorageUnit();
+//		if(targetStorageUnit.containsProduct(item.getProduct())){
+//			targetStorageUnit.moveProduct(item.getProduct(), productGroup);
+//		}
+//		
+//		productGroup.addItem(item);
+//		this.removeItem(item);
+//	}
 	
 /****************Product functions************************/
 	
 	public void addProduct(Product product){
-//		if(this.containsProduct(product)){
-//			moveProduct(product,this);
-//		}
 		_products.add(product);
 	}
 	
 	public void removeProduct(Product product){
-
-		_products.remove(product);
-		
+		Boolean productIsEmpty = true;
+		for(int i = 0; i < _items.size(); i++){
+			if(_items.get(i).getProduct() == product){
+				productIsEmpty = false;
+			}
+		}
+		if(productIsEmpty){
+			_products.remove(product);
+		}
 	}
-public abstract void moveProduct(Product product, ProductContainer productContainer);
+	
+	
+	public void moveProduct(Product product, ProductContainer targetProductContainer) {
+		/*
+		 * if Product is already in a Product Container in
+		 *	the Target Storage Unit
+		 *		Move the Product and all associated Items from
+		 *	their old Product Container to the Target Product Container
+		 */
+		if(_storageUnit.containsProduct(product)){
+			ProductContainer containerWithProduct = this.productGroupWithProduct(product);
+			
+			targetProductContainer.addProduct(product);
+			containerWithProduct.removeProduct(product);
+			
+			for (int i = 0; i < containerWithProduct.getItems().size(); i++) {
+				Item itemToTransfer = containerWithProduct.getItems().get(i);
+				
+				targetProductContainer.addItem(itemToTransfer);
+				containerWithProduct.removeItem(itemToTransfer);
+			}
+		}else{
+			targetProductContainer.addProduct(product);
+		}
+		
+		boolean itemWasTheLast = true;
+		for (int i = 0; i < _items.size(); i++) {
+			if(_items.get(i).getProduct() == product){
+				itemWasTheLast = false;
+			}
+		}
+		if(itemWasTheLast){
+			this.removeProduct(product);
+		}
+	}
+	
+/***************Product Groups****************************/
+	public void addProductGroup(ProductGroup productGroup){
+		_productGroups.add(productGroup);
+		productGroup._storageUnit = _storageUnit;
+	}
 
 /***************Getter/Setters****************************/
 	

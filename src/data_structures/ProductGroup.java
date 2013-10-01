@@ -7,27 +7,22 @@ package data_structures;
  * to organize products into groups
  */
 public class ProductGroup extends ProductContainer{
+	private ProductContainer _container;
+	private UnitSize _threeMonthSurprise;
 	
-	private StorageUnit _storageUnit;
-
-		
-	/**
-	 * @return the _storageUnit
-	 */
-	public StorageUnit getStorageUnit() {
-		return _storageUnit;
+	public ProductContainer getContainer() {
+		return _container;
+	}
+	public void setContainer(ProductContainer _container) {
+		this._container = _container;
+	}
+	
+	public UnitSize getThreeMonthSurprise() {
+		return _threeMonthSurprise;
+	}
+	public void setThreeMonthSurprise(UnitSize _threeMonthSurprise) {
+		this._threeMonthSurprise = _threeMonthSurprise;
 	}
 
-	/**
-	 * @param _storageUnit the _storageUnit to set
-	 */
-	public void setStorageUnit(StorageUnit _storageUnit) {
-		this._storageUnit = _storageUnit;
-	}
-
-	@Override
-	public void moveProduct(Product product, ProductContainer productContainer) {
-//		_storageUnit.moveProduct(product, productContainer);
-	}
 
 }
