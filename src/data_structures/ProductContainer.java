@@ -1,5 +1,7 @@
 package data_structures;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -8,10 +10,10 @@ import java.util.TreeMap;
  *An abstract class for StorageUnits and ProductGroups. These objects can "contain"
   Products and Items, and are referred to generically as "product containers".
  */
-public abstract class ProductContainer {
+public abstract class ProductContainer implements Serializable{
 	
 	private String _name;
-	private List<Product> _products;
+	private List<Product> _products = new ArrayList<Product>();
 	private List<Item> _items;
 	private List<ProductGroup> _productGroups;
 	
@@ -110,7 +112,7 @@ public abstract class ProductContainer {
 	 * 
 	 */
 	public void moveItem(Item item, ProductGroup productGroup){
-		/* TODO If the Item’s Product is already in a Product Container in
+		/* TODO If the Items Product is already in a Product Container in
 			the Target Storage Unit
 				Move the Product and all associated Items from
 			their old Product Container to the Target Product Container

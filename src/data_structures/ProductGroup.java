@@ -1,12 +1,14 @@
 package data_structures;
 
+import java.io.Serializable;
+
 
 /**\
  * @author nRitchie
  * Composite: An implementation of ProductContainer 
  * to organize products into groups
  */
-public class ProductGroup extends ProductContainer{
+public class ProductGroup extends ProductContainer implements Serializable{
 	
 	private StorageUnit _storageUnit;
 

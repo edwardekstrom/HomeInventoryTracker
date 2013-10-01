@@ -1,12 +1,13 @@
 package data_structures;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author Capchu
  * This class manages Items in storage
  */
-public class Item {
+public class Item implements Serializable{
 
 	private Product _product;
 	private Barcode _barcode;

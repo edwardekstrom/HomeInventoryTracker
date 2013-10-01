@@ -1,5 +1,6 @@
 package data_structures;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
@@ -7,7 +8,7 @@ import java.util.TreeMap;
  * @author Capchu
  * This class is for storing objects
  */
-public class Product {
+public class Product implements Serializable{
 
 	private Date _creationDate;
 	private Barcode _barcode;

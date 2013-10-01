@@ -1,0 +1,6 @@
+Testsuite: singletons_tests.ProductsManagerTest
+Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0.035 sec
+
+Testcase: testAdd took 0.017 sec
+Testcase: testRemove took 0 sec
+Testcase: testGetUnmodList took 0 sec
