@@ -1,0 +1,4 @@
+Testsuite: data_structures.ProductGroupTest
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.019 sec
+
+Testcase: testAddItem took 0.003 sec

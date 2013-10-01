@@ -51,7 +51,9 @@ public class ItemsManager {
 	 * @param item the item to be added
 	 */
 	public void addItem(Item item){
+		if(!_allItemsList.contains(item)){
 		_allItemsList.add(item);
+		}
 	}
 	
 	/**
@@ -60,6 +62,17 @@ public class ItemsManager {
 	 */
 	public void removeItem(Item item){
 		_allItemsList.remove(item);
+	}
+	
+	/**
+	 * True if the manager contains the item,
+	 * false otherwise.
+	 * @param item An item to check for.
+	 * @return true if the manager contains the item,
+	 * false otherwise.
+	 */
+	public boolean containsItem(Item item){
+		return _allItemsList.contains(item);
 	}
 	
 	/**

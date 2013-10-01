@@ -1,0 +1,8 @@
+Testsuite: data_structures_tests.UnitSizeTest
+Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 0.034 sec
+
+Testcase: makeUnitSizeTest took 0.011 sec
+Testcase: changeAmountCountTest took 0.001 sec
+Testcase: changeUnitTest took 0.001 sec
+Testcase: changeAmountOtherTest took 0 sec
+Testcase: isValidUnitAndAmountTest took 0.001 sec

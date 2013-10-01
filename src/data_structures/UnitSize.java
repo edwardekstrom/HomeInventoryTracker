@@ -1,10 +1,12 @@
 package data_structures;
 
+import java.io.Serializable;
+
 /**
  * @author Capchu
  * This Class is used to store the Unit and Size Tuple used for food amounts.
  */
-public class UnitSize {
+public class UnitSize implements Serializable{
 	
 	private float _amount;
 	private String _unit;

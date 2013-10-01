@@ -1,10 +1,14 @@
 package data_structures;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Random;
+
 /**
  * @author Capchu
  * This Class is used to store the barcodes for scanning.
  */
-public class Barcode {
+public class Barcode implements Serializable{
 
 	private String _barcode;
 	
@@ -14,6 +18,8 @@ public class Barcode {
 	public Barcode(String barcode) {
 		_barcode = barcode;
 	}
+	
+
 	
 	/**
 	 * @return the _barcode
@@ -42,6 +48,8 @@ public class Barcode {
 	private boolean isValidBarcode(String barcode){
 		return true;
 	}
+	
+
 	
 	
 }

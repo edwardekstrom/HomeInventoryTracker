@@ -1,5 +1,6 @@
 package data_structures;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  *An abstract class for StorageUnits and ProductGroups. These objects can "contain"
   Products and Items, and are referred to generically as "product containers".
  */
-public abstract class ProductContainer {
+public abstract class ProductContainer implements Serializable{
 	
 	private String _name;
 	private List<Product> _products;

@@ -20,8 +20,7 @@ public class ProductsManagerTest {
 	@Test
 	public void testAdd() {
 		ProductsManager pm = ProductsManager.getInstance();
-		Product p = new Product(new Date(), new Barcode("12345"), "a product",
-				new UnitSize(), 1, 3);
+		Product p = new Product(new Date(), new Barcode("12345"), "a product", 1, 3);
 		
 		pm.addProduct(p);
 		
@@ -32,8 +31,7 @@ public class ProductsManagerTest {
 	@Test
 	public void testRemove() {
 		ProductsManager pm = ProductsManager.getInstance();
-		Product p = new Product(new Date(), new Barcode("12345"), "a product",
-				new UnitSize(), 1, 3);
+		Product p = new Product(new Date(), new Barcode("12345"), "a product", 1, 3);
 		
 		pm.addProduct(p);
 		
@@ -46,8 +44,7 @@ public class ProductsManagerTest {
 	
 	@Test(expected = UnsupportedOperationException.class)
 	public void testGetUnmodList(){
-		Product p = new Product(new Date(), new Barcode("12345"), "a product",
-				new UnitSize(), 1, 3);
+		Product p = new Product(new Date(), new Barcode("12345"), "a product", 1, 3);
 		ProductsManager pm = ProductsManager.getInstance();
 		pm.getUnmodifiableList().add(p);
 	}
