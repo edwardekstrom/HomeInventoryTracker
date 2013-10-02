@@ -1,8 +1,18 @@
 Testsuite: data_structures_tests.UnitSizeTest
-Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 0.034 sec
+Tests run: 5, Failures: 2, Errors: 0, Time elapsed: 0.036 sec
 
-Testcase: changeAmountOtherTest took 0.012 sec
+Testcase: changeAmountCountTest took 0.012 sec
+Testcase: changeUnitTest took 0 sec
+Testcase: changeAmountOtherTest took 0.002 sec
+	FAILED
+
+junit.framework.AssertionFailedError: 
+	at data_structures_tests.UnitSizeTest.changeAmountOtherTest(UnitSizeTest.java:130)
+
 Testcase: isValidUnitAndAmountTest took 0 sec
+	FAILED
+
+junit.framework.AssertionFailedError: 
+	at data_structures_tests.UnitSizeTest.isValidUnitAndAmountTest(UnitSizeTest.java:162)
+
 Testcase: makeUnitSizeTest took 0 sec
-Testcase: changeAmountCountTest took 0 sec
-Testcase: changeUnitTest took 0.001 sec

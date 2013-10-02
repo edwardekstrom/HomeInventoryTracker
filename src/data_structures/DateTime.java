@@ -3,13 +3,14 @@
  */
 package data_structures;
 
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 
 /**
  * @author Capchu
  *
  */
-public class DateTime {
+public class DateTime implements Serializable{
 
 	private GregorianCalendar _exitDate;
 

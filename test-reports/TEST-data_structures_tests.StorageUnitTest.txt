@@ -1,7 +1,7 @@
 Testsuite: data_structures_tests.StorageUnitTest
-Tests run: 4, Failures: 0, Errors: 0, Time elapsed: 0.035 sec
+Tests run: 4, Failures: 0, Errors: 0, Time elapsed: 0.046 sec
 
-Testcase: makeStorageUnitTest took 0.014 sec
-Testcase: addItemTestBasic took 0.002 sec
+Testcase: makeStorageUnitTest took 0.023 sec
+Testcase: addItemTestBasic took 0.001 sec
 Testcase: addItemTestMuiltiple took 0.001 sec
 Testcase: addProductGroupTest took 0 sec
