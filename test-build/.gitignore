@@ -1,1 +1,10 @@
+/common
 /data_structures
+/data_structures_tests
+/gui
+/hit_exceptions
+/resources
+/singletons
+/singletons_tests
+/tools
+/ui_interaction

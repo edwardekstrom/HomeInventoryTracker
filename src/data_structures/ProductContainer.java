@@ -24,6 +24,8 @@ public abstract class ProductContainer implements Serializable{
 	 * if there is none, it will add the product and item to itself
 	 * 
 	 * @param item the item to be added
+	 * @precondition 
+	 * @postcondition
 	 */
 	public void addItem(Item item){
 		if(_products.contains(item.getProduct())){
@@ -45,7 +47,7 @@ public abstract class ProductContainer implements Serializable{
 	 * @param product
 	 * @return if product is in the subtree
 	 */
-	public boolean containsProduct(Product product) {
+	protected boolean containsProduct(Product product) {
 			if(_products.contains(product)){
 				return true;
 			}else
@@ -129,11 +131,11 @@ public abstract class ProductContainer implements Serializable{
 	
 /****************Product functions************************/
 	
-	public void addProduct(Product product){
+	protected void addProduct(Product product){
 		_products.add(product);
 	}
 	
-	public void removeProduct(Product product){
+	protected void removeProduct(Product product){
 		Boolean productIsEmpty = true;
 		for(int i = 0; i < _items.size(); i++){
 			if(_items.get(i).getProduct() == product){
@@ -146,15 +148,16 @@ public abstract class ProductContainer implements Serializable{
 	}
 	
 	
-	public void moveProduct(Product product, ProductContainer targetProductContainer) {
+	protected void moveProduct(Product product, ProductContainer targetProductContainer) {
 		/*
 		 * if Product is already in a Product Container in
 		 *	the Target Storage Unit
 		 *		Move the Product and all associated Items from
 		 *	their old Product Container to the Target Product Container
 		 */
-		if(_storageUnit.containsProduct(product)){
-			ProductContainer containerWithProduct = this.productGroupWithProduct(product);
+		if(targetProductContainer._storageUnit.containsProduct(product)){
+			ProductContainer containerWithProduct = 
+					targetProductContainer._storageUnit.productGroupWithProduct(product);
 			
 			targetProductContainer.addProduct(product);
 			containerWithProduct.removeProduct(product);

@@ -82,6 +82,15 @@ public class StorageUnitTest {
 		
 		_unit1 = new StorageUnit(name);
 		assertTrue(_unit1.getName() == name);
+		assertTrue(_unit1.getItems().size() == 0);
+		assertTrue(_unit1.getProducts().size() == 0);
+		assertTrue(_unit1.getProductGroups().size() == 0);
+		
+		_unit1 = new StorageUnit();
+		assertTrue(_unit1.getName() == "DEFAULT NAME");
+		assertTrue(_unit1.getItems().size() == 0);
+		assertTrue(_unit1.getProducts().size() == 0);
+		assertTrue(_unit1.getProductGroups().size() == 0);
 
 	}
 	
@@ -114,6 +123,17 @@ public class StorageUnitTest {
 	}
 	
 	@Test
+	public void addItemTestWhenProductIsDeepInTree(){
+		_unit1.addProductGroup(_productGroup1);
+		_productGroup1.addItem(_item1);
+		
+		_unit1.addItem(_item1);
+		
+		assertTrue(_unit1.getItems().size() == 0);
+		assertTrue(_productGroup1.getItems().size() == 2);
+	}
+	
+	@Test
 	public void addProductGroupTest() {
 		assertTrue(_unit1.getProductGroups().size() == 0);
 
@@ -121,6 +141,33 @@ public class StorageUnitTest {
 		
 		assertTrue(_unit1.getProductGroups().size() == 1);
 		assertTrue(_unit1.getProductGroups().get(0) == _productGroup1);
-
 	}
+	
+	@Test
+	public void removeItemTest(){
+		_unit1.addItem(_item1);
+		
+		assertTrue(_unit1.getItems().size() == 1);
+
+		_unit1.removeItem(_item1);
+		_unit2.removeItem(_item1);
+		
+		assertTrue(_unit1.getItems().size() == 0);
+		assertTrue(_unit2.getItems().size() == 0);
+		
+	}
+	
+	@Test
+	public void moveItemTest(){
+		_unit1.addItem(_item1);
+		_unit1.moveItem(_item1, _unit2);
+		
+		assertTrue(_unit1.getItems().size() == 0);
+		
+		assertTrue(_unit2.getProducts().size() == 1);
+
+		assertTrue(_unit2.getItems().size() == 1);
+	
+	}
+	
 }
