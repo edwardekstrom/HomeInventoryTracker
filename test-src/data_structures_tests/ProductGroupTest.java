@@ -46,9 +46,8 @@ public class ProductGroupTest {
 	}
 
 	@Test
-	public void testAddItem() {
-		
-		
+	public void test() {
+		fail("Not yet implemented");
 	}
 
 }

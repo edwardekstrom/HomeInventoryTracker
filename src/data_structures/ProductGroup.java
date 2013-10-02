@@ -1,6 +1,7 @@
 package data_structures;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 
 /**\
@@ -10,8 +11,25 @@ import java.io.Serializable;
  */
 public class ProductGroup extends ProductContainer implements Serializable{
 	private ProductContainer _container;
-	private UnitSize _threeMonthSurprise;
+	private UnitSize _threeMonthSup;
 	
+	public ProductGroup(){
+		_name = "DEFAULT NAME";
+		_storageUnit = null;
+		
+		_products = new ArrayList<Product>();
+		_items = new ArrayList<Item>();
+		_productGroups = new ArrayList<ProductGroup>();
+	}
+	
+	public ProductGroup(String name){
+		_name = name;
+		_storageUnit = null;
+		
+		_products = new ArrayList<Product>();
+		_items = new ArrayList<Item>();
+		_productGroups = new ArrayList<ProductGroup>();
+	}
 	public ProductContainer getContainer() {
 		return _container;
 	}
@@ -19,11 +37,11 @@ public class ProductGroup extends ProductContainer implements Serializable{
 		this._container = _container;
 	}
 	
-	public UnitSize getThreeMonthSurprise() {
-		return _threeMonthSurprise;
+	public UnitSize getThreeMonthSup() {
+		return _threeMonthSup;
 	}
-	public void setThreeMonthSurprise(UnitSize _threeMonthSurprise) {
-		this._threeMonthSurprise = _threeMonthSurprise;
+	public void setThreeMonthSup(UnitSize threeMonthSurprise) {
+		this._threeMonthSup = threeMonthSurprise;
 	}
 
 

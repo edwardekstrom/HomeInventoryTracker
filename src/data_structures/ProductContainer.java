@@ -10,10 +10,10 @@ import java.util.List;
  */
 public abstract class ProductContainer implements Serializable{
 	
-	private String _name;
-	private List<Product> _products;
-	private List<Item> _items;
-	private List<ProductGroup> _productGroups;
+	protected String _name;
+	protected List<Product> _products;
+	protected List<Item> _items;
+	protected List<ProductGroup> _productGroups;
 	
 	protected StorageUnit _storageUnit;
 
@@ -31,7 +31,7 @@ public abstract class ProductContainer implements Serializable{
 		}else
 		if(this.containsProduct(item.getProduct())){
 
-				this.productGroupWithProduct(item.getProduct()).addItem(item);
+			this.productGroupWithProduct(item.getProduct()).addItem(item);
 
 		}else{
 			this.addProduct(item.getProduct());
