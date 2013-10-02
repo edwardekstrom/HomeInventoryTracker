@@ -167,7 +167,28 @@ public class StorageUnitTest {
 		assertTrue(_unit2.getProducts().size() == 1);
 
 		assertTrue(_unit2.getItems().size() == 1);
+	}
 	
+	@Test
+	public void moveItemTestWithMovingProduct(){
+		_unit1.addProductGroup(_productGroup1);
+		_productGroup1.addItem(_item1);
+		
+		_unit2.addItem(_item1);
+		_unit2.moveItem(_item1, _unit1);
+		
+		assertTrue(_unit1.getItems().size() == 2);
+		
+		assertTrue(_unit2.getProducts().size() == 0);
+
+		assertTrue(_unit2.getItems().size() == 0);
+	}
+	
+	@Test
+	public void setNameTest(){
+		_unit1.setName("Franklin");
+		
+		assertTrue(_unit1.getName() == "Franklin");
 	}
 	
 }

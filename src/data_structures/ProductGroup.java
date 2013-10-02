@@ -13,6 +13,11 @@ public class ProductGroup extends ProductContainer implements Serializable{
 	private ProductContainer _container;
 	private UnitSize _threeMonthSup;
 	
+	/**
+	 * Constructor
+	 *  @precondition none
+	 * @postcondition object will be created with all defaults
+	 */
 	public ProductGroup(){
 		_name = "DEFAULT NAME";
 		_storageUnit = null;
@@ -22,6 +27,12 @@ public class ProductGroup extends ProductContainer implements Serializable{
 		_productGroups = new ArrayList<ProductGroup>();
 	}
 	
+	/**
+	 * 
+	 * @param name that will be set to name
+	 * @precondition none
+	 * @postcondition object will be created with all defaults 
+	 */
 	public ProductGroup(String name){
 		_name = name;
 		_storageUnit = null;
@@ -30,19 +41,43 @@ public class ProductGroup extends ProductContainer implements Serializable{
 		_items = new ArrayList<Item>();
 		_productGroups = new ArrayList<ProductGroup>();
 	}
+
+	/**
+	 * @return the _container
+	 * @precondition none
+	 * @postcondition none
+	 */
 	public ProductContainer getContainer() {
 		return _container;
 	}
+
+	/**
+	 * @param _container the _container to set
+	 * @precondition none
+	 * @postcondition none
+	 */
 	public void setContainer(ProductContainer _container) {
 		this._container = _container;
 	}
-	
+
+	/**
+	 * @return the _threeMonthSup
+	 * @precondition none
+	 * @postcondition none
+	 */
 	public UnitSize getThreeMonthSup() {
 		return _threeMonthSup;
 	}
-	public void setThreeMonthSup(UnitSize threeMonthSurprise) {
-		this._threeMonthSup = threeMonthSurprise;
+
+	/**
+	 * @param _threeMonthSup the _threeMonthSup to set
+	 * @precondition none
+	 * @postcondition none
+	 */
+	public void setThreeMonthSup(UnitSize _threeMonthSup) {
+		this._threeMonthSup = _threeMonthSup;
 	}
+	
 
-
+	
 }

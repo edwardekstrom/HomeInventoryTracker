@@ -24,8 +24,8 @@ public abstract class ProductContainer implements Serializable{
 	 * if there is none, it will add the product and item to itself
 	 * 
 	 * @param item the item to be added
-	 * @precondition 
-	 * @postcondition
+	 * @precondition none
+	 * @postcondition the item will be added into the list _items
 	 */
 	public void addItem(Item item){
 		if(_products.contains(item.getProduct())){
@@ -46,6 +46,9 @@ public abstract class ProductContainer implements Serializable{
 	 * 
 	 * @param product
 	 * @return if product is in the subtree
+	 * 
+	 * @precondition none
+	 * @postcondition none
 	 */
 	protected boolean containsProduct(Product product) {
 			if(_products.contains(product)){
@@ -68,6 +71,9 @@ public abstract class ProductContainer implements Serializable{
 	 * @param product the product that is being searched for
 	 * 
 	 * @return the productGroup that the product is in
+	 * 
+	 * @precondition none
+	 * @postcondition none
 	 */
 	protected ProductContainer productGroupWithProduct(Product product) {
 		if(_products.contains(product)){
@@ -75,7 +81,8 @@ public abstract class ProductContainer implements Serializable{
 		}else
 		{
 			for(int i = 0; i < _productGroups.size(); i++){
-				ProductContainer containerWithProduct = _productGroups.get(i).productGroupWithProduct(product);	
+				ProductContainer containerWithProduct = 
+						_productGroups.get(i).productGroupWithProduct(product);	
 				if(containerWithProduct != null){	
 					return containerWithProduct;	
 				}
@@ -89,20 +96,34 @@ public abstract class ProductContainer implements Serializable{
 	 * if it is not in this, but is in a subtree it will remove it from there
 	 * 
 	 * @param item the item that will be removed
-	 * 
+	 * @precondition none
+	 * @postcondition removes item from items list,
+	 * 			 if it was the last item of a product it will remove the product
 	 */
 	public void removeItem(Item item){
-//		if(_items.contains(item)){
-//			_items.remove(item);
-//		}else{
-//			this.productGroupWithProduct(item.getProduct()).removeItem(item);
-//
-//		}
+
 		_items.remove(item);
+		
+		boolean itemWasTheLast = true;
+		for (int i = 0; i < _items.size(); i++) {
+			if(_items.get(i).getProduct() == item.getProduct()){
+				itemWasTheLast = false;
+			}
+		}
+		if(itemWasTheLast){
+			this.removeProduct(item.getProduct());
+		}
+		
 	}
 	
 	/**
-	 * 
+	 * @param item that will be moved
+	 * @param productContainer that it will be moved to
+	 * @precondition none
+	 * @postcondition will move item out of this container and into 
+	 * 	the other. If the targetContainer has the item's product somewhere
+	 * else in it's storageUnit, the it moves all of those items into the 
+	 * targetContainer
 	 */
 	public void moveItem(Item item, ProductContainer productContainer){
 		this.moveProduct(item.getProduct(), productContainer);
@@ -111,30 +132,26 @@ public abstract class ProductContainer implements Serializable{
 		this.removeItem(item);
 	}
 	
-//	/**
-//	 * 
-//	 */
-//	public void moveItem(Item item, ProductGroup productGroup){
-//		/* TODO If the Items Product is already in a Product Container in
-//			the Target Storage Unit
-//				Move the Product and all associated Items from
-//			their old Product Container to the Target Product Container
-//		*/
-//		StorageUnit targetStorageUnit = productGroup.getStorageUnit();
-//		if(targetStorageUnit.containsProduct(item.getProduct())){
-//			targetStorageUnit.moveProduct(item.getProduct(), productGroup);
-//		}
-//		
-//		productGroup.addItem(item);
-//		this.removeItem(item);
-//	}
+
 	
 /****************Product functions************************/
 	
+	/**
+	 * 
+	 * @param product the product that will be added
+	 * @precondition none
+	 * @postcondition product will be in _products
+	 */
 	protected void addProduct(Product product){
 		_products.add(product);
 	}
 	
+	/**
+	 * 
+	 * @param product that will be removed
+	 * @precondition none
+	 * @postcondition product will no longer be in products
+	 */
 	protected void removeProduct(Product product){
 		Boolean productIsEmpty = true;
 		for(int i = 0; i < _items.size(); i++){
@@ -147,7 +164,15 @@ public abstract class ProductContainer implements Serializable{
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @param product that will be moved
+	 * @param targetProductContainer destination for product
+	 * 
+	 * @precondition none
+	 * @postcondition product will be moved to target and all items of that product that 
+	 * were in the target's storageUnit will be moved to target aswell
+	 */
 	protected void moveProduct(Product product, ProductContainer targetProductContainer) {
 		/*
 		 * if Product is already in a Product Container in
@@ -184,6 +209,12 @@ public abstract class ProductContainer implements Serializable{
 	}
 	
 /***************Product Groups****************************/
+	/**
+	 * 
+	 * @param productGroup the new group to be added
+	 * @precondition none
+	 * @postcondition productGroup will be in _productGroups
+	 */
 	public void addProductGroup(ProductGroup productGroup){
 		_productGroups.add(productGroup);
 		productGroup._storageUnit = _storageUnit;
@@ -193,12 +224,16 @@ public abstract class ProductContainer implements Serializable{
 	
 	/**
 	 * @return the name
+	 * @precondition none
+	 * @postcondition none
 	 */
 	public String getName() {
 		return _name;
 	}
 	/**
 	 * @param name the name to set
+	 *  @precondition none
+	 * @postcondition none
 	 */
 	public void setName(String name) {
 		this._name = name;
@@ -206,41 +241,31 @@ public abstract class ProductContainer implements Serializable{
 	
 	/**
 	 * @return the products
+	 *  @precondition none
+	 * @postcondition none
 	 */
 	public List<Product> getProducts() {
 		return _products;
 	}
-	/**
-	 * @param products the products to set
-	 */
-	public void setProducts(List<Product> products) {
-		this._products = products;
-	}
+
 	
 	/**
 	 * @return the items
+	 *  @precondition none
+	 * @postcondition none
 	 */
 	public List<Item> getItems() {
 		return _items;
 	}
-	/**
-	 * @param items the items to set
-	 */
-	public void setItems(List<Item> items) {
-		this._items = items;
-	}
 	
 	/**
 	 * @return the productGroups
+	 *  @precondition none
+	 * @postcondition none
 	 */
 	public List<ProductGroup> getProductGroups() {
 		return _productGroups;
 	}
-	/**
-	 * @param productGroups the productGroups to set
-	 */
-	public void setProductGroups(List<ProductGroup> productGroups) {
-		this._productGroups = productGroups;
-	}
+
 	
 }

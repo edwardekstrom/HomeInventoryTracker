@@ -7,7 +7,9 @@ import org.junit.Test;
 import data_structures.Barcode;
 import data_structures.Date;
 import data_structures.HomeInventory;
+import data_structures.Item;
 import data_structures.Product;
+import data_structures.ProductContainer;
 import data_structures.Serializer;
 import data_structures.StorageUnit;
 
@@ -16,8 +18,9 @@ public class HomeInventorySerializationTest {
 	public void testSerialization() {
 		HomeInventory hi = new HomeInventory();
 		StorageUnit su = new StorageUnit();
-		Product p = new Product(new Date(), new Barcode("12345"), "product", 1, 1);		
-		su.addProduct(p);
+		Product p = new Product(new Date(), new Barcode("12345"), "product", 1, 1);
+		Item i = new Item(p, new Barcode("12345"), new Date(), new StorageUnit());
+		su.addItem(i);
 		hi.addStorageUnit(su);
 		assertTrue(hi.getStorageUnitsCount() == 1);
 		
