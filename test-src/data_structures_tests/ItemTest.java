@@ -69,7 +69,9 @@ public class ItemTest {
 		assertTrue(_testItem.getBarcode() == barcode);
 		assertTrue(_testItem.getContainer() == prodGroup);
 		assertTrue(_testItem.getEntryDate() == entryDate);
-		//assertTrue(_testItem.getExpirationDate() == );
+		assertFalse(_testItem.getExpirationDate().getDate().compareTo(entryDate.getDate()) < 0 );
+		assertFalse(_testItem.getExpirationDate().getDate().compareTo(entryDate.getDate()) == 0 );
+		assertTrue(_testItem.getExpirationDate().getDate().compareTo(entryDate.getDate()) > 0 );
 	}
 	
 	@Test
