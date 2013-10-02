@@ -2,6 +2,8 @@ package singletons_tests;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 
 import data_structures.*;
@@ -48,6 +50,45 @@ public class ItemsManagerTest {
 	
 		im2.getUnmodifiableAllItemsList().add(i2);
 	}
+	
+	@Test
+	public void testGetInstance(){
+		ItemsManager im1 = ItemsManager.getInstance();
+		ItemsManager im2 = ItemsManager.getInstance();
+		assertTrue(im1==im2);
+	}
+	
+	@Test
+	public void testCanAddItem(){
+		ItemsManager im = ItemsManager.getInstance();
+		Product p1 = new Product(new Date(), new Barcode("12345"), "a product", 1, 3);
+		Item i = new Item(p1, new Barcode("1234"), new Date(), new ProductContainer() {
+		});
+		assertTrue(im.canAddItem(i));
+		im.addItem(i);
+		assertFalse(im.canAddItem(i));
+	}
+	
+	@Test
+	public void testContainsItem(){
+		ItemsManager im = ItemsManager.getInstance();
+		Product p1 = new Product(new Date(), new Barcode("12345"), "a product", 1, 3);
+		Item i = new Item(p1, new Barcode("1234"), new Date(), new ProductContainer() {
+		});
+		im.addItem(i);
+		assertTrue(im.containsItem(i));
+	}
+	
+	@Test (expected = UnsupportedOperationException.class)
+	public void testGetUnmodifiableList(){
+		ItemsManager im = ItemsManager.getInstance();
+		List<Item> l = im.getUnmodifiableAllItemsList();
+		Product p1 = new Product(new Date(), new Barcode("12345"), "a product", 1, 3);
+		Item i = new Item(p1, new Barcode("1234"), new Date(), new ProductContainer() {
+		});
+		l.add(i);
+	}
+	
 
 }
 

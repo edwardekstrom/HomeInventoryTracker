@@ -40,6 +40,26 @@ public class ProductsManagerTest {
 
 		assertFalse(pm.containsProduct(p));
 	}
+
+	
+	@Test
+	public void testContainsProduct(){
+		Product p = new Product(new Date(), new Barcode("12345"), "a product", 1, 3);
+		ProductsManager pm = ProductsManager.getInstance();
+		pm.addProduct(p);
+		assertTrue(pm.containsProduct(p));
+	}
+	
+	@Test
+	public void testCanAddProduct(){
+		Product p = new Product(new Date(), new Barcode("12345"), "a product", 1, 3);
+		ProductsManager pm = ProductsManager.getInstance();
+		assertFalse(pm.containsProduct(p));
+		assertTrue(pm.canAddProduct(p));
+		pm.addProduct(p);
+		assertFalse(pm.canAddProduct(p));
+	}
+	
 	
 	@Test(expected = UnsupportedOperationException.class)
 	public void testGetUnmodList(){
@@ -47,5 +67,7 @@ public class ProductsManagerTest {
 		ProductsManager pm = ProductsManager.getInstance();
 		pm.getUnmodifiableList().add(p);
 	}
+	
 }
+
 

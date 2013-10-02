@@ -1,6 +1,10 @@
 Testsuite: singletons_tests.ItemsManagerTest
-Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0.043 sec
+Tests run: 7, Failures: 0, Errors: 0, Time elapsed: 0.052 sec
 
-Testcase: testAdd took 0.027 sec
-Testcase: testRemove took 0 sec
-Testcase: testGetUnmodList took 0 sec
+Testcase: testRemove took 0.026 sec
+Testcase: testGetUnmodList took 0.001 sec
+Testcase: testAdd took 0.001 sec
+Testcase: testGetInstance took 0 sec
+Testcase: testCanAddItem took 0.001 sec
+Testcase: testContainsItem took 0 sec
+Testcase: testGetUnmodifiableList took 0 sec

@@ -5,7 +5,6 @@ import hit_exceptions.IllegalNameException;
 
 import org.junit.Test;
 
-import com.sun.source.tree.AssertTree;
 
 import singletons.BarcodeManager;
 
