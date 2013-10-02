@@ -113,7 +113,7 @@ public abstract class ProductContainer implements Serializable{
 //	 * 
 //	 */
 //	public void moveItem(Item item, ProductGroup productGroup){
-//		/* TODO If the Item’s Product is already in a Product Container in
+//		/* TODO If the Items Product is already in a Product Container in
 //			the Target Storage Unit
 //				Move the Product and all associated Items from
 //			their old Product Container to the Target Product Container
