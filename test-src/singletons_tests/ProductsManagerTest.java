@@ -2,8 +2,6 @@ package singletons_tests;
 
 import static org.junit.Assert.*;
 
-import java.util.Date;
-
 import org.junit.Test;
 
 import com.sun.source.tree.AssertTree;
@@ -11,6 +9,7 @@ import com.sun.source.tree.AssertTree;
 import singletons.ItemsManager;
 import singletons.ProductsManager;
 import data_structures.Barcode;
+import data_structures.Date;
 import data_structures.Item;
 import data_structures.Product;
 import data_structures.StorageUnit;

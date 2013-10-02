@@ -5,8 +5,6 @@ package data_structures_tests;
 
 import static org.junit.Assert.*;
 
-import java.util.Date;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -14,6 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import data_structures.Barcode;
+import data_structures.Date;
 import data_structures.Item;
 import data_structures.Product;
 import data_structures.ProductContainer;

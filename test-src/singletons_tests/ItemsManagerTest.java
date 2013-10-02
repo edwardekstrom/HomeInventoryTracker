@@ -2,16 +2,9 @@ package singletons_tests;
 
 import static org.junit.Assert.*;
 
-import java.util.Date;
-
 import org.junit.Test;
 
-import data_structures.Barcode;
-import data_structures.Item;
-import data_structures.Product;
-import data_structures.ProductContainer;
-import data_structures.StorageUnit;
-import data_structures.UnitSize;
+import data_structures.*;
 import singletons.ItemsManager;
 
 public class ItemsManagerTest {
@@ -20,10 +13,8 @@ public class ItemsManagerTest {
 	public void testAdd(){
 		ItemsManager im = ItemsManager.getInstance();
 		Product p = new Product(new Date(), new Barcode("12345"), "a product", 1, 3);
-		Item i = new Item(p, new Barcode("12345"), new Date(), new ProductContainer() {
-		});
-		Item j = new Item(p, new Barcode("12345"), new Date(), new ProductContainer() {
-		});
+		Item i = new Item(p, new Barcode("12345"), new Date(), new ProductContainer(){});
+		Item j = new Item(p, new Barcode("12345"), new Date(), new ProductContainer(){});
 		
 		im.addItem(i);
 		
@@ -40,8 +31,7 @@ public class ItemsManagerTest {
 	public void testRemove(){
 		ItemsManager im1 = ItemsManager.getInstance();
 		Product p1 = new Product(new Date(), new Barcode("12345"), "a product", 1, 3);
-		Item i1 = new Item(p1, new Barcode("12345"), new Date(), new ProductContainer() {
-		});
+		Item i1 = new Item(p1, new Barcode("12345"), new Date(), new ProductContainer() {});
 		
 		im1.addItem(i1);
 		im1.removeItem(i1);

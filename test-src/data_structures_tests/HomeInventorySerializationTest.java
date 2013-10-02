@@ -2,11 +2,10 @@ package data_structures_tests;
 
 import static org.junit.Assert.*;
 
-import java.util.Date;
-
 import org.junit.Test;
 
 import data_structures.Barcode;
+import data_structures.Date;
 import data_structures.HomeInventory;
 import data_structures.Product;
 import data_structures.Serializer;

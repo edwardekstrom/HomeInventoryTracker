@@ -20,13 +20,18 @@ public class ItemsManager {
 	/**
 	 * This method instantiates the instance of ItemsManager.
 	 * It will only ever be called one time.
+	 * @precondition none
+	 * @postcondition there is a new ItemsManager
 	 */
 	private ItemsManager(){
+		assert true;
 		_allItemsList = new ArrayList<Item>();
 	}
 	
 	/**
 	 * This method returns the ItemsManger singleton
+	 * @precondition none
+	 * @postcondition there is one and only one instance of the ItemsManager
 	 * @return ItemsManager, the only instance of it
 	 */
 	public static ItemsManager getInstance(){
@@ -39,15 +44,23 @@ public class ItemsManager {
 	/**
 	 * Returns true if you can add this item,
 	 * false otherwise.
+	 * @precondition none
+	 * @postcondition none
 	 * @param item check this item to see if it can be added
 	 * @return true if the item can be added, false otherwise
 	 */
 	public boolean canAddItem(Item item){
+		if (_allItemsList.contains(item)){
+			return false;
+		}else{
 		return true;
+		}
 	}
 	
 	/**
 	 * Adds the item to the list of all items.
+	 * @precondition none
+	 * @postcondition the list contains the passed item.
 	 * @param item the item to be added
 	 */
 	public void addItem(Item item){
@@ -58,6 +71,8 @@ public class ItemsManager {
 	
 	/**
 	 * Removes the item from the list of all items.
+	 * @precondition none
+	 * @postcondition the list doesn't contain the item
 	 * @param item the item to be removed
 	 */
 	public void removeItem(Item item){
@@ -67,6 +82,8 @@ public class ItemsManager {
 	/**
 	 * True if the manager contains the item,
 	 * false otherwise.
+	 * @precondition none
+	 * @postcondition none
 	 * @param item An item to check for.
 	 * @return true if the manager contains the item,
 	 * false otherwise.
@@ -77,6 +94,8 @@ public class ItemsManager {
 	
 	/**
 	 * Returns an unmodifiable all items list.
+	 * @precondition none
+	 * @postcondition there is an unmodifiable version of the _allItemsList
 	 * @return
 	 */
 	public List<Item> getUnmodifiableAllItemsList(){

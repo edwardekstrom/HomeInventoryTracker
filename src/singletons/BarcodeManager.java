@@ -67,8 +67,8 @@ public class BarcodeManager {
  * characters.
  * @param str a String
  * @return true if the string contains only alphanumeric, false otherwise
- * @preconditions none
- * @postconditions none
+ * @precondition none
+ * @postcondition none
  */
 	private boolean isAlphanumeric(String str) {
 		assert true;
@@ -89,7 +89,6 @@ public class BarcodeManager {
 	 * barcode in it.
 	 */
 	public String generateUniqueBarcode() {
-		assert true;
 		String barcode = generateNewBarcode();
 		while (_allBarcodesList.contains(barcode)) {
 			barcode = generateNewBarcode();

@@ -1,7 +1,6 @@
 package data_structures;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author Capchu
@@ -35,7 +34,7 @@ public class Item implements Serializable{
 	 * 
 	 */
 	private boolean setExpirationDate() {
-		_expirationDate = new Date();
+		_expirationDate = _entryDate.generateExperationDate(_product.getShelfLife());
 		return true;
 	}
 	

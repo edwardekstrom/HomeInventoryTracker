@@ -2,51 +2,33 @@ package data_structures;
 
 import java.io.Serializable;
 
+import hit_exceptions.InvalidAmountException;
+import hit_exceptions.InvalidUnitException;
+
 /**
  * @author Capchu
  * This Class is used to store the Unit and Size Tuple used for food amounts.
  */
+
 public class UnitSize implements Serializable{
 	
 	private float _amount;
 	private String _unit;
 	
-	/**
+	/**@precondition none
 	 * Creates and instance not setting any values.
+	 * @postcondition creates a new unit size with _amount== 1 and _unit == count
 	 */
 	public UnitSize() {
 		_amount = 1;
 		_unit = "count";
 	}
 	
-//	/**
-//	 * Sets the unit and size
-//	 * @return true if the set was successful
-//	 */
-//	public boolean setUnitSize(String amount, String unit){
-//		if(isValidUnitAmount(amount, unit)){
-//			_amount = Float.parseFloat(amount);
-//			_unit = unit;
-//			return true;
-//		}else{
-//			return false;
-//		}
-//	}
-	
-//	/**
-//	 * Checks to see if the Unit and Amount are valid
-//	 * @return true if valid
-//	 */
-//	private boolean isValidUnitAmount(String amount, String unit){
-//		if(isValidAmount(amount) && isValidUnit(unit)){
-//			return true;
-//		}else{
-//			return false;
-//		}
-//	}
 	
 	/**
-	 * Checks to see if the Unit and Amount are valid
+	 * @precondition none
+	 * Checks to see if the Unit and Amount are currently valid
+	 * @postcondition determines if _amount and _unit are valid
 	 * @return true if valid
 	 */
 	public boolean isCurrentlyValid(){
@@ -57,7 +39,9 @@ public class UnitSize implements Serializable{
 		}
 	}
 	
-	/**
+	/**@precondition none
+	 * @postcondition checks if the string is a valid amount
+	 * @returns true if passed String is a valid float and unit is not count
 	 * Checks to see if the Amount is valid
 	 * @return true if valid
 	 */
@@ -73,7 +57,8 @@ public class UnitSize implements Serializable{
 		}		
 	}
 	
-	/**
+	/**@precondition none
+	 * @postcondition checks to see if the passed value is a vaild unit
 	 * Checks to see if the Unit is valid
 	 * @return true if valid
 	 */
@@ -90,44 +75,46 @@ public class UnitSize implements Serializable{
 		}
 	}
 	
-	/**
+	/** @precondition there is an amount
+	 * @postcondition returns the amount
 	 * @return the _amount
 	 */
 	public float getAmount() {
 		return _amount;
 	}
 
-	/**
+	/**@precondition passed a String that is a valid amount
+	 * @postcondition sets _amount to the given amount String
 	 * @param amount the _amount to set
 	 */
-	public boolean setAmount(String amount) {
+	public void setAmount(String amount) throws InvalidAmountException{
 		if(isValidAmount(amount)){
 			_amount = Float.parseFloat(amount);
-			return true;
 		}else{
-			return false;
+			throw new InvalidAmountException();
 		}
 	}
 
-	/**
+	/**@precondition none
+	 * @postcondition returns the _unit
 	 * @return the _unit
 	 */
 	public String getUnit() {
 		return _unit;
 	}
 
-	/**
+	/**@precondition given a string that is a valid unit
+	 * @postcondition sets _unit to the given unit and changes amount to 1 if unit is count
 	 * @param unit the _unit to set
 	 */
-	public boolean setUnit(String unit) {
+	public void setUnit(String unit) throws InvalidUnitException{
 		if(isValidUnit(unit)){
 			_unit = unit;
 			if(unit.equals("count")){
 				_amount = 1;
 			}
-			return true;
 		}else{
-			return false;
+			throw new InvalidUnitException();
 		}
 		
 	}

@@ -3,13 +3,13 @@ package singletons;
 public class Configuration {
 	private static Configuration _instance = null;
 	
-	
+	private int _dataPersistence = 0;
 	/**
 	 * This method instantiates the instance of Configuration.
 	 * It will only ever be called one time.
 	 */
 	private Configuration(){
-
+		
 	}
 	
 	/**

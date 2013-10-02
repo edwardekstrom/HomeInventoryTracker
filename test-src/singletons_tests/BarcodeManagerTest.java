@@ -10,6 +10,7 @@ import com.sun.source.tree.AssertTree;
 import singletons.BarcodeManager;
 
 public class BarcodeManagerTest {
+	
 	@Test
 	public void testAdd(){
 		BarcodeManager bm = BarcodeManager.getInstance();
@@ -31,4 +32,37 @@ public class BarcodeManagerTest {
 			return;
 		}
 	}
+	
+	@Test
+	public void testGetInstance(){
+		BarcodeManager bm = BarcodeManager.getInstance();
+		BarcodeManager bm1 = BarcodeManager.getInstance();
+		assertTrue(bm==bm1);
+	}
+	
+	@Test
+	public void testAddUserBarcode(){
+		BarcodeManager bm = BarcodeManager.getInstance();
+		try{
+		bm.addUserBarcode("123asdf:");
+		}catch(IllegalNameException e){
+			assertTrue(true);
+			return;
+		}
+		assertTrue(false);
+	}
+	
+	@Test
+	public void testAddUserBarcode1(){
+		BarcodeManager bm = BarcodeManager.getInstance();
+		try{
+		bm.addUserBarcode("123asdf1");
+		}catch(IllegalNameException e){
+			assertTrue(false);
+			return;
+		}
+		assertTrue(true);
+	}
+	
+	
 }
