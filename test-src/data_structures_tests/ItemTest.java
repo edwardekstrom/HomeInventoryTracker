@@ -4,6 +4,9 @@
 package data_structures_tests;
 
 import static org.junit.Assert.*;
+import hit_exceptions.NullContainerException;
+import hit_exceptions.NullEntryDateException;
+import hit_exceptions.NullExitDateException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -86,7 +89,11 @@ public class ItemTest {
 		
 		//change ProductGroup
 		ProductGroup prodGroup2 = new ProductGroup();
-		assertTrue(_testItem.setContainer(prodGroup2));
+		try {
+			_testItem.setContainer(prodGroup2);
+		} catch (NullContainerException e) {
+			e.printStackTrace();
+		}
 		
 		//Make sure change was made
 		assertFalse(_testItem.getContainer() == prodGroup);
@@ -105,7 +112,11 @@ public class ItemTest {
 		
 		//change ProductGroup
 		Date entryDate2 = new Date();
-		assertTrue(_testItem.setEntryDate(entryDate2));
+		try {
+			_testItem.setEntryDate(entryDate2);
+		} catch (NullEntryDateException e) {
+			e.printStackTrace();
+		}
 		
 		//Make sure change was made
 		assertFalse(_testItem.getEntryDate() == entryDate);
@@ -124,7 +135,11 @@ public class ItemTest {
 		
 		//change ProductGroup
 		Date exitDate = new Date();
-		assertTrue(_testItem.setExitTime(exitDate));
+		try {
+			_testItem.setExitTime(exitDate);
+		} catch (NullExitDateException e) {
+			e.printStackTrace();
+		}
 		
 		//Make sure change was made
 		assertFalse(_testItem.getExitTime() == null);

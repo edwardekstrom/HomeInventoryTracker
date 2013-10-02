@@ -1,13 +1,8 @@
 Testsuite: data_structures_tests.ProductTest
-Tests run: 5, Failures: 1, Errors: 0, Time elapsed: 0.054 sec
+Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 0.047 sec
 
-Testcase: makeProductTest took 0.026 sec
+Testcase: makeProductTest took 0.023 sec
 Testcase: changeDescriptionTest took 0.001 sec
 Testcase: changeSizeTest took 0 sec
-Testcase: changeShelfLifeTest took 0.003 sec
-	FAILED
-
-junit.framework.AssertionFailedError: 
-	at data_structures_tests.ProductTest.changeShelfLifeTest(ProductTest.java:147)
-
-Testcase: changeThreeMonthSupplyTest took 0.002 sec
+Testcase: changeShelfLifeTest took 0.001 sec
+Testcase: changeThreeMonthSupplyTest took 0.001 sec

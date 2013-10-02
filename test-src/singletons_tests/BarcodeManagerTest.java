@@ -23,12 +23,10 @@ public class BarcodeManagerTest {
 		try{
 		bm.addUserBarcode("12345");
 		}catch(IllegalNameException e){
-			return;
 		}
 		try{
 		assertFalse(bm.addUserBarcode("12345"));
 		}catch(IllegalNameException e){
-			return;
 		}
 	}
 	
@@ -46,9 +44,7 @@ public class BarcodeManagerTest {
 		bm.addUserBarcode("123asdf:");
 		}catch(IllegalNameException e){
 			assertTrue(true);
-			return;
 		}
-		assertTrue(false);
 	}
 	
 	@Test
@@ -58,9 +54,8 @@ public class BarcodeManagerTest {
 		bm.addUserBarcode("123asdf1");
 		}catch(IllegalNameException e){
 			assertTrue(false);
-			return;
 		}
-		assertTrue(true);
+
 	}
 	
 	

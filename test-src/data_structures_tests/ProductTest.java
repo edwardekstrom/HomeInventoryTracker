@@ -4,6 +4,8 @@
 package data_structures_tests;
 
 import static org.junit.Assert.*;
+import hit_exceptions.InvalidShelfLifeException;
+import hit_exceptions.InvalidThreeMonthSupplyException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -136,14 +138,23 @@ public class ProductTest {
 		_testProduct = new Product(creationDate, barcode, description, shelfLife, threeMoSup);
 		
 		//Try to change shelf life to a float
-		//TODO assertFalse(_testProduct.setShelfLife("Curse your sudden but inevitable betrayal"));
+		try {
+			_testProduct.setShelfLife("Curse your sudden but inevitable betrayal");
+		} catch (InvalidShelfLifeException e2) {
+		}
 		
 		//Try to change shelf life to a float
-		//assertFalse(_testProduct.setShelfLife("4.2"));
+		try {
+			_testProduct.setShelfLife("4.2");
+		} catch (InvalidShelfLifeException e1) {
+		}
 		assertFalse(_testProduct.getShelfLife() == 4.2);
 
 		//Change supply to another integer
-		//assertTrue(_testProduct.setShelfLife("8"));
+		try {
+			_testProduct.setShelfLife("8");
+		} catch (InvalidShelfLifeException e) {
+		}
 		assertFalse(_testProduct.getShelfLife() == 10);
 		assertTrue(_testProduct.getShelfLife() == 8);
 		
@@ -160,14 +171,26 @@ public class ProductTest {
 		_testProduct = new Product(creationDate, barcode, description, shelfLife, threeMoSup);
 		
 		//Try to change shelf life to a float
-		assertFalse(_testProduct.setThreeMonthSupply("Boom"));
+		try {
+			_testProduct.setThreeMonthSupply("Boom");
+		} catch (InvalidThreeMonthSupplyException e) {
+			
+		}
 		
 		//Try to change shelf life to a float
-		assertFalse(_testProduct.setThreeMonthSupply("44.5"));
+		try {
+			_testProduct.setThreeMonthSupply("44.5");
+		} catch (InvalidThreeMonthSupplyException e) {
+			
+		}
 		assertFalse(_testProduct.getThreeMonthSupply() == 44.5);
 
 		//Change supply to another integer
-		assertTrue(_testProduct.setThreeMonthSupply("12"));
+		try {
+			_testProduct.setThreeMonthSupply("12");
+		} catch (InvalidThreeMonthSupplyException e) {
+			
+		}
 		assertFalse(_testProduct.getThreeMonthSupply() == 10);
 		assertTrue(_testProduct.getThreeMonthSupply() == 12);
 		

@@ -4,6 +4,8 @@
 package data_structures_tests;
 
 import static org.junit.Assert.*;
+import hit_exceptions.InvalidAmountException;
+import hit_exceptions.InvalidUnitException;
 
 import java.util.Date;
 
@@ -66,11 +68,26 @@ public class UnitSizeTest {
 		_testUnitSize = new UnitSize();
 		
 		//Can't do a float for count
-		assertFalse(_testUnitSize.setAmount("4.2"));
+		try {
+			_testUnitSize.setAmount("4.2");
+		} catch (InvalidAmountException e) {
+			
+		}
+		assertTrue(_testUnitSize.getAmount()==1);
 		//Can't do non-numbers
-		assertFalse(_testUnitSize.setAmount("River"));	
+		try {
+			_testUnitSize.setAmount("River");
+		} catch (InvalidAmountException e) {
+			
+		}
+		assertTrue(_testUnitSize.getAmount()==1);
 		//can't change amount when unit is count
-		assertFalse(_testUnitSize.setAmount("5"));
+		try {
+			_testUnitSize.setAmount("5");
+		} catch (InvalidAmountException e) {
+			
+		}
+		assertTrue(_testUnitSize.getAmount()==1);
 		//make sure it remains unchanged
 		assertTrue(_testUnitSize.getAmount() == 1);	
 	}
@@ -80,42 +97,91 @@ public class UnitSizeTest {
 		_testUnitSize = new UnitSize();
 		
 		//test all viable units
-		assertTrue(_testUnitSize.setUnit("ounces"));
+		try {
+			_testUnitSize.setUnit("ounces");
+		} catch (InvalidUnitException e) {
+			
+		}
 		assertTrue(_testUnitSize.getUnit().equals("ounces"));
 		
-		assertTrue(_testUnitSize.setUnit("pounds"));
+		try {
+			_testUnitSize.setUnit("pounds");
+		} catch (InvalidUnitException e) {
+			
+		}
 		assertTrue(_testUnitSize.getUnit().equals("pounds"));
 		
-		assertTrue(_testUnitSize.setUnit("grams"));
+		try {
+			_testUnitSize.setUnit("grams");
+		} catch (InvalidUnitException e) {
+			
+		}
 		assertTrue(_testUnitSize.getUnit().equals("grams"));
 		
-		assertTrue(_testUnitSize.setUnit("kilograms"));
+		try {
+			_testUnitSize.setUnit("kilograms");
+		} catch (InvalidUnitException e) {
+			
+		}
 		assertTrue(_testUnitSize.getUnit().equals("kilograms"));
 		
-		assertTrue(_testUnitSize.setUnit("gallons"));
+		try {
+			_testUnitSize.setUnit("gallons");
+		} catch (InvalidUnitException e) {
+			
+		}
 		assertTrue(_testUnitSize.getUnit().equals("gallons"));
 		
-		assertTrue(_testUnitSize.setUnit("quarts"));
+		try {
+			_testUnitSize.setUnit("quarts");
+		} catch (InvalidUnitException e) {
+			
+		}
 		assertTrue(_testUnitSize.getUnit().equals("quarts"));
 		
-		assertTrue(_testUnitSize.setUnit("pints"));
+		try {
+			_testUnitSize.setUnit("pints");
+		} catch (InvalidUnitException e) {
+			
+		}
 		assertTrue(_testUnitSize.getUnit().equals("pints"));
 		
-		assertTrue(_testUnitSize.setUnit("fluid ounces"));
+		try {
+			_testUnitSize.setUnit("fluid ounces");
+		} catch (InvalidUnitException e) {
+			
+		}
 		assertTrue(_testUnitSize.getUnit().equals("fluid ounces"));
 		
-		assertTrue(_testUnitSize.setUnit("liters"));
+		try {
+			_testUnitSize.setUnit("liters");
+		} catch (InvalidUnitException e) {
+			
+		}
 		assertTrue(_testUnitSize.getUnit().equals("liters"));
 		
 		//Invalid Units
-		assertFalse(_testUnitSize.setUnit("river"));
+		try {
+			_testUnitSize.setUnit("river");
+		} catch (InvalidUnitException e) {
+			
+		}
 		assertFalse(_testUnitSize.getUnit().equals("river"));
 		
-		assertFalse(_testUnitSize.setUnit("10"));
+		try {
+			_testUnitSize.setUnit("10");
+		} catch (InvalidUnitException e) {
+			
+		}
 		assertFalse(_testUnitSize.getUnit().equals("10"));
 		
-		assertFalse(_testUnitSize.setUnit("fluidounces"));
+		try {
+			_testUnitSize.setUnit("fluidounces");
+		} catch (InvalidUnitException e) {
+			
+		}
 		assertFalse(_testUnitSize.getUnit().equals("fluidounces"));
+
 				
 	}
 	
@@ -124,28 +190,52 @@ public class UnitSizeTest {
 		_testUnitSize = new UnitSize();
 		
 		//change unit
-		//_testUnitSize.setUnit("ounces");
+		try {
+			_testUnitSize.setUnit("ounces");
+		} catch (InvalidUnitException e) {
+			
+		}
 		assertTrue(_testUnitSize.getUnit().equals("ounces"));
 		
 		//integer
-		//TODO assertTrue(_testUnitSize.setAmount("44"));
+		try {
+			_testUnitSize.setAmount("44");
+		} catch (InvalidAmountException e) {
+			
+		}
 		assertTrue(_testUnitSize.getAmount() == 44);
 
 		//float
-		//assertTrue(_testUnitSize.setAmount("42.34"));
+		try {
+			_testUnitSize.setAmount("42.34");
+		} catch (InvalidAmountException e) {
+			
+		}
 		assertTrue(_testUnitSize.getAmount() == (float) 42.34);
 		
 		//float
-		//assertFalse(_testUnitSize.setAmount("Song"));
+		try {
+			_testUnitSize.setAmount("Song");
+		} catch (InvalidAmountException e) {
+			
+		}
 		assertTrue(_testUnitSize.getAmount() == (float) 42.34);
 		
 		//Persistence between changes
-		//_testUnitSize.setUnit("grams");
+		try {
+			_testUnitSize.setUnit("grams");
+		} catch (InvalidUnitException e) {
+			
+		}
 		assertTrue(_testUnitSize.getUnit().equals("grams"));
 		assertTrue(_testUnitSize.getAmount() == (float) 42.34);
 		
 		//changes to 1 if unit becomes count
-		//_testUnitSize.setUnit("count");
+		try {
+			_testUnitSize.setUnit("count");
+		} catch (InvalidUnitException e) {
+			
+		}
 		assertTrue(_testUnitSize.getAmount() == (float) 1);
 		
 	}
@@ -156,7 +246,11 @@ public class UnitSizeTest {
 		_testUnitSize = new UnitSize();
 		
 		//change unit
-		_testUnitSize.setUnit("ounces");
+		try {
+			_testUnitSize.setUnit("ounces");
+		} catch (InvalidUnitException e) {
+			
+		}
 		assertTrue(_testUnitSize.getUnit().equals("ounces"));
 		
 		//check if a string is valid without attempting to make a change
@@ -166,7 +260,11 @@ public class UnitSizeTest {
 		assertFalse(_testUnitSize.isValidAmount("ounces"));
 		
 		//if count, cant change at all
-		_testUnitSize.setUnit("count");
+		try {
+			_testUnitSize.setUnit("count");
+		} catch (InvalidUnitException e) {
+			
+		}
 		assertTrue(_testUnitSize.getUnit().equals("count"));
 		assertFalse(_testUnitSize.isValidAmount("13"));
 		assertFalse(_testUnitSize.isValidAmount("Simon"));

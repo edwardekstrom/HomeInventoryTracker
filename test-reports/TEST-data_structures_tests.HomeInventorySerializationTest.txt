@@ -1,4 +1,4 @@
 Testsuite: data_structures_tests.HomeInventorySerializationTest
-Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.118 sec
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.12 sec
 
-Testcase: testSerialization took 0.102 sec
+Testcase: testSerialization took 0.106 sec

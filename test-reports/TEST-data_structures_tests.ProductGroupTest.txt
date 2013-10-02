@@ -1,9 +1,14 @@
 Testsuite: data_structures_tests.ProductGroupTest
-Tests run: 1, Failures: 1, Errors: 0, Time elapsed: 0.024 sec
+Tests run: 11, Failures: 0, Errors: 0, Time elapsed: 0.074 sec
 
-Testcase: test took 0.005 sec
-	FAILED
-Not yet implemented
-junit.framework.AssertionFailedError: Not yet implemented
-	at data_structures_tests.ProductGroupTest.test(ProductGroupTest.java:50)
-
+Testcase: makeProductGroupTest took 0.028 sec
+Testcase: addItemTestBasic took 0.001 sec
+Testcase: addItemTestMuiltiple took 0.001 sec
+Testcase: addItemTestWhenProductIsDeepInTree took 0.001 sec
+Testcase: addProductGroupTest took 0.001 sec
+Testcase: removeItemTest took 0.001 sec
+Testcase: moveItemTest took 0.001 sec
+Testcase: moveItemTestWithMovingProduct took 0.002 sec
+Testcase: setNameTest took 0.001 sec
+Testcase: setContainerTest took 0.001 sec
+Testcase: setThreeMonthSupTest took 0.001 sec
