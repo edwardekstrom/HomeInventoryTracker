@@ -2,6 +2,7 @@ package data_structures;
 
 import hit_exceptions.InvalidAmountException;
 import hit_exceptions.InvalidShelfLifeException;
+import hit_exceptions.InvalidThreeMonthSupplyException;
 import hit_exceptions.InvalidUnitException;
 
 import java.io.Serializable;
@@ -142,33 +143,36 @@ public class Product implements Serializable{
 		return _threeMonthSupply;
 	}
 
-	/**
+	/**@precondition a String representation of the threeMonthSupply
+	 * @postcondition sets the three month supply to the given value
 	 * @param _threeMonthSupply the _threeMonthSupply to set
 	 */
-	public boolean setThreeMonthSupply(String threeMonthSupply) {
+	public void setThreeMonthSupply(String threeMonthSupply) throws InvalidThreeMonthSupplyException {
 		if(isValidThreeMonthSupply(threeMonthSupply)){
 			_threeMonthSupply = Integer.parseInt(threeMonthSupply);
-			return true;
 		}else{
-			return false;
+			throw new InvalidThreeMonthSupplyException();
 		}
 	}
 
-	/**
+	/**@precondition none
+	 * @postcondition gives you the container list
 	 * @return the _containersList
 	 */
 	public List<ProductContainer> getContainersList() {
 		return _containersList;
 	}
 
-	/**
+	/**@precondition none
+	 * @postcondition gives the container tree
 	 * @return the _containersMap
 	 */
 	public TreeMap<ProductContainer, String> getContainersTree() {
 		return _containersTree;
 	}
 	
-	/**
+	/**@precondition none
+	 * @postcondition returns true if the current product is valid
 	 * @return true if the product is valid
 	 */
 	public boolean isValidProduct(){
@@ -181,7 +185,8 @@ public class Product implements Serializable{
 		}
 	}
 	
-	/**
+	/**@precondition passed a String
+	 * @postcondition returns true if the String is a valid shelf life
 	 * @return true if the shelfLife is valid
 	 */
 	private boolean isValidShelfLife(String shelfLife){
@@ -193,7 +198,8 @@ public class Product implements Serializable{
 		}
 	}
 	
-	/**
+	/**@precondition passed a string
+	 * @postcondition returns True if the passed string is a valid shelf life
 	 * @return true if the shelfLife is valid
 	 */
 	private boolean isValidThreeMonthSupply(String threeMonthSupply){
