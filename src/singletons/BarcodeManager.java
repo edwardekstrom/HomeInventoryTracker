@@ -102,8 +102,11 @@ public class BarcodeManager {
 	 * Generates a new UPC-A valid local use Barcode.
 	 * 
 	 * @return Barcode
+	 * @precondition none
+	 * @postcondition none
 	 */
 	private String generateNewBarcode() {
+		assert true;
 		Random r = new Random();
 		ArrayList<Integer> barcode = new ArrayList<Integer>();
 		barcode.add(4);
@@ -139,6 +142,12 @@ public class BarcodeManager {
 		return sb.toString();
 	}
 	
+	/**
+	 * returns the size of the list of all of the barcodes.
+	 * @return Size of _allBarcodesList
+	 * @precondition none
+	 * @postcondition none
+	 */
 	public int barcodeListSize(){
 		return _allBarcodesList.size();
 	}
