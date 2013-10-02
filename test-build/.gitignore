@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /common
 /data_structures
 /data_structures_tests
@@ -8,3 +9,6 @@
 /singletons_tests
 /tools
 /ui_interaction
+=======
+/singletons_tests
+>>>>>>> 69993a79a41a08e84d3cd4500706c9db30af3354
