@@ -39,6 +39,20 @@ public class UnitSize implements Serializable{
 		}
 	}
 	
+	/**
+	 * @precondition none
+	 * Checks to see if the Unit and Amount are currently valid
+	 * @postcondition determines if _amount and _unit are valid
+	 * @return true if valid
+	 */
+	public boolean willBeValid(String amount, String unit){
+		if(isValidAmount(amount) && isValidUnit(unit)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	/**@precondition none
 	 * @postcondition checks if the string is a valid amount
 	 * @returns true if passed String is a valid float and unit is not count

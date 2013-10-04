@@ -185,6 +185,21 @@ public class Product implements Serializable{
 		}
 	}
 	
+	/**@precondition none
+	 * @postcondition returns true if the current product is valid
+	 * @return true if the product is valid
+	 */
+	public boolean willBeValidProduct(String shelfLife, String threeMonthSupply, 
+			                          String amount, String unit){
+		if(isValidShelfLife(shelfLife) && isValidThreeMonthSupply(threeMonthSupply) 
+		   && _size.willBeValid(amount, unit)){
+			
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	/**@precondition passed a String
 	 * @postcondition returns true if the String is a valid shelf life
 	 * @return true if the shelfLife is valid
