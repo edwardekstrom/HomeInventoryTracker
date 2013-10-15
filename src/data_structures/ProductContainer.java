@@ -1,5 +1,8 @@
 package data_structures;
 
+import gui.common.Tagable;
+import gui.inventory.ProductContainerData;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,6 +18,7 @@ public abstract class ProductContainer implements Serializable{
 	protected List<Item> _items;
 	protected List<ProductGroup> _productGroups;
 	
+	protected ProductContainerData _tagData;
 	protected StorageUnit _storageUnit;
 
 	/**
@@ -267,5 +271,8 @@ public abstract class ProductContainer implements Serializable{
 		return _productGroups;
 	}
 
+	public ProductContainerData getTagData(){
+		return this._tagData;
+	}
 	
 }

@@ -19,7 +19,10 @@ public class InventoryController extends Controller
 	 */
 	public InventoryController(IInventoryView view) {
 		super(view);
-
+		
+		//creating home inventory
+		
+		
 		construct();
 	}
 

@@ -50,7 +50,7 @@ public class Serializer {
 			//System.out.println(hi.getStorageUnitsCount());
 			assertTrue(homeInventory.getStorageUnitsCount() == 1);
 		}catch (Exception e){
-			e.printStackTrace();
+			return new HomeInventory();
 		}
 		return homeInventory;
 	}

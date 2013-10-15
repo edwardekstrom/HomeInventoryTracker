@@ -1,5 +1,7 @@
 package gui.storageunit;
 
+import data_structures.StorageUnit;
+import ui_interaction.StorageUnitFacade;
 import gui.common.*;
 
 /**
@@ -8,15 +10,17 @@ import gui.common.*;
 public class AddStorageUnitController extends Controller implements
 		IAddStorageUnitController {
 	
+	private StorageUnitFacade _storageUnitFacade;
+	
 	/**
 	 * Constructor.
 	 * 
 	 * @param view Reference to add storage unit view
 	 */
 	public AddStorageUnitController(IView view) {
-		super(view);
-		
+		super(view);		
 		construct();
+		_storageUnitFacade = StorageUnitFacade.getInstance();
 	}
 
 	//
@@ -78,6 +82,9 @@ public class AddStorageUnitController extends Controller implements
 	 */
 	@Override
 	public void addStorageUnit() {
+		String newStorageUnitName = getView().getStorageUnitName();
+		_storageUnitFacade.addStorageUnit(newStorageUnitName);
+		
 	}
 
 }

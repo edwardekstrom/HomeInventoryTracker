@@ -1,5 +1,7 @@
 package data_structures;
 
+import gui.inventory.ProductContainerData;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,10 @@ public class StorageUnit extends ProductContainer implements Serializable{
 		_items = new ArrayList<Item>();
 		_productGroups = new ArrayList<ProductGroup>();
 		
+	}
+
+	public void setTagData(ProductContainerData pcData) {
+		_tagData = pcData;
 	}
 
 }
