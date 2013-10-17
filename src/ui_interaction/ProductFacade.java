@@ -3,6 +3,7 @@
  */
 package ui_interaction;
 
+import singletons.Configuration;
 import data_structures.Product;
 import data_structures.ProductContainer;
 
@@ -11,6 +12,20 @@ import data_structures.ProductContainer;
  *
  */
 public class ProductFacade {
+	
+	private static ProductFacade _instance = null;
+	private Configuration config;
+	
+	private ProductFacade(){
+		config = Configuration.getInstance();
+	}
+	
+	public static ProductFacade getInstance(){
+		if (_instance == null){
+			_instance = new ProductFacade();
+		}
+		return _instance;
+	}
 
 	/**
 	 * Add the given Product to the tree

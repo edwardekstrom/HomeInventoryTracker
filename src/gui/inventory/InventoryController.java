@@ -6,12 +6,19 @@ import gui.product.*;
 
 import java.util.*;
 
+import com.sun.tools.internal.jxc.gen.config.Config;
+
+import data_structures.HomeInventory;
+import singletons.Configuration;
+import ui_interaction.ProductGroupFacade;
+import ui_interaction.StorageUnitFacade;
+
 /**
  * Controller class for inventory view.
  */
 public class InventoryController extends Controller 
-									implements IInventoryController {
-
+									implements IInventoryController, Observer{
+	
 	/**
 	 * Constructor.
 	 *  
@@ -21,7 +28,10 @@ public class InventoryController extends Controller
 		super(view);
 		
 		//creating home inventory
+		StorageUnitFacade storageUnitFacade = StorageUnitFacade.getInstance();
+		storageUnitFacade.addObserver(this);
 		
+		//ProductGroupFacade productGroupFacade = ProductGroupFacade.getInstance();
 		
 		construct();
 	}
@@ -387,6 +397,13 @@ public class InventoryController extends Controller
 	public void moveItemToContainer(ItemData itemData,
 									ProductContainerData containerData) {
 	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		StorageUnitFacade storageUnitFacade = (StorageUnitFacade)o;
+		getView().setProductContainers(storageUnitFacade.getRootPCData());
+	}
+	
 
 }
 

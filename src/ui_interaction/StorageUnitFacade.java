@@ -3,10 +3,13 @@
  */
 package ui_interaction;
 
+import gui.inventory.InventoryController;
 import gui.inventory.ProductContainerData;
 import gui.storageunit.StorageUnitView;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import com.sun.org.apache.bcel.internal.generic.StoreInstruction;
 
@@ -20,7 +23,19 @@ import data_structures.ProductContainer;
  * @author Capchu
  *
  */
-public class StorageUnitFacade {
+public class StorageUnitFacade extends Observable {
+	@Override
+	public synchronized void addObserver(Observer o) {
+		// TODO Auto-generated method stub
+		super.addObserver(o);
+	}
+
+	@Override
+	public void notifyObservers() {
+		// TODO Auto-generated method stub
+		super.notifyObservers();
+	}
+
 	private static StorageUnitFacade _instance = null;
 	private Configuration config;
 	
@@ -40,14 +55,23 @@ public class StorageUnitFacade {
 		
 		if(hi.isValidHomeInventoryName(toAdd)){
 			StorageUnit storageUnit = new StorageUnit(toAdd);
-			addStorageUnitToTree(storageUnit);
+			
 			
 			ProductContainerData pcData = new ProductContainerData();
 			pcData.setName(toAdd);
 			pcData.setTag(storageUnit);
 			storageUnit.setTagData(pcData);
+			
+			addStorageUnitToTree(storageUnit);
+			setChanged();
+			notifyObservers(this);
 		}
 	}
+	
+	public ProductContainerData getRootPCData(){
+		return config.getHomeInventory().getRootData();
+	}
+	
 	
 	public boolean canAddStorageUnit(String storageUnitName){
 		HomeInventory hi = config.getHomeInventory();

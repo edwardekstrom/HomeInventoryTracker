@@ -5,6 +5,8 @@ package ui_interaction;
 
 import java.util.List;
 
+import singletons.Configuration;
+
 import data_structures.ProductGroup;
 import data_structures.ProductContainer;
 
@@ -14,6 +16,20 @@ import data_structures.ProductContainer;
  */
 public class ProductGroupFacade {
 
+	private static ProductGroupFacade _instance = null;
+	private Configuration config;
+	
+	private ProductGroupFacade(){
+		config = Configuration.getInstance();
+	}
+	
+	public static ProductGroupFacade getInstance(){
+		if (_instance == null){
+			_instance = new ProductGroupFacade();
+		}
+		return _instance;
+	}
+	
 	/**
 	 * Add the given ProductGroup to the tree
 	 * @param toAdd

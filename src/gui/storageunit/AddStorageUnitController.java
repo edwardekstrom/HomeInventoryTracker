@@ -84,7 +84,6 @@ public class AddStorageUnitController extends Controller implements
 	public void addStorageUnit() {
 		String newStorageUnitName = getView().getStorageUnitName();
 		_storageUnitFacade.addStorageUnit(newStorageUnitName);
-		
 	}
 
 }
