@@ -1,5 +1,0 @@
-Starting audit...
-/Users/edwardekstrom/Documents/workspace/HomeInventoryTracker/src/data_structures/Product.java:150: Line is longer than 100 characters.
-/Users/edwardekstrom/Documents/workspace/HomeInventoryTracker/src/data_structures/UnitSize.java:65:5: Cyclomatic Complexity is 11 (max allowed is 10).
-/Users/edwardekstrom/Documents/workspace/HomeInventoryTracker/src/data_structures/UnitSize.java:66:9: Boolean expression complexity is 9 (max allowed is 5).
-Audit done.
