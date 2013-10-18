@@ -3,16 +3,33 @@
  */
 package ui_interaction;
 
+
+import java.util.Observable;
+import java.util.Observer;
+
 import singletons.Configuration;
 import data_structures.Product;
 import data_structures.ProductContainer;
+import data_structures.Date;
+import data_structures.Barcode;
 
 /**
  * @author Capchu
  *
  */
-public class ProductFacade {
-	
+public class ProductFacade extends Observable {
+	@Override
+	public synchronized void addObserver(Observer o) {
+		// TODO Auto-generated method stub
+		super.addObserver(o);
+	}
+
+	@Override
+	public void notifyObservers() {
+		// TODO Auto-generated method stub
+		super.notifyObservers();
+	}
+
 	private static ProductFacade _instance = null;
 	private Configuration config;
 	
@@ -27,32 +44,59 @@ public class ProductFacade {
 		return _instance;
 	}
 
+
+	public void addProduct(String shelfLife, String threeMonthSupply, String amount,
+		 	String unit, String barcode, String desc){
+		try{
+			Integer sl = Integer.parseInt(shelfLife);
+			Integer tms = Integer.parseInt(threeMonthSupply);
+
+			Product p = new Product(new Date(),new Barcode(barcode),desc,sl,tms,amount,unit);
+			addProductToTree(p);
+			addProductToManager(p);
+			setChanged();
+			notifyObservers(this);
+		}catch(Exception e){}
+	}
+
+
+
+	public boolean canAddProduct(String shelfLife, String threeMonthSupply, 
+			                          String amount, String unit,String desc){
+		return Product.willBeValidProduct(shelfLife,threeMonthSupply,amount,unit,desc);
+	}
+
+
+
+	//PRIVATE METHODS
+
+
 	/**
 	 * Add the given Product to the tree
 	 * @param toAdd
 	 */
-	public void addProductToTree(Product toAdd){
+	private void addProductToTree(Product toAdd){
 		
 	}
 	/**
 	 * add the Product to the manager
 	 * @param toAdd
 	 */
-	public void addProductToManager(Product toAdd){
+	private void addProductToManager(Product toAdd){
 		
 	}
 	/**
 	 * removes the Product from the tree
 	 * @param toRemove
 	 */
-	public void removeProductFromTree(Product toRemove){
+	private void removeProductFromTree(Product toRemove){
 		
 	}
 	/**
 	 * removes the Product from the manager
 	 * @param toRemove
 	 */
-	public void removeProductFromManager(Product toRemove){
+	private void removeProductFromManager(Product toRemove){
 		
 	}
 	

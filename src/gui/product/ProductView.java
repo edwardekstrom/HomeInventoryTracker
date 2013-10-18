@@ -262,6 +262,7 @@ public abstract class ProductView extends DialogView {
 	public SizeUnits getSizeUnit() {
 		return (SizeUnits)_sizeBox.getSelectedItem();
 	}
+	
 
 	public void setSizeUnit(SizeUnits value) {
 		boolean disabledEvents = disableEvents();

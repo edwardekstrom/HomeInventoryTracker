@@ -1,6 +1,7 @@
 package gui.product;
 
 import gui.common.*;
+import ui_interaction.ProductFacade;
 
 /**
  * Controller class for the add item view.
@@ -8,6 +9,8 @@ import gui.common.*;
 public class AddProductController extends Controller implements
 		IAddProductController {
 	
+	private ProductFacade _productFacade;
+
 	/**
 	 * Constructor.
 	 * 
@@ -15,9 +18,13 @@ public class AddProductController extends Controller implements
 	 * @param barcode Barcode for the product being added
 	 */
 	public AddProductController(IView view, String barcode) {
+		//Theirs
 		super(view);
-		
 		construct();
+
+		// Ours
+		_productFacade = ProductFacade.getInstance();
+		valuesChanged();
 	}
 
 	//
@@ -71,6 +78,18 @@ public class AddProductController extends Controller implements
 	 */
 	@Override
 	public void valuesChanged() {
+		String shelfLife = getView().getShelfLife();
+		String threeMonthSupply = getView().getSupply();
+		String amount = getView().getSizeValue();
+		String unit = getView().getSizeUnit().toString();
+		String desc = getView().getDescription();
+
+
+		boolean canAdd = _productFacade.canAddProduct(shelfLife,threeMonthSupply,amount,unit,desc);
+		getView().enableOK(canAdd);
+
+
+
 	}
 	
 	/**
@@ -79,6 +98,14 @@ public class AddProductController extends Controller implements
 	 */
 	@Override
 	public void addProduct() {
+		String shelfLife = getView().getShelfLife();
+		String threeMonthSupply = getView().getSupply();
+		String amount = getView().getSizeValue();
+		String unit = getView().getSizeUnit().toString();
+		String barcode = getView().getBarcode();
+		String desc = getView().getDescription();
+
+		_productFacade.addProduct(shelfLife,threeMonthSupply,amount,unit,barcode,desc);
 	}
 
 }

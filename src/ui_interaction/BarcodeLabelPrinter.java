@@ -20,19 +20,19 @@ public class BarcodeLabelPrinter {
 	private static ArrayList<Item> items;
 
 	public static void main(String[] args){
+        try{
+    		Product c1 = new Product(new Date(), new Barcode("product"),
+    			 "product 1", 3,3, "1","count");
+    		items = new ArrayList<Item>();
+    		for(int i =0;i<10;i++){
+    			//Product p = new Product();
+    			Barcode b = new Barcode(i+"2345678999");
+    			Date entry = new Date();
+    			ProductContainer c = new StorageUnit();
+    			//items.add(new Item(p,b,entry,c));
+    		}
 
-		Product c1 = new Product(new Date(), new Barcode("product"),
-			 "product 1", 3,3);
-		items = new ArrayList<Item>();
-		for(int i =0;i<10;i++){
-			//Product p = new Product();
-			Barcode b = new Barcode(i+"2345678999");
-			Date entry = new Date();
-			ProductContainer c = new StorageUnit();
-			//items.add(new Item(p,b,entry,c));
-		}
-
-		try{
+		
 			Document document = new Document(new Rectangle(610, 840));
 			String filename = "barcode_test";
 	        // step 2

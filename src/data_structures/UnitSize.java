@@ -19,11 +19,11 @@ public class UnitSize implements Serializable{
 	 * Creates and instance not setting any values.
 	 * @postcondition creates a new unit size with _amount== 1 and _unit == count
 	 */
-	public UnitSize() {
-		_amount = 1;
-		_unit = "count";
+	public UnitSize(String amount,String unit ) 
+		throws InvalidAmountException, InvalidUnitException {
+		setAmount(amount);
+		setUnit(unit);
 	}
-	
 	
 	/**
 	 * @precondition none
@@ -32,63 +32,39 @@ public class UnitSize implements Serializable{
 	 * @return true if valid
 	 */
 	public boolean isCurrentlyValid(){
-		if(isValidAmount(_amount+"") && isValidUnit(_unit)){
+		if(isValid("" + _amount,_unit))
 			return true;
-		}else{
+		else
 			return false;
-		}
 	}
 	
 	/**
-	 * @precondition none
-	 * Checks to see if the Unit and Amount are currently valid
-	 * @postcondition determines if _amount and _unit are valid
-	 * @return true if valid
+	 * Determine whether an amount is valid
+	 * @param String unit (the unit of measurement)
+	 * @param String amount (the amount of that measurement)
+	 * REFACTOR ME!
 	 */
-	public boolean willBeValid(String amount, String unit){
-		if(isValidAmount(amount) && isValidUnit(unit)){
-			return true;
-		}else{
-			return false;
-		}
-	}
-	
-	/**@precondition none
-	 * @postcondition checks if the string is a valid amount
-	 * @returns true if passed String is a valid float and unit is not count
-	 * Checks to see if the Amount is valid
-	 * @return true if valid
-	 */
-	public boolean isValidAmount(String amount){
-		if(_unit.equals("count")){
-			return false;
-		}
-		try{
-			Float.parseFloat(amount);
-			return true;
-		}catch(NumberFormatException nfe){
-			return false;
-		}		
-	}
-	
-	/**@precondition none
-	 * @postcondition checks to see if the passed value is a vaild unit
-	 * Checks to see if the Unit is valid
-	 * @return true if valid
-	 */
-	public boolean isValidUnit(String unit){
-		if( (unit.compareTo("pounds") == 0) || (unit.compareTo("ounces") == 0) || 
+	public static boolean isValid(String unit, String amount){
+		if(!(unit.equals("pounds") || (unit.compareTo("ounces") == 0) || 
 		    (unit.compareTo("grams") == 0) || (unit.compareTo("kilograms") == 0) ||
 		    (unit.compareTo("gallons") == 0) || (unit.compareTo("quarts") == 0) ||
 		    (unit.compareTo("pints") == 0) || (unit.compareTo("fluid ounces") == 0) ||
-		    (unit.compareTo("liters") == 0) || (unit.compareTo("count") == 0))
-		{	
-			return true;
-		}else{
+		    (unit.compareTo("liters") == 0) || (unit.compareTo("count") == 0))) {
 			return false;
 		}
+		try{
+			Float amt = Float.parseFloat(amount);
+			if( !(unit.compareTo("count") == 0 && amt.intValue() == amt.floatValue())){
+				return false;
+			}
+
+		}catch(NumberFormatException nfe){
+			return false;
+		}		
+
+		return true;
 	}
-	
+
 	/** @precondition there is an amount
 	 * @postcondition returns the amount
 	 * @return the _amount
@@ -102,7 +78,7 @@ public class UnitSize implements Serializable{
 	 * @param amount the _amount to set
 	 */
 	public void setAmount(String amount) throws InvalidAmountException{
-		if(isValidAmount(amount)){
+		if(isValid(_unit, amount)){
 			_amount = Float.parseFloat(amount);
 		}else{
 			throw new InvalidAmountException();
@@ -122,11 +98,8 @@ public class UnitSize implements Serializable{
 	 * @param unit the _unit to set
 	 */
 	public void setUnit(String unit) throws InvalidUnitException{
-		if(isValidUnit(unit)){
+		if(isValid(unit,"" + _amount)){
 			_unit = unit;
-			if(unit.equals("count")){
-				_amount = 1;
-			}
 		}else{
 			throw new InvalidUnitException();
 		}

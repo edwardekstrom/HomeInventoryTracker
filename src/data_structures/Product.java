@@ -33,11 +33,12 @@ public class Product implements Serializable{
 	 * @param _threeMonthSupply
 	 */
 	public Product(Date creationDate, Barcode barcode, String description, 
-			       Integer shelfLife, Integer threeMonthSupply) {
+			       Integer shelfLife, Integer threeMonthSupply,String amount,
+			        String unit) throws InvalidUnitException, InvalidAmountException{
 		_creationDate = creationDate;
 		_barcode = barcode;
 		_description = description;
-		_size = new UnitSize();
+		_size = new UnitSize(amount,unit);
 		_shelfLife = shelfLife;
 		_threeMonthSupply = threeMonthSupply;
 	}
@@ -189,11 +190,10 @@ public class Product implements Serializable{
 	 * @postcondition returns true if the current product is valid
 	 * @return true if the product is valid
 	 */
-	public boolean willBeValidProduct(String shelfLife, String threeMonthSupply, 
-			                          String amount, String unit){
+	public static boolean willBeValidProduct(String shelfLife, String threeMonthSupply, 
+			                          String amount, String unit, String desc){
 		if(isValidShelfLife(shelfLife) && isValidThreeMonthSupply(threeMonthSupply) 
-		   && _size.willBeValid(amount, unit)){
-			
+		   && UnitSize.isValid(amount, unit) &&  !desc.equals("")){
 			return true;
 		}else{
 			return false;
@@ -204,7 +204,7 @@ public class Product implements Serializable{
 	 * @postcondition returns true if the String is a valid shelf life
 	 * @return true if the shelfLife is valid
 	 */
-	private boolean isValidShelfLife(String shelfLife){
+	public static boolean isValidShelfLife(String shelfLife){
 		try{
 			Integer.parseInt(shelfLife);
 			return true;
@@ -217,7 +217,7 @@ public class Product implements Serializable{
 	 * @postcondition returns True if the passed string is a valid shelf life
 	 * @return true if the shelfLife is valid
 	 */
-	private boolean isValidThreeMonthSupply(String threeMonthSupply){
+	public static boolean isValidThreeMonthSupply(String threeMonthSupply){
 		try{
 			Integer.parseInt(threeMonthSupply);
 			return true;
@@ -225,5 +225,7 @@ public class Product implements Serializable{
 			return false;
 		}
 	}
+
+
 	
 }
