@@ -4,8 +4,10 @@
 package data_structures_tests;
 
 import static org.junit.Assert.*;
+import hit_exceptions.InvalidAmountException;
 import hit_exceptions.InvalidShelfLifeException;
 import hit_exceptions.InvalidThreeMonthSupplyException;
+import hit_exceptions.InvalidUnitException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -44,7 +46,7 @@ public class ProductTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		_testProduct = new Product(new Date(), new Barcode("5565"), "TestProduct", 5, 1);
+		_testProduct = new Product(new Date(), new Barcode("5565"), "TestProduct", 5, 1, "1", "count");
 	}
 
 	/**
@@ -62,7 +64,12 @@ public class ProductTest {
 		int shelfLife = 10;
 		int threeMoSup = 2;
 		
-		_testProduct = new Product(creationDate, barcode, description, shelfLife, threeMoSup);
+		try {
+			_testProduct = new Product(creationDate, barcode, description, shelfLife, threeMoSup, "1", "count");
+		} catch (InvalidUnitException | InvalidAmountException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertTrue(_testProduct.getBarcode() == barcode);
 		assertTrue(_testProduct.getCreationDate() == creationDate);
@@ -83,7 +90,12 @@ public class ProductTest {
 		int shelfLife = 10;
 		int threeMoSup = 2;
 		
-		_testProduct = new Product(creationDate, barcode, description, shelfLife, threeMoSup);
+		try {
+			_testProduct = new Product(creationDate, barcode, description, shelfLife, threeMoSup, "1", "count");
+		} catch (InvalidUnitException | InvalidAmountException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//Change the Description
 		assertTrue(_testProduct.setDescription("This is a Mech Warrior"));
@@ -106,7 +118,12 @@ public class ProductTest {
 		int shelfLife = 10;
 		int threeMoSup = 2;
 		
-		_testProduct = new Product(creationDate, barcode, description, shelfLife, threeMoSup);
+		try {
+			_testProduct = new Product(creationDate, barcode, description, shelfLife, threeMoSup, "1", "count");
+		} catch (InvalidUnitException | InvalidAmountException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//if unit is count, cannot change amount
 		//TODO assertFalse(_testProduct.setSizeAmount("10"));
@@ -135,7 +152,12 @@ public class ProductTest {
 		int shelfLife = 10;
 		int threeMoSup = 2;
 		
-		_testProduct = new Product(creationDate, barcode, description, shelfLife, threeMoSup);
+		try {
+			_testProduct = new Product(creationDate, barcode, description, shelfLife, threeMoSup, "1", "count");
+		} catch (InvalidUnitException | InvalidAmountException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
 		
 		//Try to change shelf life to a float
 		try {
@@ -168,7 +190,12 @@ public class ProductTest {
 		int shelfLife = 10;
 		int threeMoSup = 2;
 		
-		_testProduct = new Product(creationDate, barcode, description, shelfLife, threeMoSup);
+		try {
+			_testProduct = new Product(creationDate, barcode, description, shelfLife, threeMoSup, "1", "count");
+		} catch (InvalidUnitException | InvalidAmountException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		//Try to change shelf life to a float
 		try {

@@ -54,7 +54,7 @@ public class StorageUnitTest {
 		int shelfLife = 10;
 		int threeMoSup = 2;
 		
-		_product1 = new Product(creationDate, barcodeProduct, description, shelfLife, threeMoSup);
+		_product1 = new Product(creationDate, barcodeProduct, description, shelfLife, threeMoSup, "1", "count");
 		
 		//create item
 		Date entryDate = new Date();

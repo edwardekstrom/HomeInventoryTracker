@@ -4,6 +4,8 @@
 package data_structures_tests;
 
 import static org.junit.Assert.*;
+import hit_exceptions.InvalidAmountException;
+import hit_exceptions.InvalidUnitException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -67,7 +69,7 @@ public class ProductGroupTest {
 		int shelfLife = 10;
 		int threeMoSup = 2;
 		
-		_product1 = new Product(creationDate, barcodeProduct, description, shelfLife, threeMoSup);
+		_product1 = new Product(creationDate, barcodeProduct, description, shelfLife, threeMoSup, "1", "count");
 		
 		//create item
 		Date entryDate = new Date();
@@ -212,8 +214,15 @@ public class ProductGroupTest {
 	
 	@Test
 	public void setThreeMonthSupTest(){
-		UnitSize uSize = new UnitSize();
-		_group1.setThreeMonthSup(uSize);
-		assertTrue(_group1.getThreeMonthSup() == uSize);
+		UnitSize uSize;
+		try {
+			uSize = new UnitSize("1", "count");
+			_group1.setThreeMonthSup(uSize);
+			assertTrue(_group1.getThreeMonthSup() == uSize);
+		} catch (InvalidAmountException | InvalidUnitException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }

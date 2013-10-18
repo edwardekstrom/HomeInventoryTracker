@@ -49,7 +49,7 @@ public class ItemTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		_testProduct = new Product(new Date(), new Barcode("5565"), "TestProduct", 5, 1);
+		_testProduct = new Product(new Date(), new Barcode("5565"), "TestProduct", 5, 1, "1", "count");
 		_testItem = new Item(_testProduct, new Barcode("55"), new Date(), new ProductGroup());
 	}
 

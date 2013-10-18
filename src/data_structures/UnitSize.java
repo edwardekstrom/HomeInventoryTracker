@@ -64,7 +64,7 @@ public class UnitSize implements Serializable{
 			return false;
 
 		try{
-			System.out.println(amount);
+			//System.out.println(amount);
 			Float amt = Float.parseFloat(amount);
 			if( unit.equals("count") && amt.intValue() != amt.floatValue()){
 				return false;
@@ -90,7 +90,7 @@ public class UnitSize implements Serializable{
 	 * @param amount the _amount to set
 	 */
 	public void setAmount(String amount) throws InvalidAmountException{
-		if(isValid(_unit, amount)){
+		if(isValid(amount, _unit)){
 			_amount = Float.parseFloat(amount);
 		}else{
 			throw new InvalidAmountException();
@@ -110,7 +110,10 @@ public class UnitSize implements Serializable{
 	 * @param unit the _unit to set
 	 */
 	public void setUnit(String unit) throws InvalidUnitException{
-		if(isValid(unit,"" + _amount)){
+		//System.out.println(unit);
+		//System.out.println("" + _amount);
+		if(isValid("" + _amount, unit)){
+			//System.out.println("changed");
 			_unit = unit;
 		}else{
 			throw new InvalidUnitException();
