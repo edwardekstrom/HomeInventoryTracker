@@ -9,6 +9,8 @@ import java.util.*;
 import com.sun.tools.internal.jxc.gen.config.Config;
 
 import data_structures.HomeInventory;
+import data_structures.Item;
+import data_structures.Product;
 import data_structures.ProductContainer;
 import data_structures.Serializer;
 import data_structures.StorageUnit;
@@ -70,9 +72,41 @@ public class InventoryController extends Controller
 	@Override
 	protected void loadValues() {
 		ProductContainerData root = new ProductContainerData();
-	
+		
 		
 		getView().setProductContainers(root);
+	}
+	
+	private void loadProducts(){
+		ArrayList<ProductData> productsList = new ArrayList<ProductData>();
+		
+		ProductContainer selectedContainer = (ProductContainer) getView().getSelectedProductContainer().getTag();
+		StorageUnit storageUnit = selectedContainer.getStorageUnit();
+		
+		for(Product product: storageUnit.getProducts()){
+			productsList.add(product.getTagData());
+		}
+		ProductData[] products = productsList.toArray(new ProductData[productsList.size()]);
+		getView().setProducts(products);
+	}
+	
+	private void loadItems(){
+		ArrayList<ItemData> itemDatas = new ArrayList<ItemData>();
+		
+		ProductContainer selectedContainer = (ProductContainer) getView().getSelectedProductContainer().getTag();
+		StorageUnit storageUnit = selectedContainer.getStorageUnit();
+		
+		if(getView().getSelectedProduct()!=null){
+			Product product = (Product) getView().getSelectedProduct().getTag();
+
+			for (Item item : storageUnit.getItems()) {
+				// if(item.getProduct() == product){
+				itemDatas.add(item.getTagData());
+				// }
+			}
+
+			getView().setItems(itemDatas.toArray(new ItemData[itemDatas.size()]));
+		}
 	}
 
 	/**
@@ -99,7 +133,10 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public boolean canAddStorageUnit() {
-		return true;
+		if(getView().getSelectedProductContainer().getName().equals("root"))
+			return true;
+		else
+			return false;
 	}
 	
 	/**
@@ -107,9 +144,11 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public boolean canAddItems() {
-
-		
-		return true;
+		ProductContainer pc = (ProductContainer) getView().getSelectedProductContainer().getTag();
+		if(pc == pc.getStorageUnit())
+			return true;
+		else
+			return false;
 	}
 	
 	/**
@@ -205,6 +244,10 @@ public class InventoryController extends Controller
 	public void productContainerSelectionChanged() {
 		List<ProductData> productDataList = new ArrayList<ProductData>();		
 		ProductContainerData selectedContainer = getView().getSelectedProductContainer();
+		if(!getView().getSelectedProductContainer().getName().equals("root")){
+			loadProducts();
+			loadItems();
+		}
 //		if (selectedContainer != null) {
 //			int productCount = rand.nextInt(20) + 1;
 //			for (int i = 1; i <= productCount; ++i) {
@@ -220,9 +263,9 @@ public class InventoryController extends Controller
 //				productDataList.add(productData);
 //			}
 //		}
-		getView().setProducts(productDataList.toArray(new ProductData[0]));
-		
-		getView().setItems(new ItemData[0]);
+//		getView().setProducts(productDataList.toArray(new ProductData[0]));
+//		
+//		getView().setItems(new ItemData[0]);
 	}
 
 	/**

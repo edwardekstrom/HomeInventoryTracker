@@ -22,6 +22,7 @@ public class HomeInventory implements Serializable{
 	public HomeInventory(){
 		_storageUnits = new ArrayList<StorageUnit>();
 		_rootData = new ProductContainerData();
+		_rootData.setName("root");
 		_rootData.setTag(this);
 		
 	}
