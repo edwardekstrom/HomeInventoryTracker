@@ -271,7 +271,14 @@ public class AddItemBatchController extends Controller implements
 	@Override
 	public void done() {
 		
+		ArrayList<Item> items = new ArrayList<Item>();
+
+		for (ItemData i: _items){
+			items.add((Item)i.getTag());
+		}
+
 		getView().close();
+		BarcodeLabelPrinter.printLabels(items);
 
 	}
 
