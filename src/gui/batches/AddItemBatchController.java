@@ -122,7 +122,9 @@ ArrayList<ItemData> itemDatas = new ArrayList<ItemData>();
 		boolean validCount = false;
 		String count = getView().getCount();
 		try{
-			Integer.parseInt(count);
+			if(!count.equals("")){
+				Integer.parseInt(count);
+			}
 		}catch(NumberFormatException nfe){
 			getView().displayErrorMessage("Invalid Count: Reseting Count to 1");
 			//getView().selectProduct(null);
@@ -206,20 +208,24 @@ ArrayList<ItemData> itemDatas = new ArrayList<ItemData>();
 		Date entryDate = new Date(getView().getEntryDate()); 
 		String count = getView().getCount();
 		
-		if(getView().getSelectedProduct()!=null){
+		if(count.equals("")){
+			getView().displayErrorMessage("Invalid Count: Reseting Count to 1");
+			getView().setCount("1");
+		}else{
 		
-			Product selectedProduct = (Product) getView().getSelectedProduct()
-					.getTag();
-			StorageUnit currUnit = _storageUnit;
-
-			int numItems = Integer.parseInt(count);
-
-			for (int i = 0; i < numItems; i++) {
-				_itemFacade.addItem(selectedProduct, entryDate, _storageUnit);
-			}
+			if(getView().getSelectedProduct()!=null){
+			
+				Product selectedProduct = (Product) getView().getSelectedProduct().getTag();
+				StorageUnit currUnit = _storageUnit;
+		
+				int numItems = Integer.parseInt(count);
+		
+				for (int i = 0; i < numItems; i++) {
+					_itemFacade.addItem(selectedProduct, entryDate, _storageUnit);
+				}
+			}	
+			getView().close();
 		}
-		
-		getView().close();
 	}
 
 	public void addProduct(Product p){
