@@ -85,6 +85,8 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void useScannerChanged() {
+		System.out.println("useScannerChanged");
+
 	}
 
 	/**
@@ -93,6 +95,7 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void selectedProductChanged() {
+		System.out.println("selectedProductChanged");
 	}
 
 	/**
@@ -101,6 +104,9 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void addItem() {
+		System.out.println("addItem");
+
+		getView().displayAddProductView();
 	}
 	
 	/**

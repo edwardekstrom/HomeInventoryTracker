@@ -58,25 +58,7 @@ public class InventoryController extends Controller
 	@Override
 	protected void loadValues() {
 		ProductContainerData root = new ProductContainerData();
-		
-		ProductContainerData basementCloset = new ProductContainerData("Basement Closet");
-		
-		ProductContainerData toothpaste = new ProductContainerData("Toothpaste");
-		toothpaste.addChild(new ProductContainerData("Kids"));
-		toothpaste.addChild(new ProductContainerData("Parents"));
-		basementCloset.addChild(toothpaste);
-		
-		root.addChild(basementCloset);
-		
-		ProductContainerData foodStorage = new ProductContainerData("Food Storage Room");
-		
-		ProductContainerData soup = new ProductContainerData("Soup");
-		soup.addChild(new ProductContainerData("Chicken Noodle"));
-		soup.addChild(new ProductContainerData("Split Pea"));
-		soup.addChild(new ProductContainerData("Tomato"));
-		foodStorage.addChild(soup);
-		
-		root.addChild(foodStorage);
+	
 		
 		getView().setProductContainers(root);
 	}
@@ -113,6 +95,8 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public boolean canAddItems() {
+
+		
 		return true;
 	}
 	

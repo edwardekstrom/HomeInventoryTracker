@@ -22,6 +22,11 @@ public class AddProductController extends Controller implements
 		super(view);
 		construct();
 
+		IAddProductView v = getView();
+		v.setBarcode(barcode);
+		v.enableBarcode(false);
+
+
 		// Ours
 		_productFacade = ProductFacade.getInstance();
 		valuesChanged();
