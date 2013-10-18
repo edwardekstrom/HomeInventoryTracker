@@ -1,5 +1,7 @@
 package gui.storageunit;
 
+import data_structures.StorageUnit;
+import ui_interaction.StorageUnitFacade;
 import gui.common.*;
 import gui.inventory.*;
 
@@ -8,7 +10,8 @@ import gui.inventory.*;
  */
 public class EditStorageUnitController extends Controller 
 										implements IEditStorageUnitController {
-	
+	private StorageUnitFacade _storageUnitFacade;
+	private StorageUnit _storageUnit;
 	/**
 	 * Constructor.
 	 * 
@@ -17,8 +20,12 @@ public class EditStorageUnitController extends Controller
 	 */
 	public EditStorageUnitController(IView view, ProductContainerData target) {
 		super(view);
-
 		construct();
+		
+		_storageUnit = (StorageUnit) target.getTag();
+		getView().setStorageUnitName(_storageUnit.getName());
+		_storageUnitFacade = StorageUnitFacade.getInstance();
+		valuesChanged();
 	}
 
 	//
@@ -72,6 +79,9 @@ public class EditStorageUnitController extends Controller
 	 */
 	@Override
 	public void valuesChanged() {
+		String newStorageUnitName = getView().getStorageUnitName();
+		boolean canAdd = _storageUnitFacade.canAddStorageUnit(newStorageUnitName);
+		getView().enableOK(canAdd);
 	}
 
 	/**
@@ -80,6 +90,8 @@ public class EditStorageUnitController extends Controller
 	 */
 	@Override
 	public void editStorageUnit() {
+		String name = getView().getStorageUnitName();
+		_storageUnit.setName(name);
 	}
 
 }

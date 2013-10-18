@@ -1,6 +1,5 @@
 package data_structures;
 
-import static org.junit.Assert.assertTrue;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -48,7 +47,7 @@ public class Serializer {
 			homeInventory = (HomeInventory) in.readObject();
 			in.close();
 			//System.out.println(hi.getStorageUnitsCount());
-			assertTrue(homeInventory.getStorageUnitsCount() == 1);
+
 		}catch (Exception e){
 			return new HomeInventory();
 		}

@@ -258,6 +258,7 @@ public abstract class ProductContainer implements Serializable{
 	 * @postcondition none
 	 */
 	public void setName(String name) {
+		_tagData.setName(name);
 		this._name = name;
 	}
 	

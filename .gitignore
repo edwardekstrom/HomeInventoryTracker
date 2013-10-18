@@ -5,3 +5,4 @@
 *.project
 *.gitignore.swp
 *README.txt
+/test-build

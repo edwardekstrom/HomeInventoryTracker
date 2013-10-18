@@ -68,6 +68,12 @@ public class StorageUnitFacade extends Observable {
 		}
 	}
 	
+	public void editStorageUnit(StorageUnit storageUnit, String newName){
+		storageUnit.setName(newName);
+		setChanged();
+		notifyObservers(this);
+	}
+	
 	public ProductContainerData getRootPCData(){
 		return config.getHomeInventory().getRootData();
 	}
