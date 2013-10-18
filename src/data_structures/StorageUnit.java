@@ -32,8 +32,7 @@ public class StorageUnit extends ProductContainer implements Serializable{
 		
 	}
 
-	public void setTagData(ProductContainerData pcData) {
-		_tagData = pcData;
-	}
+
+
 
 }

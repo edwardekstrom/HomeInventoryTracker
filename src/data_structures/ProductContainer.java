@@ -18,7 +18,7 @@ public abstract class ProductContainer implements Serializable{
 	protected List<Item> _items;
 	protected List<ProductGroup> _productGroups;
 	
-	protected ProductContainerData _tagData;
+	protected ProductContainerData _tagData = new ProductContainerData();
 	protected StorageUnit _storageUnit;
 
 	/**
@@ -44,6 +44,7 @@ public abstract class ProductContainer implements Serializable{
 			_items.add(item);
 		}
 	}
+	
 	
 	/**
 	 * Checks if a product is in this object or in any of it's productGroup subtrees
@@ -224,7 +225,15 @@ public abstract class ProductContainer implements Serializable{
 		productGroup._storageUnit = _storageUnit;
 	}
 
-	
+	public boolean canAddProductGroupWithName(String name) {
+		if(name.equals("")) return false;
+		for(ProductGroup pg: _productGroups){
+			if(pg.getName().equals(name)) return false;
+		}
+
+		return true;
+	}
+
 /*/**************Validation****************************/
 	public boolean canBeDeleted(){
 		
@@ -243,6 +252,14 @@ public abstract class ProductContainer implements Serializable{
 	
 
 /*/**************Getter/Setters****************************/
+	
+	/**
+	 * sets its tag.
+	 * @param pcData
+	 */
+	public void setTagData(ProductContainerData pcData) {
+		_tagData = pcData;
+	}
 	
 	/**
 	 * @return the name
@@ -292,6 +309,9 @@ public abstract class ProductContainer implements Serializable{
 
 	public ProductContainerData getTagData(){
 		return this._tagData;
+	}
+	public StorageUnit getStorageUnit(){
+		return this._storageUnit;
 	}
 	
 }

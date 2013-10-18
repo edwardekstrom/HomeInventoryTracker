@@ -32,6 +32,8 @@ public class InventoryController extends Controller
 		//creating home inventory
 		StorageUnitFacade storageUnitFacade = StorageUnitFacade.getInstance();
 		storageUnitFacade.addObserver(this);
+		ProductGroupFacade productGroupFacade = ProductGroupFacade.getInstance();
+		productGroupFacade.addObserver(this);
 		
 		//ProductGroupFacade productGroupFacade = ProductGroupFacade.getInstance();
 		
@@ -406,8 +408,7 @@ public class InventoryController extends Controller
 
 	@Override
 	public void update(Observable o, Object arg) {
-		StorageUnitFacade storageUnitFacade = (StorageUnitFacade)o;
-		getView().setProductContainers(storageUnitFacade.getRootPCData());
+		getView().setProductContainers(StorageUnitFacade.getInstance().getRootPCData());
 	}
 	
 

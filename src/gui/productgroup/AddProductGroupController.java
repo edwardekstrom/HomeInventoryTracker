@@ -1,5 +1,9 @@
 package gui.productgroup;
 
+import data_structures.ProductContainer;
+import data_structures.ProductGroup;
+import data_structures.UnitSize;
+import ui_interaction.ProductGroupFacade;
 import gui.common.*;
 import gui.inventory.*;
 
@@ -8,6 +12,9 @@ import gui.inventory.*;
  */
 public class AddProductGroupController extends Controller implements
 		IAddProductGroupController {
+	
+	private ProductGroupFacade _productGroupFacade;
+	private ProductContainer _parent;
 	
 	/**
 	 * Constructor.
@@ -19,6 +26,9 @@ public class AddProductGroupController extends Controller implements
 		super(view);
 		
 		construct();
+		_productGroupFacade  = ProductGroupFacade.getInstance();
+		_parent = (ProductContainer) container.getTag();
+		valuesChanged();
 	}
 
 	//
@@ -72,6 +82,19 @@ public class AddProductGroupController extends Controller implements
 	 */
 	@Override
 	public void valuesChanged() {
+		String name = getView().getProductGroupName();
+		
+		boolean validName = _productGroupFacade.canCreateChildWithName(_parent,name);
+		
+		//TODO Check unit size when chris and jay get their crap together
+		boolean validUnitSize = true;
+		if(validName && validUnitSize){
+			getView().enableOK(true);
+		}else{
+			getView().enableOK(false);
+		}
+		
+		
 	}
 	
 	/**
@@ -80,6 +103,20 @@ public class AddProductGroupController extends Controller implements
 	 */
 	@Override
 	public void addProductGroup() {
+		String newProductGroupName = getView().getProductGroupName();
+		String supplyValue = getView().getSupplyValue();
+		SizeUnits supplyUnit = getView().getSupplyUnit();
+		
+		ProductGroup pg = new ProductGroup();
+		pg.setName(newProductGroupName);
+		
+//		TODO uncomment this
+//		UnitSize threeMounthSup = new UnitSize(supplyValue, supplyUnit.toString() );
+//		pg.setThreeMonthSup(threeMounthSup);
+		
+		pg.setContainer(_parent);
+		
+		_productGroupFacade.addProductGroup(pg);
 	}
 
 }

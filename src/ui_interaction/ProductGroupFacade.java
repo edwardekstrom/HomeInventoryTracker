@@ -3,19 +3,39 @@
  */
 package ui_interaction;
 
+import gui.inventory.ProductContainerData;
+
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+
+import com.sun.xml.internal.bind.v2.runtime.output.Pcdata;
 
 import singletons.Configuration;
-
 import data_structures.ProductGroup;
 import data_structures.ProductContainer;
+import data_structures.StorageUnit;
 
 /**
  * @author Capchu
  *
  */
-public class ProductGroupFacade {
+public class ProductGroupFacade extends Observable {
 
+	@Override
+	public synchronized void addObserver(Observer o) {
+		super.addObserver(o);
+	}
+
+	@Override
+	public void notifyObservers(Object arg) {
+		super.notifyObservers(arg);
+	}
+
+	@Override
+	protected synchronized void setChanged() {
+		super.setChanged();
+	}
 	private static ProductGroupFacade _instance = null;
 	private Configuration config;
 	
@@ -32,18 +52,24 @@ public class ProductGroupFacade {
 	
 	/**
 	 * Add the given ProductGroup to the tree
-	 * @param toAdd
+	 * @param productGroup
 	 */
-	public void addProductGroupToTree(ProductGroup toAdd){
+	public void addProductGroup(ProductGroup productGroup){
+		ProductContainer parent = productGroup.getContainer();
+		parent.addProductGroup(productGroup);
+		
+		ProductContainerData pcData = new ProductContainerData();
+		pcData.setName(productGroup.getName());
+		pcData.setTag(productGroup);
+		
+		parent.getTagData().addChild(pcData);
+		productGroup.setTagData(pcData);
+		
+		setChanged();
+		notifyObservers(this);
 		
 	}
-	/**
-	 * add the ProductGroup to the manager
-	 * @param toAdd
-	 */
-	public void addProductGroupToManager(ProductGroup toAdd){
-		
-	}
+
 	/**
 	 * removes the ProductGroup from the tree
 	 * @param toRemove
@@ -65,5 +91,9 @@ public class ProductGroupFacade {
 	 */
 	public void moveProductGroupInTree(ProductContainer start, ProductContainer finish){
 		
+	}
+
+	public boolean canCreateChildWithName(ProductContainer productContainer, String name) {
+		return productContainer.canAddProductGroupWithName(name);
 	}
 }
