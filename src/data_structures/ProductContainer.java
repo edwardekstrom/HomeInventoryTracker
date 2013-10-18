@@ -68,7 +68,30 @@ public abstract class ProductContainer implements Serializable{
 			}
 			return false;
 	}
-
+	/**
+	 * Checks if a product with barcode is in this object or in any of it's productGroup subtrees
+	 * 
+	 * @param barcode 
+	 * @return if product is in the subtree
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 */
+	protected boolean containsProduct(String barcode) {
+		for(Product p:_products){
+			if(p.getBarcode().equals(barcode)){
+				return true;
+			}
+		}
+		
+		for(int i = 0; i < _productGroups.size(); i++){
+			if(_productGroups.get(i).containsProduct(barcode)){
+				return true;
+			}
+		}
+		
+		return false;
+	}
 	/**
 	 * finds the productGroup with the product in it
 	 * and returns it

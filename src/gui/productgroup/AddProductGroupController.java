@@ -86,8 +86,11 @@ public class AddProductGroupController extends Controller implements
 		
 		boolean validName = _productGroupFacade.canCreateChildWithName(_parent,name);
 		
-		//TODO Check unit size when chris and jay get their crap together
-		boolean validUnitSize = true;
+		//TODO fix when jay and chris get their crap together
+		String amount = getView().getSupplyValue();
+		String supplyUnit = getView().getSupplyUnit().toString();
+		boolean validUnitSize = UnitSize.isValid(supplyUnit, amount);
+		
 		if(validName && validUnitSize){
 			getView().enableOK(true);
 		}else{
@@ -110,7 +113,7 @@ public class AddProductGroupController extends Controller implements
 		ProductGroup pg = new ProductGroup();
 		pg.setName(newProductGroupName);
 		
-//		TODO uncomment this
+//		TODO uncomment this when crap is put together
 //		UnitSize threeMounthSup = new UnitSize(supplyValue, supplyUnit.toString() );
 //		pg.setThreeMonthSup(threeMounthSup);
 		

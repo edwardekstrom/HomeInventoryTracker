@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.sun.xml.internal.bind.v2.runtime.output.Pcdata;
 
 import singletons.Configuration;
 import data_structures.ProductGroup;

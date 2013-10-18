@@ -73,4 +73,8 @@ public class HomeInventory implements Serializable{
 		}
 		return pcdList;
 	}
+	
+	public void removeStorageUnit(StorageUnit su){
+		_storageUnits.remove(su);
+	}
 }

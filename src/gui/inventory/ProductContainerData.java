@@ -9,6 +9,10 @@ import gui.common.*;
  */
 public class ProductContainerData extends Tagable {
 
+	public void removeChildPCData(ProductContainerData productContainerData){
+		deleteChild(productContainerData);
+	}
+	
 	/**
 	 * Name property.
 	 */
@@ -30,6 +34,7 @@ public class ProductContainerData extends Tagable {
 	public ProductContainerData() {
 		this("");
 	}
+	
 
 	/**
 	 * Constructs a new ProductContainerData object with the specified name.

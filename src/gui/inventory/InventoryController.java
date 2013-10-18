@@ -123,6 +123,7 @@ public class InventoryController extends Controller
 	public boolean canDeleteStorageUnit() {
 		ProductContainer su = (ProductContainer) getView().getSelectedProductContainer().getTag();
 		return su.canBeDeleted();
+		//TODO test this
 	}
 	
 	/**
@@ -156,7 +157,7 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public boolean canDeleteProductGroup() {
-		return true;
+		return canDeleteStorageUnit();
 	}
 
 	/**
