@@ -1,15 +1,11 @@
 package hit_exceptions;
 
+import java.lang.Exception;
+
 public class InvalidShelfLifeException extends Exception{
 
 	public InvalidShelfLifeException() {
 		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public InvalidShelfLifeException(String message, Throwable cause,
-			boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub
 	}
 

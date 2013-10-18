@@ -12,10 +12,13 @@ import java.io.*;
 import java.awt.*;
 import java.util.*;
 
-import java.util.Date;
 
 import data_structures.Barcode;
+import data_structures.Date;
 import data_structures.*;
+import hit_exceptions.InvalidShelfLifeException;
+
+import java.text.SimpleDateFormat;
 
 
 public class BarcodeLabelPrinter {
@@ -24,52 +27,76 @@ public class BarcodeLabelPrinter {
 
 	public static void main(String[] args){
 
-		Product c1 = new Product(new Date(), new Barcode("product"),
-			 "product 1", 3,3);
-		items = new ArrayList<Item>();
-		for(int i =0;i<10;i++){
-			Product p = new Product();
-			Barcode b = new Barcode(i+"2345678999");
+		Product p1 = new Product(
+            new Date(),
+            new Barcode("123456789999"),
+			"product 1", 
+            new Integer(3),
+            new Integer(3));
+            ProductContainer c = new StorageUnit();
+
+
+    	items = new ArrayList<Item>();
+
+
+		for(int i =0;i<32;i++){
+			Barcode b = new Barcode();
 			Date entry = new Date();
-			ProductContainer c = new StorageUnit();
-			items.add(new Item(p,b,entry,c));
+			items.add(new Item(p1,b,entry,c));
 		}
-
-		try{
-			Document document = new Document(new Rectangle(610, 840));
-			String filename = "barcode_test";
-	        // step 2
-	        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filename));
-	        writer.setPdfVersion(PdfWriter.VERSION_1_5);
-	        // step 3
-	        document.open();
-	        // step 4
-        	PdfContentByte cb = writer.getDirectContent();
-			printLabel(document, cb, "123456789999","Description","10/10/10","12/12/12");
-
-			document.close();
-
-			java.awt.Desktop.getDesktop().open(new File(filename)); 
-		}catch(Exception e){System.out.println(e.getMessage());}
+        printLabels(items);
 
 	}
 
-	public static void printLabel(Document document, PdfContentByte cb, String barcode,
-		String description, String entry, String exit) throws IOException, DocumentException{
+
+        public static void printLabels(ArrayList<Item> items){
+
+                try{
+                        Document document = new Document(new Rectangle(610, 840));
+
+                        String filename = "itemLabels.pdf";
+
+                        PdfWriter writer = PdfWriter.getInstance(document, 
+                                new FileOutputStream(filename));
+                        writer.setPdfVersion(PdfWriter.VERSION_1_5);
+
+                        document.open();
+
+                        PdfContentByte cb = writer.getDirectContent();
+
+                        PdfPTable table = new PdfPTable(5);
+                        table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
+                        table.getDefaultCell().setPadding(30);
+                         
+                        
+
+                        for (Item i : items){
+                                printLabel(document, cb,table,i);
+                        }
+
+                        table.completeRow();
+                        document.add(table);
+                        document.close();
+
+                        java.awt.Desktop.getDesktop().open(new File(filename)); 
+                }catch(Exception e){System.out.println(e.toString());}
+        }
+
+
+	public static void printLabel(Document document, PdfContentByte cb, 
+                PdfPTable table, Item item) throws IOException, DocumentException{
 		
-        Font font = new Font(Font.FontFamily.TIMES_ROMAN, 7);
+        // unpack Item
+
+        String description = item.getProduct().getDescription();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
+        String entry = item.getEntryDate().getDateAsString(sdf);
+        String exit  = item.getExpirationDate().getDateAsString(sdf);
+        String barcode = item.getBarcode().getBarcode();
  		
         PdfPCell cell;
-        PdfPTable theTable = new PdfPTable(5);
-
-
-        theTable.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
-
-        // BC1
+        Font font = new Font(Font.FontFamily.TIMES_ROMAN, 7);
         PdfPTable local = new PdfPTable(1);
-
-
-
         BarcodeEAN codeEAN = new BarcodeEAN();
 
 
@@ -88,6 +115,7 @@ public class BarcodeLabelPrinter {
 
         codeEAN.setCodeType(com.itextpdf.text.pdf.Barcode.UPCA);
         codeEAN.setCode(barcode);
+        System.out.println(barcode.length());
         Image img = codeEAN.createImageWithBarcode(cb, null, null);
     
         cell = new PdfPCell(img);
@@ -99,25 +127,18 @@ public class BarcodeLabelPrinter {
       
 
 
-        theTable.setHorizontalAlignment(Element.ALIGN_LEFT);
+        table.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-		theTable.setWidthPercentage(100f);
+	table.setWidthPercentage(100f);
 
-        theTable.addCell(cell);
-        theTable.addCell(cell);
-        theTable.addCell(cell);
-        theTable.addCell(cell);
-        theTable.addCell(cell);
-        theTable.addCell(cell);
-        theTable.addCell(cell);
-        theTable.addCell(cell);
-        theTable.addCell(cell);
+        table.addCell(cell);
+        
 
-        theTable.completeRow();
+        
    
 	        
         
-        document.add(theTable);
+        
         
 	}
 

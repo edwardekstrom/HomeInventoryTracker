@@ -6,6 +6,7 @@ package data_structures;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.text.SimpleDateFormat;
 
 /**
  * @author Capchu
@@ -63,5 +64,10 @@ public class Date implements Serializable{
 	 */
 	public GregorianCalendar getDate() {
 		return _date;
+	}
+
+	public String getDateAsString(SimpleDateFormat sdf){
+		java.util.Date dt = _date.getTime();
+		return sdf.format(dt);
 	}
 }
