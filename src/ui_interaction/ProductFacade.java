@@ -21,17 +21,7 @@ import gui.batches.AddItemBatchController;
  *
  */
 public class ProductFacade extends Observable {
-	@Override
-	public synchronized void addObserver(Observer o) {
-		// TODO Auto-generated method stub
-		super.addObserver(o);
-	}
 
-	@Override
-	public void notifyObservers() {
-		// TODO Auto-generated method stub
-		super.notifyObservers();
-	}
 
 	private static ProductFacade _instance = null;
 	private Configuration config;
@@ -91,4 +81,15 @@ public class ProductFacade extends Observable {
 		
 	}
 	
+	@Override
+	public synchronized void addObserver(Observer o) {
+		// TODO Auto-generated method stub
+		super.addObserver(o);
+	}
+
+	@Override
+	public void notifyObservers() {
+		// TODO Auto-generated method stub
+		super.notifyObservers();
+	}
 }

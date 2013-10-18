@@ -1,5 +1,6 @@
 package data_structures;
 
+import gui.item.ItemData;
 import hit_exceptions.NullContainerException;
 import hit_exceptions.NullEntryDateException;
 import hit_exceptions.NullExitDateException;
@@ -18,6 +19,7 @@ public class Item implements Serializable{
 	private Date _exitTime;
 	private Date _expirationDate;
 	private ProductContainer _container;
+	private ItemData _tagData;
 	
 	/**@precondition none
 	 * @postcondition creates a new Item with the given data
@@ -34,6 +36,14 @@ public class Item implements Serializable{
 		_entryDate = entryDate;
 		setExpirationDate();
 		_container = container;
+		
+		_tagData = new ItemData();
+		_tagData.setTag(this);
+		_tagData.setBarcode(barcode.getBarcode());
+		_tagData.setEntryDate(new java.util.Date(entryDate.getDate().getTimeInMillis()));
+		//TODO Make sure these work
+		_tagData.setStorageUnit(container.getStorageUnit().getName());
+		_tagData.setProductGroup(container.getName());
 	}
 
 	/**@precondition expDate is not null
@@ -51,6 +61,10 @@ public class Item implements Serializable{
 	 */
 	public Product getProduct() {
 		return _product;
+	}
+	
+	public ItemData getTagData(){
+		return _tagData;
 	}
 
 	/**@precondition none

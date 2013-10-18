@@ -44,6 +44,12 @@ public class Date implements Serializable{
 		_date = new GregorianCalendar(year, month, day);
 	}
 	
+	public Date(java.util.Date entryDate) {
+		_date = new GregorianCalendar();
+		_date.setTime(entryDate);
+		// TODO Auto-generated constructor stub
+	}
+
 	/**@precondition passed an int for the shelfLife if the product
 	 * @postcondition generates an expiration date using the entry 
 	 * date it's called on and the shelf life of the product

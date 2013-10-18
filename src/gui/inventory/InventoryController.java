@@ -13,6 +13,8 @@ import data_structures.ProductContainer;
 import data_structures.Serializer;
 import data_structures.StorageUnit;
 import singletons.Configuration;
+import ui_interaction.ItemFacade;
+import ui_interaction.ProductFacade;
 import ui_interaction.ProductGroupFacade;
 import ui_interaction.StorageUnitFacade;
 
@@ -33,10 +35,19 @@ public class InventoryController extends Controller
 		construct();
 		
 		HomeInventory homeInventory = Serializer.deserializeHIT();
+		
 		StorageUnitFacade storageUnitFacade = StorageUnitFacade.getInstance();
 		storageUnitFacade.addObserver(this);
+		
 		ProductGroupFacade productGroupFacade = ProductGroupFacade.getInstance();
 		productGroupFacade.addObserver(this);
+		
+		ItemFacade itemFacade = ItemFacade.getInstance();
+		itemFacade.addObserver(this);
+		
+		ProductFacade productFacade = ProductFacade.getInstance();
+		productFacade.addObserver(this);
+		
 		update(null, null);
 		
 	}
@@ -194,21 +205,21 @@ public class InventoryController extends Controller
 	public void productContainerSelectionChanged() {
 		List<ProductData> productDataList = new ArrayList<ProductData>();		
 		ProductContainerData selectedContainer = getView().getSelectedProductContainer();
-		if (selectedContainer != null) {
-			int productCount = rand.nextInt(20) + 1;
-			for (int i = 1; i <= productCount; ++i) {
-				ProductData productData = new ProductData();			
-				productData.setBarcode(getRandomBarcode());
-				int itemCount = rand.nextInt(25) + 1;
-				productData.setCount(Integer.toString(itemCount));
-				productData.setDescription("Item " + i);
-				productData.setShelfLife("3 months");
-				productData.setSize("1 pounds");
-				productData.setSupply("10 count");
-				
-				productDataList.add(productData);
-			}
-		}
+//		if (selectedContainer != null) {
+//			int productCount = rand.nextInt(20) + 1;
+//			for (int i = 1; i <= productCount; ++i) {
+//				ProductData productData = new ProductData();			
+//				productData.setBarcode(getRandomBarcode());
+//				int itemCount = rand.nextInt(25) + 1;
+//				productData.setCount(Integer.toString(itemCount));
+//				productData.setDescription("Item " + i);
+//				productData.setShelfLife("3 months");
+//				productData.setSize("1 pounds");
+//				productData.setSupply("10 count");
+//				
+//				productDataList.add(productData);
+//			}
+//		}
 		getView().setProducts(productDataList.toArray(new ProductData[0]));
 		
 		getView().setItems(new ItemData[0]);
@@ -221,24 +232,24 @@ public class InventoryController extends Controller
 	public void productSelectionChanged() {
 		List<ItemData> itemDataList = new ArrayList<ItemData>();		
 		ProductData selectedProduct = getView().getSelectedProduct();
-		if (selectedProduct != null) {
-			Date now = new Date();
-			GregorianCalendar cal = new GregorianCalendar();
-			int itemCount = Integer.parseInt(selectedProduct.getCount());
-			for (int i = 1; i <= itemCount; ++i) {
-				cal.setTime(now);
-				ItemData itemData = new ItemData();
-				itemData.setBarcode(getRandomBarcode());
-				cal.add(Calendar.MONTH, -rand.nextInt(12));
-				itemData.setEntryDate(cal.getTime());
-				cal.add(Calendar.MONTH, 3);
-				itemData.setExpirationDate(cal.getTime());
-				itemData.setProductGroup("Some Group");
-				itemData.setStorageUnit("Some Unit");
-				
-				itemDataList.add(itemData);
-			}
-		}
+//		if (selectedProduct != null) {
+//			Date now = new Date();
+//			GregorianCalendar cal = new GregorianCalendar();
+//			int itemCount = Integer.parseInt(selectedProduct.getCount());
+//			for (int i = 1; i <= itemCount; ++i) {
+//				cal.setTime(now);
+//				ItemData itemData = new ItemData();
+//				itemData.setBarcode(getRandomBarcode());
+//				cal.add(Calendar.MONTH, -rand.nextInt(12));
+//				itemData.setEntryDate(cal.getTime());
+//				cal.add(Calendar.MONTH, 3);
+//				itemData.setExpirationDate(cal.getTime());
+//				itemData.setProductGroup("Some Group");
+//				itemData.setStorageUnit("Some Unit");
+//				
+//				itemDataList.add(itemData);
+//			}
+//		}
 		getView().setItems(itemDataList.toArray(new ItemData[0]));
 	}
 

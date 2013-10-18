@@ -21,20 +21,7 @@ import data_structures.StorageUnit;
  */
 public class ProductGroupFacade extends Observable {
 
-	@Override
-	public synchronized void addObserver(Observer o) {
-		super.addObserver(o);
-	}
-
-	@Override
-	public void notifyObservers(Object arg) {
-		super.notifyObservers(arg);
-	}
-
-	@Override
-	protected synchronized void setChanged() {
-		super.setChanged();
-	}
+	
 	private static ProductGroupFacade _instance = null;
 	private Configuration config;
 	
@@ -94,5 +81,20 @@ public class ProductGroupFacade extends Observable {
 
 	public boolean canCreateChildWithName(ProductContainer productContainer, String name) {
 		return productContainer.canAddProductGroupWithName(name);
+	}
+	
+	@Override
+	public synchronized void addObserver(Observer o) {
+		super.addObserver(o);
+	}
+
+	@Override
+	public void notifyObservers(Object arg) {
+		super.notifyObservers(arg);
+	}
+
+	@Override
+	protected synchronized void setChanged() {
+		super.setChanged();
 	}
 }

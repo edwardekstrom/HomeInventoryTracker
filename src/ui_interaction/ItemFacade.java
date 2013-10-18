@@ -4,26 +4,35 @@
 package ui_interaction;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import singletons.Configuration;
+import singletons.ItemsManager;
+import data_structures.Barcode;
+import data_structures.Date;
 import data_structures.Item;
+import data_structures.Product;
 import data_structures.ProductContainer;
-
 import gui.batches.AddItemBatchController;
 
 /**
  * @author Capchu
  *
  */
-public class ItemFacade {
+public class ItemFacade extends Observable{
+
+	
 
 	private static ItemFacade _instance = null;
-	private Configuration config;
+	private Configuration _config;
+	private ItemsManager _itemsManager;
 
 	private AddItemBatchController _addItemBatchController;
 	
 	private ItemFacade(){
-		config = Configuration.getInstance();
+		_config = Configuration.getInstance();
+		_itemsManager = ItemsManager.getInstance();
 	}
 	
 	public static ItemFacade getInstance(){
@@ -34,31 +43,54 @@ public class ItemFacade {
 	}
 	
 	/**
+	 * Add the given item
+	 * @param toAdd
+	 */
+	public Item addItem(Product product, Date entryDate, ProductContainer container){
+		
+		Barcode newBarcode = new Barcode();
+		Item itemToAdd = new Item(product, newBarcode, entryDate, container);
+		
+		addItemToTree(itemToAdd);
+		addItemToManager(itemToAdd);
+		
+		setChanged();
+		notifyObservers(this);
+		
+		return itemToAdd;
+		
+	}
+	
+	public void removeItem(){
+		
+	}
+	
+	/**
 	 * Add the given item to the tree
 	 * @param toAdd
 	 */
-	public void addItemToTree(Item toAdd){
-		
+	private void addItemToTree(Item toAdd){
+		toAdd.getContainer().addItem(toAdd);
 	}
 	/**
 	 * add the Item to the manager
 	 * @param toAdd
 	 */
-	public void addItemToManager(Item toAdd){
-		
+	private void addItemToManager(Item toAdd){
+		_itemsManager.addItem(toAdd);
 	}
 	/**
 	 * removes the item from the tree
 	 * @param toRemove
 	 */
-	public void removeItemFromTree(Item toRemove){
+	private void removeItemFromTree(Item toRemove){
 		
 	}
 	/**
 	 * removes the item from the manager
 	 * @param toRemove
 	 */
-	public void removeItemFromManager(Item toRemove){
+	private void removeItemFromManager(Item toRemove){
 		
 	}
 	/**
@@ -85,6 +117,42 @@ public class ItemFacade {
 
 	public AddItemBatchController getAddItemBatchController(){
 		return _addItemBatchController;
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.util.Observable#addObserver(java.util.Observer)
+	 */
+	@Override
+	public synchronized void addObserver(Observer o) {
+		// TODO Auto-generated method stub
+		super.addObserver(o);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.Observable#notifyObservers()
+	 */
+	@Override
+	public void notifyObservers() {
+		// TODO Auto-generated method stub
+		super.notifyObservers();
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.Observable#notifyObservers(java.lang.Object)
+	 */
+	@Override
+	public void notifyObservers(Object arg) {
+		// TODO Auto-generated method stub
+		super.notifyObservers(arg);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.Observable#setChanged()
+	 */
+	@Override
+	protected synchronized void setChanged() {
+		// TODO Auto-generated method stub
+		super.setChanged();
 	}
 	
 }

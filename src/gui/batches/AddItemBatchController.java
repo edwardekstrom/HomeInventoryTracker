@@ -2,13 +2,16 @@ package gui.batches;
 
 import gui.common.*;
 import gui.inventory.*;
+import gui.item.ItemData;
 import gui.product.*;
-
 import data_structures.*;
-
 import ui_interaction.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.GregorianCalendar;
+
 
 /**
  * Controller class for the add item batch view.
@@ -16,8 +19,9 @@ import java.util.ArrayList;
 public class AddItemBatchController extends Controller implements
 		IAddItemBatchController {
 
-	StorageUnit _storageUnit;
-	ArrayList<ProductData> _products;
+	private StorageUnit _storageUnit;
+	private ArrayList<ProductData> _products;
+	private ItemFacade _itemFacade;
 
 	/**
 	 * Constructor.
@@ -28,10 +32,14 @@ public class AddItemBatchController extends Controller implements
 	public AddItemBatchController(IView view, ProductContainerData target) {
 		super(view);
 		_storageUnit = (StorageUnit)target.getTag();
+		_itemFacade = ItemFacade.getInstance();
 		construct();
 
 		ItemFacade.getInstance().registerAddItemBatchController(this);
 		_products =  new ArrayList<ProductData>();
+		barcodeChanged();
+		loadValues();
+		getView().setCount("1");
 	}
 
 	/**
@@ -51,6 +59,35 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void loadValues() {
+		loadProducts();
+		loadItems();
+	}
+	
+	private void loadProducts(){
+ArrayList<ProductData> productsList = new ArrayList<ProductData>();
+		
+		for(Product product: _storageUnit.getProducts()){
+			productsList.add(product.getTagData());
+		}
+		ProductData[] products = productsList.toArray(new ProductData[productsList.size()]);
+		getView().setProducts(products);
+	}
+	
+	private void loadItems(){
+ArrayList<ItemData> itemDatas = new ArrayList<ItemData>();
+		
+		if(getView().getSelectedProduct()!=null){
+		Product product = (Product) getView().getSelectedProduct().getTag();
+		
+		
+		for(Item item: _storageUnit.getItems()){
+			if(item.getProduct() == product){
+				itemDatas.add(item.getTagData());
+			}
+		}
+		
+		getView().setItems(itemDatas.toArray(new ItemData[itemDatas.size()]));
+		}
 	}
 
 	/**
@@ -65,6 +102,7 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void enableComponents() {
+		
 	}
 
 	/**
@@ -81,6 +119,16 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void countChanged() {
+		boolean validCount = false;
+		String count = getView().getCount();
+		try{
+			Integer.parseInt(count);
+		}catch(NumberFormatException nfe){
+			getView().displayErrorMessage("Invalid Count: Reseting Count to 1");
+			//getView().selectProduct(null);
+			getView().setCount("1");
+		}
+		
 	}
 
 	/**
@@ -89,6 +137,10 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void barcodeChanged() {
+		boolean legalBarcode = false;
+		String barcode = getView().getBarcode();
+		if(!barcode.equals("")) legalBarcode = true;
+		getView().enableItemAction(legalBarcode);
 	}
 
 	/**
@@ -107,7 +159,8 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void selectedProductChanged() {
-		System.out.println("selectedProductChanged");
+		loadItems();
+		
 	}
 
 	/**
@@ -123,7 +176,7 @@ public class AddItemBatchController extends Controller implements
 
 		if(!_storageUnit.containsProduct(barcode))
 			getView().displayAddProductView();
-
+		
 		//add items with that product
 	}
 	
@@ -149,13 +202,30 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void done() {
+		//Product product, Barcode barcode, Date entryDate, ProductContainer container
+		Date entryDate = new Date(getView().getEntryDate()); 
+		String count = getView().getCount();
+		
+		if(getView().getSelectedProduct()!=null){
+		
+			Product selectedProduct = (Product) getView().getSelectedProduct()
+					.getTag();
+			StorageUnit currUnit = _storageUnit;
+
+			int numItems = Integer.parseInt(count);
+
+			for (int i = 0; i < numItems; i++) {
+				_itemFacade.addItem(selectedProduct, entryDate, _storageUnit);
+			}
+		}
+		
 		getView().close();
 	}
 
 	public void addProduct(Product p){
 		_products.add(p.getTagData());
 		ProductData[] products = _products.toArray(new ProductData[_products.size()]);
-		getView().setProducts(products);
+		loadValues();
 	}
 
 
