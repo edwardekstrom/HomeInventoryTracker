@@ -38,7 +38,7 @@ public class AddItemBatchController extends Controller implements
 		ItemFacade.getInstance().registerAddItemBatchController(this);
 		_products =  new ArrayList<ProductData>();
 		barcodeChanged();
-		loadValues();
+		//loadValues();
 		getView().setCount("1");
 	}
 
@@ -59,12 +59,12 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void loadValues() {
-		loadProducts();
-		loadItems();
+		//loadProducts();
+		//loadItems();
 	}
 	
 	private void loadProducts(){
-ArrayList<ProductData> productsList = new ArrayList<ProductData>();
+		ArrayList<ProductData> productsList = new ArrayList<ProductData>();
 		
 		for(Product product: _storageUnit.getProducts()){
 			productsList.add(product.getTagData());
@@ -74,7 +74,7 @@ ArrayList<ProductData> productsList = new ArrayList<ProductData>();
 	}
 	
 	private void loadItems(){
-ArrayList<ItemData> itemDatas = new ArrayList<ItemData>();
+		ArrayList<ItemData> itemDatas = new ArrayList<ItemData>();
 		
 		if(getView().getSelectedProduct()!=null){
 		Product product = (Product) getView().getSelectedProduct().getTag();
@@ -174,8 +174,6 @@ ArrayList<ItemData> itemDatas = new ArrayList<ItemData>();
 		
 		String barcode = getView().getBarcode();
 
-
-
 		if(!_storageUnit.containsProduct(barcode))
 			getView().displayAddProductView();
 		
@@ -229,9 +227,14 @@ ArrayList<ItemData> itemDatas = new ArrayList<ItemData>();
 	}
 
 	public void addProduct(Product p){
+//		_products.add(p.getTagData());
+//		ProductData[] products = _products.toArray(new ProductData[_products.size()]);
+//		loadValues();
+		
 		_products.add(p.getTagData());
 		ProductData[] products = _products.toArray(new ProductData[_products.size()]);
-		loadValues();
+		getView().setProducts(products);
+
 	}
 
 
