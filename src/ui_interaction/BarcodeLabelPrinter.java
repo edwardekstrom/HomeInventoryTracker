@@ -49,38 +49,38 @@ public class BarcodeLabelPrinter {
 	}
 
 
-        public static void printLabels(ArrayList<Item> items){
+    public static void printLabels(ArrayList<Item> items){
 
-                try{
-                        Document document = new Document(new Rectangle(610, 840));
+        try{
+                Document document = new Document(new Rectangle(610, 840));
 
-                        String filename = "itemLabels.pdf";
+                String filename = "itemLabels.pdf";
 
-                        PdfWriter writer = PdfWriter.getInstance(document, 
-                                new FileOutputStream(filename));
-                        writer.setPdfVersion(PdfWriter.VERSION_1_5);
+                PdfWriter writer = PdfWriter.getInstance(document, 
+                        new FileOutputStream(filename));
+                writer.setPdfVersion(PdfWriter.VERSION_1_5);
 
-                        document.open();
+                document.open();
 
-                        PdfContentByte cb = writer.getDirectContent();
+                PdfContentByte cb = writer.getDirectContent();
 
-                        PdfPTable table = new PdfPTable(5);
-                        table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
-                        table.getDefaultCell().setPadding(30);
-                         
-                        
+                PdfPTable table = new PdfPTable(5);
+                table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
+                table.getDefaultCell().setPadding(30);
+                 
+                
 
-                        for (Item i : items){
-                                printLabel(document, cb,table,i);
-                        }
+                for (Item i : items){
+                        printLabel(document, cb,table,i);
+                }
 
-                        table.completeRow();
-                        document.add(table);
-                        document.close();
+                table.completeRow();
+                document.add(table);
+                document.close();
 
-                        java.awt.Desktop.getDesktop().open(new File(filename)); 
-                }catch(Exception e){System.out.println(e.toString());}
-        }
+                java.awt.Desktop.getDesktop().open(new File(filename)); 
+        }catch(Exception e){System.out.println(e.toString());}
+    }
 
 
 	public static void printLabel(Document document, PdfContentByte cb, 
@@ -129,7 +129,7 @@ public class BarcodeLabelPrinter {
 
         table.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-	table.setWidthPercentage(100f);
+	    table.setWidthPercentage(100f);
 
         table.addCell(cell);
         

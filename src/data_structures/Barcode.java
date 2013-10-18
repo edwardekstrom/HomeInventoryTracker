@@ -21,7 +21,7 @@ public class Barcode implements Serializable{
 	 * @throws <code>IllegalArgumentException</code> when the given code is invalid
 	 *
 	 */
-	public Barcode(String barcode) throws IllegalArgumentException {
+	public Barcode(String barcode){
 		setBarcode(barcode);
 	}
 	
@@ -30,7 +30,7 @@ public class Barcode implements Serializable{
      * 
      * @post Barcode.validate(this.code()) == true;
      */
-    public Barcode() throws IllegalArgumentException{
+    public Barcode(){
         setBarcode(this.generateCode());
     }
 
@@ -45,12 +45,8 @@ public class Barcode implements Serializable{
 	 * @param barcode the _barcode to set
 	 * @return true if successful 
 	 */
-	public void setBarcode(String barcode) throws IllegalArgumentException{
-		if(validate(barcode)){
-			_barcode = barcode;
-		}else{
-			throw new IllegalArgumentException("Invalid Barcode");
-		}
+	public void setBarcode(String barcode){
+		_barcode = barcode;
 	}
 
 	/**
