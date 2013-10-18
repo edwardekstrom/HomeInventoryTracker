@@ -9,6 +9,8 @@ import java.util.*;
 import com.sun.tools.internal.jxc.gen.config.Config;
 
 import data_structures.HomeInventory;
+import data_structures.ProductContainer;
+import data_structures.StorageUnit;
 import singletons.Configuration;
 import ui_interaction.ProductGroupFacade;
 import ui_interaction.StorageUnitFacade;
@@ -133,7 +135,8 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public boolean canDeleteStorageUnit() {
-		return true;
+		ProductContainer su = (ProductContainer) getView().getSelectedProductContainer().getTag();
+		return su.canBeDeleted();
 	}
 	
 	/**
@@ -141,6 +144,9 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void deleteStorageUnit() {
+		StorageUnitFacade storageUnitFacade = StorageUnitFacade.getInstance();
+		StorageUnit productContainer = (StorageUnit) getView().getSelectedProductContainer().getTag();
+		storageUnitFacade.removeStorageUnit(productContainer);
 	}
 
 	/**

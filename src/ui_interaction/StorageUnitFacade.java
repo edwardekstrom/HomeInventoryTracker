@@ -79,6 +79,13 @@ public class StorageUnitFacade extends Observable {
 	}
 	
 	public void removeStorageUnit(StorageUnit toRemove){
+		ProductContainerData pcData = toRemove.getTagData();
+		for(int i = 0; i < pcData.getChildCount(); i++){
+			ProductContainerData child = pcData.getChild(i);
+			child = null;
+		}
+		pcData = null;
+		
 		removeStorageUnitFromTree(toRemove);
 	}
 	

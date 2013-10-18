@@ -5,6 +5,7 @@ package ui_interaction;
 
 import java.util.List;
 
+import singletons.Configuration;
 import data_structures.Item;
 import data_structures.ProductContainer;
 
@@ -14,6 +15,20 @@ import data_structures.ProductContainer;
  */
 public class ItemFacade {
 
+	private static ItemFacade _instance = null;
+	private Configuration config;
+	
+	private ItemFacade(){
+		config = Configuration.getInstance();
+	}
+	
+	public static ItemFacade getInstance(){
+		if (_instance == null){
+			_instance = new ItemFacade();
+		}
+		return _instance;
+	}
+	
 	/**
 	 * Add the given item to the tree
 	 * @param toAdd

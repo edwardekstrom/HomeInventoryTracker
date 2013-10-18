@@ -212,7 +212,7 @@ public abstract class ProductContainer implements Serializable{
 		}
 	}
 	
-/***************Product Groups****************************/
+/*/**************Product Groups****************************/
 	/**
 	 * 
 	 * @param productGroup the new group to be added
@@ -224,7 +224,25 @@ public abstract class ProductContainer implements Serializable{
 		productGroup._storageUnit = _storageUnit;
 	}
 
-/***************Getter/Setters****************************/
+	
+/*/**************Validation****************************/
+	public boolean canBeDeleted(){
+		
+		if(_items.size() != 0){
+			return false;
+		}
+		
+		for(ProductGroup pg : _productGroups){
+			if (!pg.canBeDeleted()){
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+
+/*/**************Getter/Setters****************************/
 	
 	/**
 	 * @return the name

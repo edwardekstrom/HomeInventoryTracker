@@ -21,6 +21,7 @@ public class AddStorageUnitController extends Controller implements
 		super(view);		
 		construct();
 		_storageUnitFacade = StorageUnitFacade.getInstance();
+		valuesChanged();
 	}
 
 	//
@@ -51,6 +52,8 @@ public class AddStorageUnitController extends Controller implements
 	 */
 	@Override
 	protected void enableComponents() {
+		
+		
 	}
 
 	/**
@@ -74,6 +77,9 @@ public class AddStorageUnitController extends Controller implements
 	 */
 	@Override
 	public void valuesChanged() {
+		String newStorageUnitName = getView().getStorageUnitName();
+		boolean canAdd = _storageUnitFacade.canAddStorageUnit(newStorageUnitName);
+		getView().enableOK(canAdd);
 	}
 	
 	/**

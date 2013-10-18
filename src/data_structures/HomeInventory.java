@@ -54,7 +54,12 @@ public class HomeInventory implements Serializable{
 	}
 	
 	public boolean isValidHomeInventoryName(String name){
-		return !_storageUnits.contains(name);
+		if(name.equals("")) return false;
+			
+		for(StorageUnit su: _storageUnits){
+			if(su.getName().equals(name)) return false;
+		}
+		return true;
 	}
 	
 	public List<StorageUnit> getStorageUnits(){
