@@ -184,8 +184,11 @@ public class AddItemBatchController extends Controller implements
 
 		}
 		else if(current != null){
-				addProduct(current);
-				addCurrentItems(current);
+			addProduct(current);
+			addCurrentItems(current);
+		}
+		else if(batchCurrent != null){
+			addCurrentItems(batchCurrent);
 		}
 
 		
