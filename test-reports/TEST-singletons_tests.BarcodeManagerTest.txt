@@ -1,8 +1,0 @@
-Testsuite: singletons_tests.BarcodeManagerTest
-Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 0.045 sec
-
-Testcase: testAdd took 0.018 sec
-Testcase: testAddDuplicateUserBarcode took 0.001 sec
-Testcase: testGetInstance took 0 sec
-Testcase: testAddUserBarcode took 0.001 sec
-Testcase: testAddUserBarcode1 took 0.001 sec
