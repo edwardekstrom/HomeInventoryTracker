@@ -1,13 +1,15 @@
 package gui.inventory;
 
+import java.io.Serializable;
 import java.util.*;
+
 import gui.common.*;
 
 /**
  * Display data class for product containers (i.e., storage units
  * and product groups). 
  */
-public class ProductContainerData extends Tagable {
+public class ProductContainerData extends Tagable implements Serializable{
 
 	public void removeChildPCData(ProductContainerData productContainerData){
 		deleteChild(productContainerData);

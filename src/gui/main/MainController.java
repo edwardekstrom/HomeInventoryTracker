@@ -1,5 +1,8 @@
 package gui.main;
 
+import singletons.Configuration;
+import data_structures.HomeInventory;
+import data_structures.Serializer;
 import gui.common.*;
 
 /**
@@ -44,6 +47,8 @@ public class MainController extends Controller implements IMainController {
 	 */
 	@Override
 	public void exit() {
+		HomeInventory homeInventory = Configuration.getInstance().getHomeInventory();
+		Serializer.serializeHIT(homeInventory);
 	}
 
 	/**

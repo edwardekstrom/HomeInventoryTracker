@@ -1,5 +1,7 @@
 package gui.common;
 
+import java.io.Serializable;
+
 
 /**
  * 
@@ -8,7 +10,7 @@ package gui.common;
  * The Tag property is used to link Tagable objects back to the model objects
  * they represent.
  */
-public class Tagable {
+public class Tagable implements Serializable{
 
 	/**
 	 * Tag property.  Reference to a model object corresponding to this object.

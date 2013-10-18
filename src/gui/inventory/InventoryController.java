@@ -10,6 +10,7 @@ import com.sun.tools.internal.jxc.gen.config.Config;
 
 import data_structures.HomeInventory;
 import data_structures.ProductContainer;
+import data_structures.Serializer;
 import data_structures.StorageUnit;
 import singletons.Configuration;
 import ui_interaction.ProductGroupFacade;
@@ -29,15 +30,15 @@ public class InventoryController extends Controller
 	public InventoryController(IInventoryView view) {
 		super(view);
 		
-		//creating home inventory
+		construct();
+		
+		HomeInventory homeInventory = Serializer.deserializeHIT();
 		StorageUnitFacade storageUnitFacade = StorageUnitFacade.getInstance();
 		storageUnitFacade.addObserver(this);
 		ProductGroupFacade productGroupFacade = ProductGroupFacade.getInstance();
 		productGroupFacade.addObserver(this);
+		update(null, null);
 		
-		//ProductGroupFacade productGroupFacade = ProductGroupFacade.getInstance();
-		
-		construct();
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package gui.item;
 
+import java.io.Serializable;
 import java.util.*;
 
 import gui.common.Tagable;
@@ -7,7 +8,7 @@ import gui.common.Tagable;
 /**
  * Display data class for items.
  */
-public class ItemData extends Tagable {
+public class ItemData extends Tagable implements Serializable{
 
 	/**
 	 * EntryDate attribute.

@@ -1,11 +1,13 @@
 package gui.product;
 
+import java.io.Serializable;
+
 import gui.common.Tagable;
 
 /**
  * Display data class for products.
  */
-public class ProductData extends Tagable {
+public class ProductData extends Tagable implements Serializable{
 
 	/**
 	 * Description attribute.
