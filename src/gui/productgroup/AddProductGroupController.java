@@ -89,7 +89,7 @@ public class AddProductGroupController extends Controller implements
 		//TODO fix when jay and chris get their crap together
 		String amount = getView().getSupplyValue();
 		String supplyUnit = getView().getSupplyUnit().toString();
-		boolean validUnitSize = UnitSize.isValid(supplyUnit, amount);
+		boolean validUnitSize = UnitSize.isValid(amount, supplyUnit);
 		
 		if(validName && validUnitSize){
 			getView().enableOK(true);
@@ -112,10 +112,15 @@ public class AddProductGroupController extends Controller implements
 		
 		ProductGroup pg = new ProductGroup();
 		pg.setName(newProductGroupName);
+		UnitSize threeMounthSup = null;
+		try {
+			threeMounthSup = new UnitSize(supplyValue, supplyUnit.toString() );
+			
+		} catch (Exception e) {
+			System.out.println("fail in addProductGroupController");
+		}
 		
-//		TODO uncomment this when crap is put together
-//		UnitSize threeMounthSup = new UnitSize(supplyValue, supplyUnit.toString() );
-//		pg.setThreeMonthSup(threeMounthSup);
+		pg.setThreeMonthSup(threeMounthSup);
 		
 		pg.setContainer(_parent);
 		

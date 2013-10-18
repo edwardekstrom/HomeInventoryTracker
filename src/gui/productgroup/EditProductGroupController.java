@@ -1,5 +1,11 @@
 package gui.productgroup;
 
+import ui_interaction.ProductGroupFacade;
+import ui_interaction.StorageUnitFacade;
+import data_structures.ProductContainer;
+import data_structures.ProductGroup;
+import data_structures.StorageUnit;
+import data_structures.UnitSize;
 import gui.common.*;
 import gui.inventory.*;
 
@@ -8,6 +14,8 @@ import gui.inventory.*;
  */
 public class EditProductGroupController extends Controller 
 										implements IEditProductGroupController {
+	ProductGroupFacade _productGroupFacade;
+	private ProductGroup _target;
 	
 	/**
 	 * Constructor.
@@ -19,6 +27,22 @@ public class EditProductGroupController extends Controller
 		super(view);
 
 		construct();
+
+		_productGroupFacade = ProductGroupFacade.getInstance();
+		_target = (ProductGroup) target.getTag();
+		getView().setProductGroupName(_target.getName());
+		
+		for( SizeUnits v : SizeUnits.values()){
+			String unit = _target.getThreeMonthSup().getUnit();
+			if(v.toString().equals(unit)){
+				getView().setSupplyUnit(v);
+				break;
+			}
+		}
+		String value = Float.toString(_target.getThreeMonthSup().getAmount());
+		getView().setSupplyValue(value);
+		
+		valuesChanged();
 	}
 
 	//
@@ -72,6 +96,20 @@ public class EditProductGroupController extends Controller
 	 */
 	@Override
 	public void valuesChanged() {
+		String name = getView().getProductGroupName();
+		
+		boolean validName = _target.getContainer().canAddProductGroupWithName(name);
+		
+		//TODO fix when jay and chris get their crap together
+		String amount = getView().getSupplyValue();
+		String supplyUnit = getView().getSupplyUnit().toString();
+		boolean validUnitSize = UnitSize.isValid(amount, supplyUnit);
+		
+		if(validName && validUnitSize){
+			getView().enableOK(true);
+		}else{
+			getView().enableOK(false);
+		}
 	}
 	
 	/**
@@ -80,6 +118,9 @@ public class EditProductGroupController extends Controller
 	 */
 	@Override
 	public void editProductGroup() {
+		String newProductGroupName = getView().getProductGroupName();
+		String supplyValue = getView().getSupplyValue();
+		SizeUnits supplyUnit = getView().getSupplyUnit();
 	}
 
 }
