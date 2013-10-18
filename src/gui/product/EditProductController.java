@@ -1,5 +1,7 @@
 package gui.product;
 
+import ui_interaction.ProductFacade;
+import data_structures.Product;
 import gui.common.*;
 
 /**
@@ -7,6 +9,8 @@ import gui.common.*;
  */
 public class EditProductController extends Controller 
 										implements IEditProductController {
+	
+	ProductFacade _productfacade;
 	
 	/**
 	 * Constructor.
@@ -16,8 +20,10 @@ public class EditProductController extends Controller
 	 */
 	public EditProductController(IView view, ProductData target) {
 		super(view);
-
 		construct();
+		
+		getView().enableBarcode(false);
+		_productfacade = ProductFacade.getInstance();
 	}
 
 	//
@@ -48,6 +54,8 @@ public class EditProductController extends Controller
 	 */
 	@Override
 	protected void enableComponents() {
+		
+		
 	}
 
 	/**
@@ -59,6 +67,7 @@ public class EditProductController extends Controller
 	 */
 	@Override
 	protected void loadValues() {
+		
 	}
 
 	//
@@ -71,6 +80,23 @@ public class EditProductController extends Controller
 	 */
 	@Override
 	public void valuesChanged() {
+		String desc = getView().getDescription();
+		String shelfLife = getView().getShelfLife();
+		String sizeUnit = getView().getSizeUnit().toString();
+		String sizeValue = getView().getSizeValue();
+		String supply = getView().getSupply();
+		
+		boolean isValidProduct;
+		
+		isValidProduct = Product.willBeValidProduct(shelfLife, supply, sizeValue, sizeUnit, desc);
+		getView().enableOK(isValidProduct);
+		
+		if(sizeUnit.toString().equals("count")){
+			getView().enableSizeValue(false);
+			getView().setSizeValue("1");
+		}else{
+			getView().enableSizeValue(true);
+		}
 	}
 	
 	/**
@@ -79,6 +105,13 @@ public class EditProductController extends Controller
 	 */
 	@Override
 	public void editProduct() {
+		String desc = getView().getDescription();
+		String shelfLife = getView().getShelfLife();
+		String sizeUnit = getView().getSizeUnit().toString();
+		String sizeValue = getView().getSizeValue();
+		String supply = getView().getSupply();
+		
+		
 	}
 
 }
