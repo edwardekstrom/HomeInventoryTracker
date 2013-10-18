@@ -87,7 +87,11 @@ public class ProductsManager {
 	public boolean containsProduct(Product product){
 		return _allProductsList.contains(product);
 	}
+
 	
+	
+
+
 	/**
 	 * Returns an unmodifiable version of the allProductsList.
 	 * @precondition none

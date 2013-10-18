@@ -1,3 +1,5 @@
+
+
 package gui.product;
 
 import gui.common.*;
@@ -134,7 +136,7 @@ public class AddProductController extends Controller implements
 
 
 		boolean canAdd = _productFacade.canAddProduct(shelfLife,threeMonthSupply,amount,unit,desc);
-		System.out.println(canAdd);
+		// System.out.println(canAdd);
 		getView().enableOK(canAdd);
 	}
 

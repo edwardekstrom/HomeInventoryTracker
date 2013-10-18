@@ -16,6 +16,8 @@ import data_structures.Barcode;
 import gui.product.*;
 import gui.batches.AddItemBatchController;
 
+import singletons.ProductsManager;
+
 /**
  * @author Capchu
  *
@@ -64,7 +66,7 @@ public class ProductFacade extends Observable {
 	 * @param toAdd
 	 */
 	private void addProductToManager(Product toAdd){
-		
+		ProductsManager.getInstance().addProduct(toAdd);
 	}
 	/**
 	 * removes the Product from the tree
