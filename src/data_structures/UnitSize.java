@@ -20,10 +20,15 @@ public class UnitSize implements Serializable{
 	 * Creates and instance not setting any values.
 	 * @postcondition creates a new unit size with _amount== 1 and _unit == count
 	 */
-	public UnitSize(String amount,String unit ) 
+	public UnitSize(String amount, String unit ) 
 		throws InvalidAmountException, InvalidUnitException {
-		setAmount(amount);
-		setUnit(unit);
+		if(isValid(amount, unit)){
+			_unit = unit;
+			_amount = Float.parseFloat(amount);
+		}else{
+			throw new InvalidUnitException();
+		}
+		
 	}
 	
 	/**
