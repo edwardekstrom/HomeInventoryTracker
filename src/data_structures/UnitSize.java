@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import hit_exceptions.InvalidAmountException;
 import hit_exceptions.InvalidUnitException;
+import gui.common.SizeUnits;
 
 /**
  * @author Capchu
@@ -44,17 +45,23 @@ public class UnitSize implements Serializable{
 	 * @param String amount (the amount of that measurement)
 	 * REFACTOR ME!
 	 */
-	public static boolean isValid(String unit, String amount){
-		if(!(unit.equals("pounds") || (unit.compareTo("ounces") == 0) || 
-		    (unit.compareTo("grams") == 0) || (unit.compareTo("kilograms") == 0) ||
-		    (unit.compareTo("gallons") == 0) || (unit.compareTo("quarts") == 0) ||
-		    (unit.compareTo("pints") == 0) || (unit.compareTo("fluid ounces") == 0) ||
-		    (unit.compareTo("liters") == 0) || (unit.compareTo("count") == 0))) {
-			return false;
+	public static boolean isValid(String amount, String unit){
+
+		boolean found = false;
+		for( SizeUnits v : SizeUnits.values()){
+			if(v.toString().equals(unit)){
+				found = true;
+				break;
+			}
 		}
+
+		if(!found)
+			return false;
+
 		try{
+			System.out.println(amount);
 			Float amt = Float.parseFloat(amount);
-			if( !(unit.compareTo("count") == 0 && amt.intValue() == amt.floatValue())){
+			if( unit.equals("count") && amt.intValue() != amt.floatValue()){
 				return false;
 			}
 

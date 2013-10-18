@@ -22,14 +22,34 @@ public class AddProductController extends Controller implements
 		super(view);
 		construct();
 
-		IAddProductView v = getView();
-		v.setBarcode(barcode);
-		v.enableBarcode(false);
-
+		
+		setDefaults(barcode);
 
 		// Ours
 		_productFacade = ProductFacade.getInstance();
 		valuesChanged();
+	}
+
+
+	private void setDefaults(String barcode){
+		IAddProductView v = getView();
+		v.setBarcode(barcode);
+		v.setSizeUnit(SizeUnits.Count);
+		v.enableBarcode(false);
+		v.setShelfLife("0");
+		v.setSupply("0");
+		countDefaults();
+	}
+
+	private void countDefaults(){
+		IAddProductView v = getView();
+		v.setSizeValue("1");
+		v.enableSizeValue(false);
+	}
+
+	private void notCountDefaults(){
+		IAddProductView v = getView();
+		v.enableSizeValue(true);
 	}
 
 	//
@@ -83,6 +103,25 @@ public class AddProductController extends Controller implements
 	 */
 	@Override
 	public void valuesChanged() {
+
+		changedUnit();
+		validateCurrentProduct();
+
+
+
+
+	}
+
+	private void changedUnit(){
+		IAddProductView v = getView();
+		SizeUnits su = v.getSizeUnit();
+		if (su == SizeUnits.Count)
+			countDefaults();
+		else
+			notCountDefaults();
+	}
+
+	private void validateCurrentProduct(){
 		String shelfLife = getView().getShelfLife();
 		String threeMonthSupply = getView().getSupply();
 		String amount = getView().getSizeValue();
@@ -91,11 +130,11 @@ public class AddProductController extends Controller implements
 
 
 		boolean canAdd = _productFacade.canAddProduct(shelfLife,threeMonthSupply,amount,unit,desc);
+		System.out.println(canAdd);
 		getView().enableOK(canAdd);
-
-
-
 	}
+
+
 	
 	/**
 	 * This method is called when the user clicks the "OK"

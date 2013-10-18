@@ -4,11 +4,16 @@ import gui.common.*;
 import gui.inventory.*;
 import gui.product.*;
 
+import data_structures.*;
+
 /**
  * Controller class for the add item batch view.
  */
 public class AddItemBatchController extends Controller implements
 		IAddItemBatchController {
+
+	StorageUnit _storageUnit;
+
 
 	/**
 	 * Constructor.
@@ -18,7 +23,7 @@ public class AddItemBatchController extends Controller implements
 	 */
 	public AddItemBatchController(IView view, ProductContainerData target) {
 		super(view);
-		
+		_storageUnit= (StorageUnit)target.getTag();
 		construct();
 	}
 
@@ -104,8 +109,12 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void addItem() {
-		System.out.println("addItem");
+		
+		String barcode = getView().getBarcode();
 
+
+
+		// if(_storageUnit.contains())
 		getView().displayAddProductView();
 	}
 	
