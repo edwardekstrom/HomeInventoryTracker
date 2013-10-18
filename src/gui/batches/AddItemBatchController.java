@@ -23,7 +23,7 @@ public class AddItemBatchController extends Controller implements
 	 */
 	public AddItemBatchController(IView view, ProductContainerData target) {
 		super(view);
-		_storageUnit= (StorageUnit)target.getTag();
+		_storageUnit = (StorageUnit)target.getTag();
 		construct();
 	}
 
@@ -114,8 +114,10 @@ public class AddItemBatchController extends Controller implements
 
 
 
-		// if(_storageUnit.contains())
-		getView().displayAddProductView();
+		if(!_storageUnit.containsProduct(barcode))
+			getView().displayAddProductView();
+
+		//add items with that product
 	}
 	
 	/**

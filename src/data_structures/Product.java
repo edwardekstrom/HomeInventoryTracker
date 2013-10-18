@@ -8,6 +8,9 @@ import hit_exceptions.InvalidUnitException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.TreeMap;
+
+import gui.product.*;
+
 /**
  * @author Capchu
  * This class is for storing objects
@@ -22,6 +25,8 @@ public class Product implements Serializable{
 	private Integer _threeMonthSupply;
 	private List<ProductContainer> _containersList;
 	private TreeMap<ProductContainer, String> _containersTree;
+
+	private ProductData _tagData;
 	
 	/**@precondition none
 	 * @postcondition creates a new Product with the given data, and creates a UnitSize
@@ -226,6 +231,17 @@ public class Product implements Serializable{
 		}
 	}
 
+	/**		
+	 * sets its tag.
+	 * @param pcData
+	 */
+	public void setTagData(ProductData data) {
+		_tagData = data;
+	}
+
+	public ProductData getTagData(){
+		return this._tagData;
+	}
 
 	
 }
