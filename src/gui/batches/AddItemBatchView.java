@@ -25,6 +25,7 @@ public class AddItemBatchView extends ItemBatchView implements
 	private JLabel countLabel;
 	private JTextField countField;
 
+
 	public AddItemBatchView(GUI parent, DialogBox dialog,
 			ProductContainerData target) {
 		super(parent, dialog);

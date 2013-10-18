@@ -6,6 +6,10 @@ import gui.product.*;
 
 import data_structures.*;
 
+import ui_interaction.*;
+
+import java.util.ArrayList;
+
 /**
  * Controller class for the add item batch view.
  */
@@ -13,7 +17,7 @@ public class AddItemBatchController extends Controller implements
 		IAddItemBatchController {
 
 	StorageUnit _storageUnit;
-
+	ArrayList<ProductData> _products;
 
 	/**
 	 * Constructor.
@@ -25,6 +29,9 @@ public class AddItemBatchController extends Controller implements
 		super(view);
 		_storageUnit = (StorageUnit)target.getTag();
 		construct();
+
+		ItemFacade.getInstance().registerAddItemBatchController(this);
+		_products =  new ArrayList<ProductData>();
 	}
 
 	/**
@@ -144,6 +151,14 @@ public class AddItemBatchController extends Controller implements
 	public void done() {
 		getView().close();
 	}
+
+	public void addProduct(Product p){
+		_products.add(p.getTagData());
+		ProductData[] products = _products.toArray(new ProductData[_products.size()]);
+		getView().setProducts(products);
+	}
+
+
 	
 }
 

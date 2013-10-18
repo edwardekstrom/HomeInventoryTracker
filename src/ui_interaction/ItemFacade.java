@@ -9,6 +9,8 @@ import singletons.Configuration;
 import data_structures.Item;
 import data_structures.ProductContainer;
 
+import gui.batches.AddItemBatchController;
+
 /**
  * @author Capchu
  *
@@ -17,6 +19,8 @@ public class ItemFacade {
 
 	private static ItemFacade _instance = null;
 	private Configuration config;
+
+	private AddItemBatchController _addItemBatchController;
 	
 	private ItemFacade(){
 		config = Configuration.getInstance();
@@ -72,6 +76,15 @@ public class ItemFacade {
 	 */
 	public void printBatchBarcodes(List<Item> toPrint){
 		
+	}
+
+
+	public void registerAddItemBatchController(AddItemBatchController aibc){
+		_addItemBatchController =aibc;
+	}
+
+	public AddItemBatchController getAddItemBatchController(){
+		return _addItemBatchController;
 	}
 	
 }

@@ -14,6 +14,7 @@ import data_structures.Date;
 import data_structures.Barcode;
 
 import gui.product.*;
+import gui.batches.AddItemBatchController;
 
 /**
  * @author Capchu
@@ -49,9 +50,12 @@ public class ProductFacade extends Observable {
 
 	public void addProduct(Product p){
 			
-			addProductToManager(p);
-			setChanged();
-			notifyObservers(this);
+		addProductToManager(p);
+		setChanged();
+		notifyObservers(this);
+
+		AddItemBatchController aibc = ItemFacade.getInstance().getAddItemBatchController();
+		aibc.addProduct(p);
 	
 	}
 
