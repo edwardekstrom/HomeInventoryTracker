@@ -20,7 +20,10 @@ public class AddItemBatchController extends Controller implements
 		IAddItemBatchController {
 
 	private StorageUnit _storageUnit;
+	
 	private ArrayList<ProductData> _products;
+	private ArrayList<ItemData> _items;
+
 	private ItemFacade _itemFacade;
 
 	/**
@@ -37,6 +40,7 @@ public class AddItemBatchController extends Controller implements
 
 		ItemFacade.getInstance().registerAddItemBatchController(this);
 		_products =  new ArrayList<ProductData>();
+		_items = new ArrayList<ItemData>();
 		barcodeChanged();
 		//loadValues();
 		getView().setCount("1");
@@ -77,16 +81,15 @@ public class AddItemBatchController extends Controller implements
 		ArrayList<ItemData> itemDatas = new ArrayList<ItemData>();
 		
 		if(getView().getSelectedProduct()!=null){
-		Product product = (Product) getView().getSelectedProduct().getTag();
-		
-		
-		for(Item item: _storageUnit.getItems()){
-			if(item.getProduct() == product){
-				itemDatas.add(item.getTagData());
+			Product product = (Product) getView().getSelectedProduct().getTag();
+			
+			for(Item item: _storageUnit.getItems()){
+				if(item.getProduct() == product){
+					itemDatas.add(item.getTagData());
+				}
 			}
-		}
-		
-		getView().setItems(itemDatas.toArray(new ItemData[itemDatas.size()]));
+			
+			getView().setItems(itemDatas.toArray(new ItemData[itemDatas.size()]));
 		}
 	}
 
@@ -162,7 +165,6 @@ public class AddItemBatchController extends Controller implements
 	@Override
 	public void selectedProductChanged() {
 		loadItems();
-		
 	}
 
 	/**
@@ -183,11 +185,66 @@ public class AddItemBatchController extends Controller implements
 		}
 		else if(current != null){
 				addProduct(current);
+				addCurrentItems(current);
 		}
 
-		//add items with that product
+		
+	}
+
+
+
+	public  void addCurrentItems(Product current){
+
+
+
+		Date entryDate = new Date(getView().getEntryDate()); 
+		String count = getView().getCount();
+
+
+		if(count.equals("")){
+			getView().displayErrorMessage("Invalid Count: Reseting Count to 1");
+			getView().setCount("1");
+		}
+		else{
+				
+			StorageUnit currUnit = _storageUnit;
+	
+			int numItems = Integer.parseInt(count);
+	
+			for (int i = 0; i < numItems; i++){
+				Item item = _itemFacade.addItem(current, entryDate, _storageUnit);
+				_items.add(item.getTagData());
+
+
+			}
+
+			displayItemsForProduct(current);
+		}
+
+	}
+
+
+	public void displayItemsForProduct(Product p){
+		ItemData[] items = getItemsFor(p);
+		getView().setItems(items);
+
 	}
 	
+	private ItemData[] getItemsFor(Product p){
+		ArrayList<ItemData> items = new ArrayList<ItemData>();
+		for(ItemData i: _items){
+			Product product = ((Item)i.getTag()).getProduct();
+
+			if(product == p)
+				items.add(i);
+		}
+
+		ItemData[] itemsArray = items.toArray(new ItemData[items.size()]);
+		return itemsArray;
+	}
+
+
+
 	/**
 	 * This method is called when the user clicks the "Redo" button
 	 * in the add item batch view.
@@ -210,28 +267,9 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void done() {
-		//Product product, Barcode barcode, Date entryDate, ProductContainer container
-		Date entryDate = new Date(getView().getEntryDate()); 
-		String count = getView().getCount();
 		
-		if(count.equals("")){
-			getView().displayErrorMessage("Invalid Count: Reseting Count to 1");
-			getView().setCount("1");
-		}else{
-		
-			if(getView().getSelectedProduct()!=null){
-			
-				Product selectedProduct = (Product) getView().getSelectedProduct().getTag();
-				StorageUnit currUnit = _storageUnit;
-		
-				int numItems = Integer.parseInt(count);
-		
-				for (int i = 0; i < numItems; i++) {
-					_itemFacade.addItem(selectedProduct, entryDate, _storageUnit);
-				}
-			}	
-			getView().close();
-		}
+		getView().close();
+
 	}
 
 	public void addProduct(Product p){
