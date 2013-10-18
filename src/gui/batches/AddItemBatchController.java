@@ -174,9 +174,17 @@ public class AddItemBatchController extends Controller implements
 		
 		String barcode = getView().getBarcode();
 
-		if(!_storageUnit.containsProduct(barcode))
+		Product current = _storageUnit.getProduct(barcode);
+		Product batchCurrent = getProduct(barcode);
+
+		if(current == null && batchCurrent == null){
 			getView().displayAddProductView();
-		
+
+		}
+		else if(current != null){
+				addProduct(current);
+		}
+
 		//add items with that product
 	}
 	
@@ -235,6 +243,14 @@ public class AddItemBatchController extends Controller implements
 		ProductData[] products = _products.toArray(new ProductData[_products.size()]);
 		getView().setProducts(products);
 
+	}
+
+	public Product getProduct(String barcode){
+		for (ProductData pd: _products){
+			if(pd.getBarcode().equals(barcode))
+				return (Product)pd.getTag();
+		}
+		return null;
 	}
 
 

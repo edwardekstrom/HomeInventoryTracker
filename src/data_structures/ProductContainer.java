@@ -92,6 +92,29 @@ public abstract class ProductContainer implements Serializable{
 		
 		return false;
 	}
+
+
+	/**
+	 * Get the product by barcode if it exists
+	 * @param barcode (string) - the barcode we want for the product
+	 * @return Product or null if not found
+	 */
+	public Product getProduct(String barcode){
+		for(Product p:_products){
+			if(p.getBarcode().equals(barcode))
+				return p;
+		}
+		for(int i = 0; i < _productGroups.size(); i++){
+			Product p = _productGroups.get(i).getProduct(barcode);
+			if(p != null)
+				return p;
+		}
+
+		return null;
+	}
+
+
+
 	/**
 	 * finds the productGroup with the product in it
 	 * and returns it
