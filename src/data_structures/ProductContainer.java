@@ -77,7 +77,7 @@ public abstract class ProductContainer implements Serializable{
 	 * @precondition none
 	 * @postcondition none
 	 */
-	protected boolean containsProduct(String barcode) {
+	public boolean containsProduct(String barcode) {
 		for(Product p:_products){
 			if(p.getBarcode().equals(barcode)){
 				return true;
@@ -170,7 +170,7 @@ public abstract class ProductContainer implements Serializable{
 	 * @precondition none
 	 * @postcondition product will be in _products
 	 */
-	protected void addProduct(Product product){
+	private void addProduct(Product product){
 		_products.add(product);
 	}
 	
@@ -283,6 +283,10 @@ public abstract class ProductContainer implements Serializable{
 	public void setTagData(ProductContainerData pcData) {
 		_tagData = pcData;
 	}
+
+	public ProductContainerData getTagData(){
+		return this._tagData;
+	}
 	
 	/**
 	 * @return the name
@@ -330,9 +334,6 @@ public abstract class ProductContainer implements Serializable{
 		return _productGroups;
 	}
 
-	public ProductContainerData getTagData(){
-		return this._tagData;
-	}
 	public StorageUnit getStorageUnit(){
 		return this._storageUnit;
 	}

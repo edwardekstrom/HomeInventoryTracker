@@ -3,6 +3,10 @@ package gui.product;
 import gui.common.*;
 import ui_interaction.ProductFacade;
 
+import data_structures.Product;
+import data_structures.Barcode;
+import data_structures.Date;
+
 /**
  * Controller class for the add item view.
  */
@@ -142,14 +146,31 @@ public class AddProductController extends Controller implements
 	 */
 	@Override
 	public void addProduct() {
-		String shelfLife = getView().getShelfLife();
-		String threeMonthSupply = getView().getSupply();
-		String amount = getView().getSizeValue();
-		String unit = getView().getSizeUnit().toString();
-		String barcode = getView().getBarcode();
-		String desc = getView().getDescription();
 
-		_productFacade.addProduct(shelfLife,threeMonthSupply,amount,unit,barcode,desc);
+		try{
+			String shelfLife = getView().getShelfLife();
+			String threeMonthSupply = getView().getSupply();
+			String amount = getView().getSizeValue();
+			String unit = getView().getSizeUnit().toString();
+			String barcode = getView().getBarcode();
+			String desc = getView().getDescription();
+
+			Integer sl = Integer.parseInt(shelfLife);
+			Integer tms = Integer.parseInt(threeMonthSupply);
+
+			Product p = new Product(new Date(),new Barcode(barcode),desc,sl,tms,amount,unit);
+			ProductData pd = new ProductData();
+
+			pd.setBarcode(barcode);
+			pd.setSize(amount);
+			pd.setShelfLife(shelfLife);
+			pd.setSupply(threeMonthSupply);
+			pd.setCount(unit);
+			pd.setDescription(desc);
+			pd.setTag(p);
+			p.setTagData(pd);
+			_productFacade.addProduct(p);
+		}catch (Exception e){}
 	}
 
 }

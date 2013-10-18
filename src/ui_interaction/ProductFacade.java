@@ -13,6 +13,8 @@ import data_structures.ProductContainer;
 import data_structures.Date;
 import data_structures.Barcode;
 
+import gui.product.*;
+
 /**
  * @author Capchu
  *
@@ -45,18 +47,12 @@ public class ProductFacade extends Observable {
 	}
 
 
-	public void addProduct(String shelfLife, String threeMonthSupply, String amount,
-		 	String unit, String barcode, String desc){
-		try{
-			Integer sl = Integer.parseInt(shelfLife);
-			Integer tms = Integer.parseInt(threeMonthSupply);
-
-			Product p = new Product(new Date(),new Barcode(barcode),desc,sl,tms,amount,unit);
-			addProductToTree(p);
+	public void addProduct(Product p){
+			
 			addProductToManager(p);
 			setChanged();
 			notifyObservers(this);
-		}catch(Exception e){}
+	
 	}
 
 
@@ -69,15 +65,6 @@ public class ProductFacade extends Observable {
 
 
 	//PRIVATE METHODS
-
-
-	/**
-	 * Add the given Product to the tree
-	 * @param toAdd
-	 */
-	private void addProductToTree(Product toAdd){
-		
-	}
 	/**
 	 * add the Product to the manager
 	 * @param toAdd

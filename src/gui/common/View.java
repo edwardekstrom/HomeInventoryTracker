@@ -38,6 +38,11 @@ import gui.main.GUI;
  */
 public abstract class View extends JPanel implements IView {
 	
+
+	public void hellow(){
+		System.out.println("hellow");
+	}
+
 	public static final int MenuFontSize = 14;
 	public static final int BorderFontSize = 14;
 	public static final int ContentFontSize = 12;
