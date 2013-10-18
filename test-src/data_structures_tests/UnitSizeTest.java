@@ -45,7 +45,7 @@ public class UnitSizeTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		_testUnitSize = new UnitSize();
+		_testUnitSize = new UnitSize("1", "count");
 	}
 
 	/**
@@ -57,7 +57,12 @@ public class UnitSizeTest {
 
 	@Test
 	public void makeUnitSizeTest() {
-		_testUnitSize = new UnitSize();
+		try {
+			_testUnitSize = new UnitSize("1", "count");
+		} catch (InvalidAmountException | InvalidUnitException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertTrue(_testUnitSize.getUnit().equals("count"));
 		assertTrue(_testUnitSize.getAmount() == 1);
@@ -65,7 +70,12 @@ public class UnitSizeTest {
 	
 	@Test
 	public void changeAmountCountTest() {
-		_testUnitSize = new UnitSize();
+		try {
+			_testUnitSize = new UnitSize("1", "count");
+		} catch (InvalidAmountException | InvalidUnitException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		//Can't do a float for count
 		try {
@@ -81,26 +91,25 @@ public class UnitSizeTest {
 			
 		}
 		assertTrue(_testUnitSize.getAmount()==1);
-		//can't change amount when unit is count
-		try {
-			_testUnitSize.setAmount("5");
-		} catch (InvalidAmountException e) {
-			
-		}
-		assertTrue(_testUnitSize.getAmount()==1);
-		//make sure it remains unchanged
-		assertTrue(_testUnitSize.getAmount() == 1);	
+
 	}
 	
 	@Test
 	public void changeUnitTest() {
-		_testUnitSize = new UnitSize();
+		try {
+			_testUnitSize = new UnitSize("1", "count");
+		} catch (InvalidAmountException | InvalidUnitException e1) {
+			// TODO Auto-generated catch block
+			System.out.println("fail");
+			e1.printStackTrace();
+		}
 		
 		//test all viable units
 		try {
 			_testUnitSize.setUnit("ounces");
 		} catch (InvalidUnitException e) {
-			
+			System.out.println(_testUnitSize.getUnit());
+			System.out.println(_testUnitSize.getAmount());
 		}
 		assertTrue(_testUnitSize.getUnit().equals("ounces"));
 		
@@ -187,7 +196,12 @@ public class UnitSizeTest {
 	
 	@Test
 	public void changeAmountOtherTest() {
-		_testUnitSize = new UnitSize();
+		try {
+			_testUnitSize = new UnitSize("1", "count");
+		} catch (InvalidAmountException | InvalidUnitException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		//change unit
 		try {
@@ -201,7 +215,7 @@ public class UnitSizeTest {
 		try {
 			_testUnitSize.setAmount("44");
 		} catch (InvalidAmountException e) {
-			
+			System.out.println("failed");
 		}
 		assertTrue(_testUnitSize.getAmount() == 44);
 
@@ -230,20 +244,17 @@ public class UnitSizeTest {
 		assertTrue(_testUnitSize.getUnit().equals("grams"));
 		assertTrue(_testUnitSize.getAmount() == (float) 42.34);
 		
-		//changes to 1 if unit becomes count
-		try {
-			_testUnitSize.setUnit("count");
-		} catch (InvalidUnitException e) {
-			
-		}
-		assertTrue(_testUnitSize.getAmount() == (float) 1);
-		
 	}
 	
 	@Test
 	public void isValidUnitAndAmountTest() {
 
-		_testUnitSize = new UnitSize();
+		try {
+			_testUnitSize = new UnitSize("1", "count");
+		} catch (InvalidAmountException | InvalidUnitException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		//change unit
 		try {
@@ -254,10 +265,10 @@ public class UnitSizeTest {
 		assertTrue(_testUnitSize.getUnit().equals("ounces"));
 		
 		//check if a string is valid without attempting to make a change
-		assertFalse(_testUnitSize.isValidAmount("River"));
-		assertTrue(_testUnitSize.isValidAmount("43.3"));
-		assertTrue(_testUnitSize.isValidAmount("42"));
-		assertFalse(_testUnitSize.isValidAmount("ounces"));
+		assertFalse(UnitSize.isValid("River", "ounces"));
+		assertTrue(UnitSize.isValid("43.3", "ounces"));
+		assertTrue(UnitSize.isValid("42", "ounces"));
+		assertFalse(UnitSize.isValid("ounces", "ounces"));
 		
 		//if count, cant change at all
 		try {
@@ -266,16 +277,16 @@ public class UnitSizeTest {
 			
 		}
 		assertTrue(_testUnitSize.getUnit().equals("count"));
-		assertFalse(_testUnitSize.isValidAmount("13"));
-		assertFalse(_testUnitSize.isValidAmount("Simon"));
-		assertFalse(_testUnitSize.isValidAmount("3.4"));
-		assertFalse(_testUnitSize.isValidAmount("ounces"));
+		assertTrue(UnitSize.isValid("13", "count"));
+		assertFalse(UnitSize.isValid("Simon", "count"));
+		assertFalse(UnitSize.isValid("3.4", "count"));
+		assertFalse(UnitSize.isValid("ounces", "count"));
 		
 		//check if a unit is valid w/o making a change
-		assertTrue(_testUnitSize.isValidUnit("count"));
-		assertFalse(_testUnitSize.isValidUnit("55.33"));
-		assertFalse(_testUnitSize.isValidUnit("55"));
-		assertFalse(_testUnitSize.isValidUnit("Tam"));
+		assertTrue(UnitSize.isValid("1", "count"));
+		assertFalse(UnitSize.isValid("1", "55.33"));
+		assertFalse(UnitSize.isValid("1", "55"));
+		assertFalse(UnitSize.isValid("1", "Tam"));
 			
 	}
 

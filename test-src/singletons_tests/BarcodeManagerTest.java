@@ -13,8 +13,9 @@ public class BarcodeManagerTest {
 	@Test
 	public void testAdd(){
 		BarcodeManager bm = BarcodeManager.getInstance();
+		int oldSize = bm.barcodeListSize();
 		bm.generateUniqueBarcode();
-		assertTrue( bm.barcodeListSize() == 1);
+		assertTrue( bm.barcodeListSize() == oldSize+1);
 	}
 	
 	@Test
