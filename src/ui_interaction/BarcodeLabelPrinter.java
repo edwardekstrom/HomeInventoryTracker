@@ -92,7 +92,6 @@ public class BarcodeLabelPrinter {
 
         codeEAN.setCodeType(com.itextpdf.text.pdf.Barcode.UPCA);
         codeEAN.setCode(barcode);
-        System.out.println(barcode.length());
         Image img = codeEAN.createImageWithBarcode(cb, null, null);
     
         cell = new PdfPCell(img);

@@ -78,8 +78,9 @@ public abstract class ProductContainer implements Serializable{
 	 * @postcondition none
 	 */
 	public boolean containsProduct(String barcode) {
+		System.out.println(barcode);
 		for(Product p:_products){
-			if(p.getBarcode().equals(barcode)){
+			if(p.getBarcode().getBarcode().equals(barcode)){
 				return true;
 			}
 		}
@@ -101,7 +102,7 @@ public abstract class ProductContainer implements Serializable{
 	 */
 	public Product getProduct(String barcode){
 		for(Product p:_products){
-			if(p.getBarcode().equals(barcode))
+			if(p.getBarcode().getBarcode().equals(barcode))
 				return p;
 		}
 		for(int i = 0; i < _productGroups.size(); i++){
