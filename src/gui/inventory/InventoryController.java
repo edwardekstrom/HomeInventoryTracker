@@ -381,6 +381,16 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void removeItem() {
+		ItemData id = getView().getSelectedItem();
+		Item item = (Item)id.getTag();
+
+		ProductContainer pc = item.getContainer();
+		pc.removeItem(item);
+
+		Product p  = item.getProduct();
+
+		loadItems();
+
 	}
 
 	/**

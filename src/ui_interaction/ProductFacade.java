@@ -12,6 +12,7 @@ import data_structures.Product;
 import data_structures.ProductContainer;
 import data_structures.Date;
 import data_structures.Barcode;
+import gui.inventory.ProductContainerData;
 import gui.product.*;
 import gui.batches.AddItemBatchController;
 import hit_exceptions.InvalidAmountException;
@@ -96,6 +97,10 @@ public class ProductFacade extends Observable {
 		removeProductFromManager(toRemove);
 		removeProductFromTree(toRemove, removeFrom);
 		
+		//toRemove.getTagData();
+		
+		setChanged();
+		notifyObservers(this);
 	}
 
 	//PRIVATE METHODS
@@ -112,14 +117,14 @@ public class ProductFacade extends Observable {
 	 * @param removeFrom 
 	 */
 	private void removeProductFromTree(Product toRemove, ProductContainer removeFrom){
-		
+		removeFrom.removeProduct(toRemove);
 	}
 	/**
 	 * removes the Product from the manager
 	 * @param toRemove
 	 */
 	private void removeProductFromManager(Product toRemove){
-		
+		ProductsManager.getInstance().removeProduct(toRemove);
 	}
 	
 	@Override
