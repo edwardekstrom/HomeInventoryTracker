@@ -376,6 +376,9 @@ public class InventoryController extends Controller
 		ProductContainer pc = (ProductContainer)getView().getSelectedProductContainer().getTag();
 		Product p = (Product) getView().getSelectedProduct().getTag();
 		ProductFacade.getInstance().romoveProduct(p, pc);
+		
+		getView().selectProductContainer(pc.getTagData());
+		loadProducts();
 	}
 
 	/**

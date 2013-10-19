@@ -4,6 +4,10 @@ import gui.common.*;
 import gui.inventory.*;
 import gui.product.*;
 
+import singletons.*;
+
+import data_structures.*;
+
 /**
  * Controller class for the transfer item batch view.
  */
@@ -53,6 +57,10 @@ public class TransferItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void enableComponents() {
+		ITransferItemBatchView v = getView();
+		v.enableRedo(false);
+		v.enableUndo(false);
+		v.enableItemAction(false);
 	}
 
 	/**
@@ -61,6 +69,10 @@ public class TransferItemBatchController extends Controller implements
 	 */
 	@Override
 	public void barcodeChanged() {
+		ITransferItemBatchView v = getView();
+		Item item = ItemsManager.getInstance().getItem(v.getBarcode());
+		v.enableItemAction(item != null);
+	
 	}
 	
 	/**
