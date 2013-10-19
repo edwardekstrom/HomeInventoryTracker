@@ -128,8 +128,7 @@ public class EditProductController extends Controller
 		String supply = getView().getSupply();
 		
 		_productfacade.editProduct(_productTarget, desc, sizeValue, sizeUnit, shelfLife, supply);
-		
-		
+			
 	}
 
 }

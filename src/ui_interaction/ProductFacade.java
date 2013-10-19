@@ -91,6 +91,12 @@ public class ProductFacade extends Observable {
 		}
 		
 	}
+	
+	public void romoveProduct(Product toRemove, ProductContainer removeFrom){
+		removeProductFromManager(toRemove);
+		removeProductFromTree(toRemove, removeFrom);
+		
+	}
 
 	//PRIVATE METHODS
 	/**
@@ -103,8 +109,9 @@ public class ProductFacade extends Observable {
 	/**
 	 * removes the Product from the tree
 	 * @param toRemove
+	 * @param removeFrom 
 	 */
-	private void removeProductFromTree(Product toRemove){
+	private void removeProductFromTree(Product toRemove, ProductContainer removeFrom){
 		
 	}
 	/**
