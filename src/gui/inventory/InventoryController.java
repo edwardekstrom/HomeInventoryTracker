@@ -293,7 +293,8 @@ public class InventoryController extends Controller
 //				itemDataList.add(itemData);
 //			}
 //		}
-		getView().setItems(itemDataList.toArray(new ItemData[0]));
+		loadItems();
+		//getView().setItems(itemDataList.toArray(new ItemData[0]));
 	}
 
 	/**
