@@ -1,13 +1,16 @@
 package gui.item;
 
 import gui.common.*;
+import data_structures.*;
 
+import java.util.Date;
 /**
  * Controller class for the edit item view.
  */
 public class EditItemController extends Controller 
 										implements IEditItemController {
 	
+	private ItemData _target;
 	/**
 	 * Constructor.
 	 * 
@@ -18,6 +21,11 @@ public class EditItemController extends Controller
 		super(view);
 
 		construct();
+
+		_target = target;
+
+		
+
 	}
 
 	//
@@ -48,6 +56,8 @@ public class EditItemController extends Controller
 	 */
 	@Override
 	protected void enableComponents() {
+		getView().enableBarcode(false);
+		getView().enableDescription(false);
 	}
 
 	/**
@@ -59,6 +69,16 @@ public class EditItemController extends Controller
 	 */
 	@Override
 	protected void loadValues() {
+
+		String barcode = _target.getBarcode();
+		Product p = ((Item)_target.getTag()).getProduct();
+		String desc = p.getDescription();
+
+		Date entry = _target.getEntryDate();
+
+		getView().setBarcode(barcode);
+		getView().setDescription(desc);
+		getView().setEntryDate(entry);
 	}
 
 	//
@@ -71,6 +91,7 @@ public class EditItemController extends Controller
 	 */
 	@Override
 	public void valuesChanged() {
+
 	}
 	
 	/**
