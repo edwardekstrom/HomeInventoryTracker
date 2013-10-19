@@ -12,10 +12,12 @@ import data_structures.Product;
 import data_structures.ProductContainer;
 import data_structures.Date;
 import data_structures.Barcode;
-
 import gui.product.*;
 import gui.batches.AddItemBatchController;
-
+import hit_exceptions.InvalidAmountException;
+import hit_exceptions.InvalidShelfLifeException;
+import hit_exceptions.InvalidThreeMonthSupplyException;
+import hit_exceptions.InvalidUnitException;
 import singletons.ProductsManager;
 
 /**
@@ -52,14 +54,43 @@ public class ProductFacade extends Observable {
 	
 	}
 
-
-
 	public boolean canAddProduct(String shelfLife, String threeMonthSupply, 
 			                          String amount, String unit,String desc){
 		return Product.willBeValidProduct(shelfLife,threeMonthSupply,amount,unit,desc);
 	}
 
-
+	public void editProduct(Product p, String desc, String sizeValue, String sizeUnit, String shelfLife, String supply){
+		
+		try {
+			p.setDescription(desc);
+			p.setSizeAmount(sizeValue);
+			p.setSizeUnit(sizeUnit);
+			p.setShelfLife(shelfLife);
+			p.setThreeMonthSupply(supply);
+			
+			ProductData pd = p.getTagData();
+			
+			pd.setDescription(desc);
+			pd.setCount(sizeValue);
+			pd.setSize(sizeUnit);
+			pd.setSupply(supply);
+			pd.setShelfLife(shelfLife);
+			
+		} catch (InvalidAmountException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidUnitException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidShelfLifeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidThreeMonthSupplyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 	//PRIVATE METHODS
 	/**
