@@ -6,6 +6,8 @@ import gui.product.*;
 
 import java.util.*;
 
+import org.omg.CORBA._PolicyStub;
+
 import com.sun.tools.internal.jxc.gen.config.Config;
 
 import data_structures.HomeInventory;
@@ -317,7 +319,18 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public boolean canDeleteProduct() {
-		return true;
+		Product p = (Product) getView().getSelectedProduct().getTag();
+		ProductContainer pc = (ProductContainer)getView().getSelectedProductContainer().getTag();
+		List<Item> iList = pc.getItems();
+		boolean canDelete = true;
+		
+		for(Item item : iList){
+			if(item.getProduct() == p){
+				canDelete = false;
+			}
+		}
+		
+		return canDelete;
 	}
 
 	/**
@@ -325,6 +338,9 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void deleteProduct() {
+		ProductContainer pc = (ProductContainer)getView().getSelectedProductContainer().getTag();
+		Product p = (Product) getView().getSelectedProduct().getTag();
+		ProductFacade.getInstance().romoveProduct(p, pc);
 	}
 
 	/**
