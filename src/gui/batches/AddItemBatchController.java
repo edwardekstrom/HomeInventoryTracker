@@ -41,9 +41,13 @@ public class AddItemBatchController extends Controller implements
 		ItemFacade.getInstance().registerAddItemBatchController(this);
 		_products =  new ArrayList<ProductData>();
 		_items = new ArrayList<ItemData>();
+
 		barcodeChanged();
 		//loadValues();
 		getView().setCount("1");
+
+
+		getView().setUseScanner(true);
 	}
 
 	/**
@@ -144,8 +148,14 @@ public class AddItemBatchController extends Controller implements
 	public void barcodeChanged() {
 		boolean legalBarcode = false;
 		String barcode = getView().getBarcode();
+
+
 		if(!barcode.equals("")) legalBarcode = true;
 		getView().enableItemAction(legalBarcode);
+
+		if(getView().getUseScanner() && legalBarcode){
+			addItem();
+		}
 	}
 
 	/**
@@ -154,7 +164,7 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void useScannerChanged() {
-		System.out.println("useScannerChanged");
+		
 
 	}
 
