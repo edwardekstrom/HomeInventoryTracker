@@ -204,7 +204,7 @@ public abstract class ProductContainer implements Serializable{
 	 * @precondition none
 	 * @postcondition product will no longer be in products
 	 */
-	protected void removeProduct(Product product){
+	public void removeProduct(Product product){
 		Boolean productIsEmpty = true;
 		for(int i = 0; i < _items.size(); i++){
 			if(_items.get(i).getProduct() == product){
