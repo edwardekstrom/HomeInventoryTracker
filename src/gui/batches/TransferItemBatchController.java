@@ -120,9 +120,11 @@ public class TransferItemBatchController extends Controller implements
 		ITransferItemBatchView v = getView();
 		Item item = ItemsManager.getInstance().getItem(v.getBarcode());
 		ItemData empty = item.getTagData();
+		Product p = item.getProduct();
 
 		ItemFacade.getInstance().moveItemInTree(item,(ProductContainer)_target.getTag());
 		_items.add(empty);
+		_products.add(p.getTagData());
 		loadValues();
 	}
 	

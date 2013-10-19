@@ -3,12 +3,25 @@ package gui.batches;
 import gui.common.*;
 import gui.product.*;
 
+
+import singletons.*;
+import gui.product.ProductData;
+import gui.item.ItemData;
+
+import data_structures.*;
+import ui_interaction.*;
+
+import java.util.ArrayList;
+
 /**
  * Controller class for the remove item batch view.
  */
 public class RemoveItemBatchController extends Controller implements
 		IRemoveItemBatchController {
 	
+	private ArrayList<ItemData> _items;
+	private ArrayList<ProductData> _products;
+
 	/**
 	 * Constructor.
 	 * 
@@ -17,6 +30,8 @@ public class RemoveItemBatchController extends Controller implements
 	public RemoveItemBatchController(IView view) {
 		super(view);
 
+		_items = new ArrayList<ItemData>();
+		_products = new ArrayList<ProductData>();
 		construct();
 	}
 	
@@ -37,6 +52,13 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void loadValues() {
+		ItemData[] items = _items.toArray(new ItemData[_items.size()]);
+		getView().setItems(items);
+
+		ProductData[] products = _products.toArray(new ProductData[_products.size()]);
+		getView().setProducts(products);
+
+
 	}
 
 	/**
@@ -51,6 +73,11 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void enableComponents() {
+		IRemoveItemBatchView v = getView();
+		v.enableRedo(false);
+		v.enableUndo(false);
+		v.enableItemAction(false);
+
 	}
 
 	/**
@@ -59,6 +86,9 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	public void barcodeChanged() {
+		IRemoveItemBatchView v = getView();
+		Item item = ItemsManager.getInstance().getItem(v.getBarcode());
+		v.enableItemAction(item != null);
 	}
 	
 	/**
@@ -83,6 +113,15 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	public void removeItem() {
+		IRemoveItemBatchView v = getView();
+		Item item = ItemsManager.getInstance().getItem(v.getBarcode());
+		ItemData empty = item.getTagData();
+		Product p = item.getProduct();
+
+		ItemFacade.getInstance().removeItem(item);
+		_items.add(empty);
+		_products.add(p.getTagData());
+		loadValues();
 	}
 	
 	/**
