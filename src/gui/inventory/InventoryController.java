@@ -244,9 +244,16 @@ public class InventoryController extends Controller
 	public void productContainerSelectionChanged() {
 		List<ProductData> productDataList = new ArrayList<ProductData>();		
 		ProductContainerData selectedContainer = getView().getSelectedProductContainer();
-		if(!getView().getSelectedProductContainer().getName().equals("root")){
+		if(!selectedContainer.getName().equals("root")){
 			loadProducts();
 			loadItems();
+		}else{
+			getView().setContextUnit("All");
+		}
+		
+		HomeInventory homeInventory = Configuration.getInstance().getHomeInventory();
+		if(homeInventory.getStorageUnits().contains(selectedContainer.getTag())){
+			getView().setContextUnit(selectedContainer.getName());
 		}
 //		if (selectedContainer != null) {
 //			int productCount = rand.nextInt(20) + 1;
