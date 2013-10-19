@@ -101,4 +101,13 @@ public class ItemsManager {
 	public List<Item> getUnmodifiableAllItemsList(){
 		return Collections.unmodifiableList(_allItemsList);
 	}
+
+	public Item getItem(String barcode){
+		for(Item i : _allItemsList){
+			String code = i.getBarcode().getBarcode();
+			if(code.equals(barcode))
+				return i;
+		}
+		return null;
+	}	
 }
