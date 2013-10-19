@@ -18,6 +18,7 @@ import data_structures.ProductGroup;
 import data_structures.Serializer;
 import data_structures.StorageUnit;
 import singletons.Configuration;
+import sun.security.jca.GetInstance.Instance;
 import ui_interaction.ItemFacade;
 import ui_interaction.ProductFacade;
 import ui_interaction.ProductGroupFacade;
@@ -87,6 +88,7 @@ public class InventoryController extends Controller
 		StorageUnit storageUnit = selectedContainer.getStorageUnit();
 		
 		List<Product> produList = selectedContainer.getProducts();
+		
 		for(Product product: selectedContainer.getProducts()){
 			productsList.add(product.getTagData());
 		}
@@ -265,6 +267,8 @@ public class InventoryController extends Controller
 			String threeMonth = Float.toString(pg.getThreeMonthSup().getAmount()); 
 			getView().setContextGroup(group);
 			getView().setContextSupply(threeMonth);
+		}else if(selectedContainer.getTag() instanceof HomeInventory){
+			loadAllProducts();
 		}
 //		if (selectedContainer != null) {
 //			int productCount = rand.nextInt(20) + 1;
@@ -284,6 +288,24 @@ public class InventoryController extends Controller
 //		getView().setProducts(productDataList.toArray(new ProductData[0]));
 //		
 //		getView().setItems(new ItemData[0]);
+	}
+
+	private void loadAllProducts() {
+		ArrayList<ProductData> productDatas = new ArrayList<ProductData>();
+		HomeInventory homeInventory = Configuration.getInstance().getHomeInventory();
+		for(StorageUnit su : homeInventory.getStorageUnits()){
+			for(Product p : su.getProducts()){
+				productDatas.add(p.getTagData());
+			}
+			for(ProductGroup pc : su.getProductGroups()){
+				for(Product p : pc.getProducts()){
+					productDatas.add(p.getTagData());
+				}
+			}
+		}
+		ProductData[] products = productDatas.toArray(new ProductData[productDatas.size()]);
+		getView().setProducts(products);
+		
 	}
 
 	/**
@@ -311,7 +333,11 @@ public class InventoryController extends Controller
 //				itemDataList.add(itemData);
 //			}
 //		}
-		loadItems();
+		if(getView().getSelectedProductContainer().getTag() instanceof HomeInventory){
+					
+		}else{
+			loadItems();
+		}
 		//getView().setItems(itemDataList.toArray(new ItemData[0]));
 	}
 
@@ -350,6 +376,9 @@ public class InventoryController extends Controller
 		ProductContainer pc = (ProductContainer)getView().getSelectedProductContainer().getTag();
 		Product p = (Product) getView().getSelectedProduct().getTag();
 		ProductFacade.getInstance().romoveProduct(p, pc);
+		
+		getView().selectProductContainer(pc.getTagData());
+		loadProducts();
 	}
 
 	/**
