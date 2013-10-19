@@ -2,6 +2,7 @@ package gui.productgroup;
 
 import ui_interaction.ProductGroupFacade;
 import ui_interaction.StorageUnitFacade;
+import data_structures.Item;
 import data_structures.ProductContainer;
 import data_structures.ProductGroup;
 import data_structures.StorageUnit;
@@ -121,6 +122,15 @@ public class EditProductGroupController extends Controller
 		String newProductGroupName = getView().getProductGroupName();
 		String supplyValue = getView().getSupplyValue();
 		SizeUnits supplyUnit = getView().getSupplyUnit();
+		_target.setName(newProductGroupName);
+		UnitSize tmSupply = null;
+		try{
+		tmSupply = new UnitSize(supplyValue, supplyUnit.toString());
+		}catch(Exception e){
+			System.out.println(supplyUnit.toString());
+		}
+		_target.setThreeMonthSup(tmSupply);
+		_target.getTagData().setName(newProductGroupName);
 	}
 
 }
