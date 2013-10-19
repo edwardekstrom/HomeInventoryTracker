@@ -4,6 +4,9 @@ import gui.common.*;
 import data_structures.*;
 
 import java.util.Date;
+
+import ui_interaction.*;
+
 /**
  * Controller class for the edit item view.
  */
@@ -11,6 +14,8 @@ public class EditItemController extends Controller
 										implements IEditItemController {
 	
 	private ItemData _target;
+	private int _count;
+
 	/**
 	 * Constructor.
 	 * 
@@ -19,13 +24,20 @@ public class EditItemController extends Controller
 	 */
 	public EditItemController(IView view, ItemData target) {
 		super(view);
-
 		construct();
-
 		_target = target;
 
-		
+		String barcode = _target.getBarcode();
+		Product p = ((Item)_target.getTag()).getProduct();
+		String desc = p.getDescription();
 
+		Date entry = _target.getEntryDate();
+
+		getView().setBarcode(barcode);
+		getView().setDescription(desc);
+		getView().setEntryDate(entry);
+
+		_count = 0;
 	}
 
 	//
@@ -70,15 +82,7 @@ public class EditItemController extends Controller
 	@Override
 	protected void loadValues() {
 
-		String barcode = _target.getBarcode();
-		Product p = ((Item)_target.getTag()).getProduct();
-		String desc = p.getDescription();
 
-		Date entry = _target.getEntryDate();
-
-		getView().setBarcode(barcode);
-		getView().setDescription(desc);
-		getView().setEntryDate(entry);
 	}
 
 	//
@@ -91,7 +95,14 @@ public class EditItemController extends Controller
 	 */
 	@Override
 	public void valuesChanged() {
+		Date entryDate = getView().getEntryDate();
 
+		if (entryDate == null){
+			getView().enableOK(false);
+		}
+		else{
+			getView().enableOK(true);
+		}
 	}
 	
 	/**
@@ -100,6 +111,16 @@ public class EditItemController extends Controller
 	 */
 	@Override
 	public void editItem() {
+		Date entryDate = getView().getEntryDate();
+
+		Item item = (Item)_target.getTag();
+		data_structures.Date entry = new data_structures.Date(entryDate);
+		try{
+			item.setEntryDate(entry);
+			_target.setEntryDate(entryDate);
+		}catch(Exception e){}
+
+
 	}
 
 }

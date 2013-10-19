@@ -154,5 +154,9 @@ public class ItemFacade extends Observable{
 		// TODO Auto-generated method stub
 		super.setChanged();
 	}
+
+	public void change(){
+		this.setChanged();
+	}
 	
 }
