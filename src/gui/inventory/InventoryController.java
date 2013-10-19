@@ -377,6 +377,10 @@ public class InventoryController extends Controller
 
 		ProductContainer pc = item.getContainer();
 		pc.removeItem(item);
+
+		Product p  = item.getProduct();
+
+		loadItems();
 		System.out.println("InventoryController-removeItem");
 
 	}
