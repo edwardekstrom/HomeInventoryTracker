@@ -14,6 +14,7 @@ import data_structures.HomeInventory;
 import data_structures.Item;
 import data_structures.Product;
 import data_structures.ProductContainer;
+import data_structures.ProductGroup;
 import data_structures.Serializer;
 import data_structures.StorageUnit;
 import singletons.Configuration;
@@ -85,7 +86,8 @@ public class InventoryController extends Controller
 		ProductContainer selectedContainer = (ProductContainer) getView().getSelectedProductContainer().getTag();
 		StorageUnit storageUnit = selectedContainer.getStorageUnit();
 		
-		for(Product product: storageUnit.getProducts()){
+		List<Product> produList = selectedContainer.getProducts();
+		for(Product product: selectedContainer.getProducts()){
 			productsList.add(product.getTagData());
 		}
 		ProductData[] products = productsList.toArray(new ProductData[productsList.size()]);
@@ -101,10 +103,10 @@ public class InventoryController extends Controller
 		if(getView().getSelectedProduct()!=null){
 			Product product = (Product) getView().getSelectedProduct().getTag();
 
-			for (Item item : storageUnit.getItems()) {
-				// if(item.getProduct() == product){
-				itemDatas.add(item.getTagData());
-				// }
+			for (Item item : selectedContainer.getItems()) {
+				if(item.getProduct() == product){
+					itemDatas.add(item.getTagData());
+				}
 			}
 
 			getView().setItems(itemDatas.toArray(new ItemData[itemDatas.size()]));
@@ -256,6 +258,13 @@ public class InventoryController extends Controller
 		HomeInventory homeInventory = Configuration.getInstance().getHomeInventory();
 		if(homeInventory.getStorageUnits().contains(selectedContainer.getTag())){
 			getView().setContextUnit(selectedContainer.getName());
+		}
+		if(selectedContainer.getTag() instanceof ProductGroup){
+			ProductGroup pg = (ProductGroup)selectedContainer.getTag();
+			String group = pg.getName();
+			String threeMonth = Float.toString(pg.getThreeMonthSup().getAmount()); 
+			getView().setContextGroup(group);
+			getView().setContextSupply(threeMonth);
 		}
 //		if (selectedContainer != null) {
 //			int productCount = rand.nextInt(20) + 1;
@@ -436,6 +445,7 @@ public class InventoryController extends Controller
 	@Override
 	public void editStorageUnit() {
 		getView().displayEditStorageUnitView();
+		update(null, null);
 	}
 
 	/**
