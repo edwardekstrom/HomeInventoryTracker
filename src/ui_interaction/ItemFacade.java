@@ -61,9 +61,10 @@ public class ItemFacade extends Observable{
 		
 	}
 	
-	public void removeItem(){
-		
-	}
+	public void removeItem(Item item){
+		removeItemFromTree(item);
+		removeItemFromManager(item);
+	}	
 	
 	/**
 	 * Add the given item to the tree
@@ -83,23 +84,25 @@ public class ItemFacade extends Observable{
 	 * removes the item from the tree
 	 * @param toRemove
 	 */
-	private void removeItemFromTree(Item toRemove){
-		
+	private void removeItemFromTree(Item item){
+		ProductContainer pc = item.getContainer();
+		pc.removeItem(item);
 	}
 	/**
 	 * removes the item from the manager
 	 * @param toRemove
 	 */
 	private void removeItemFromManager(Item toRemove){
-		
+		ItemsManager.getInstance().removeItem(toRemove);
 	}
 	/**
 	 * Moves the Item from start container to finish
 	 * @param start
 	 * @param finish
 	 */
-	public void moveItemInTree(ProductContainer start, ProductContainer finish){
-		
+	public void moveItemInTree(Item item, ProductContainer destination ){
+		removeItem(item);
+		destination.addItem(item);
 	}
 	
 	/**
@@ -155,8 +158,5 @@ public class ItemFacade extends Observable{
 		super.setChanged();
 	}
 
-	public void change(){
-		this.setChanged();
-	}
 	
 }

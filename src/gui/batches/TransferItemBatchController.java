@@ -5,8 +5,13 @@ import gui.inventory.*;
 import gui.product.*;
 
 import singletons.*;
+import gui.product.ProductData;
+import gui.item.ItemData;
 
 import data_structures.*;
+import ui_interaction.*;
+
+import java.util.ArrayList;
 
 /**
  * Controller class for the transfer item batch view.
@@ -14,6 +19,10 @@ import data_structures.*;
 public class TransferItemBatchController extends Controller implements
 		ITransferItemBatchController {
 	
+	private ArrayList<ItemData> _items;
+	private ArrayList<ProductData> _products;
+	ProductContainerData _target;
+
 	/**
 	 * Constructor.
 	 * 
@@ -22,8 +31,14 @@ public class TransferItemBatchController extends Controller implements
 	 */
 	public TransferItemBatchController(IView view, ProductContainerData target) {
 		super(view);
+        _target = target;
+
+		_items = new ArrayList<ItemData>();
+		_products = new ArrayList<ProductData>();
 
 		construct();
+
+		
 	}
 	
 	/**
@@ -43,6 +58,11 @@ public class TransferItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void loadValues() {
+		ItemData[] items = _items.toArray(new ItemData[_items.size()]);
+		getView().setItems(items);
+
+		ProductData[] products = _products.toArray(new ProductData[_products.size()]);
+		getView().setProducts(products);
 	}
 
 	/**
@@ -72,7 +92,7 @@ public class TransferItemBatchController extends Controller implements
 		ITransferItemBatchView v = getView();
 		Item item = ItemsManager.getInstance().getItem(v.getBarcode());
 		v.enableItemAction(item != null);
-	
+
 	}
 	
 	/**
@@ -97,6 +117,13 @@ public class TransferItemBatchController extends Controller implements
 	 */
 	@Override
 	public void transferItem() {
+		ITransferItemBatchView v = getView();
+		Item item = ItemsManager.getInstance().getItem(v.getBarcode());
+		ItemData empty = item.getTagData();
+
+		ItemFacade.getInstance().moveItemInTree(item,(ProductContainer)_target.getTag());
+		_items.add(empty);
+		loadValues();
 	}
 	
 	/**

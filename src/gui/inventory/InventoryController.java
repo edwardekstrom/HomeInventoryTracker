@@ -384,10 +384,7 @@ public class InventoryController extends Controller
 		ItemData id = getView().getSelectedItem();
 		Item item = (Item)id.getTag();
 
-		ProductContainer pc = item.getContainer();
-		pc.removeItem(item);
-
-		Product p  = item.getProduct();
+		ItemFacade.getInstance().removeItem(item);
 
 		loadItems();
 
