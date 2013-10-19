@@ -11,6 +11,7 @@ public class EditProductController extends Controller
 										implements IEditProductController {
 	
 	ProductFacade _productfacade;
+	Product _productTarget;
 	
 	/**
 	 * Constructor.
@@ -21,9 +22,24 @@ public class EditProductController extends Controller
 	public EditProductController(IView view, ProductData target) {
 		super(view);
 		construct();
+		_productTarget = (Product) target.getTag();
+		
+		getView().setBarcode(_productTarget.getBarcode().getBarcode());
+		getView().setDescription(_productTarget.getDescription());
+		getView().setShelfLife(_productTarget.getShelfLife()+"");
+		
+		for( SizeUnits v : SizeUnits.values()){
+			if(v.toString().equals(_productTarget.getSizeUnit())){
+				getView().setSizeUnit(v);
+				break;
+			}
+		}
+		getView().setSizeValue(_productTarget.getSizeAmount()+"");
+		getView().setSupply(_productTarget.getThreeMonthSupply()+"");
 		
 		getView().enableBarcode(false);
 		_productfacade = ProductFacade.getInstance();
+		valuesChanged();
 	}
 
 	//
@@ -110,6 +126,8 @@ public class EditProductController extends Controller
 		String sizeUnit = getView().getSizeUnit().toString();
 		String sizeValue = getView().getSizeValue();
 		String supply = getView().getSupply();
+		
+		_productfacade.editProduct(_productTarget, desc, sizeValue, sizeUnit, shelfLife, supply);
 		
 		
 	}
