@@ -77,7 +77,7 @@ public class RemoveItemBatchController extends Controller implements
 		v.enableRedo(false);
 		v.enableUndo(false);
 		v.enableItemAction(false);
-
+		v.setUseScanner(true);
 	}
 
 	/**

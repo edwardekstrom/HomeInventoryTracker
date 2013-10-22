@@ -44,7 +44,7 @@ public class Item implements Serializable{
 		_tagData.setExpirationDate(new java.util.Date(_expirationDate.getDate().getTimeInMillis()));
 		//TODO Make sure these work
 		_tagData.setStorageUnit(container.getStorageUnit().getName());
-		_tagData.setProductGroup(container.getName());
+		// _tagData.setProductGroup(container.getName());
 	}
 
 	/**@precondition expDate is not null
@@ -96,6 +96,7 @@ public class Item implements Serializable{
 		}else{
 			_entryDate = entryDate;
 			setExpirationDate();
+			
 		}
 
 	}

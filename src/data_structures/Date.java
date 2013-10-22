@@ -72,6 +72,10 @@ public class Date implements Serializable{
 		return _date;
 	}
 
+	public java.util.Date getUtilDate(){
+		return _date.getTime();
+	}
+
 	public String getDateAsString(SimpleDateFormat sdf){
 		java.util.Date dt = _date.getTime();
 		return sdf.format(dt);

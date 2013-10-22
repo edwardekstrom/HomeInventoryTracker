@@ -14,7 +14,6 @@ public class EditItemController extends Controller
 										implements IEditItemController {
 	
 	private ItemData _target;
-	private int _count;
 
 	/**
 	 * Constructor.
@@ -37,7 +36,6 @@ public class EditItemController extends Controller
 		getView().setDescription(desc);
 		getView().setEntryDate(entry);
 
-		_count = 0;
 	}
 
 	//
@@ -118,6 +116,7 @@ public class EditItemController extends Controller
 		try{
 			item.setEntryDate(entry);
 			_target.setEntryDate(entryDate);
+			_target.setExpirationDate(item.getExpirationDate().getUtilDate());
 		}catch(Exception e){}
 
 

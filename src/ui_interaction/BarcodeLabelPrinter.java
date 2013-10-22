@@ -56,7 +56,7 @@ public class BarcodeLabelPrinter {
                 document.close();
 
                 java.awt.Desktop.getDesktop().open(new File(filename)); 
-        }catch(Exception e){System.out.println(e.toString());}
+        }catch(Exception e){}
     }
 
 
