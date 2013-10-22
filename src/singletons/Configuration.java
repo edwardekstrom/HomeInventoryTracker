@@ -30,6 +30,10 @@ public class Configuration {
 		return _instance;
 	}
 	
+	public static HomeInventory getHIT(){
+		return getInstance().getHomeInventory();
+	}
+
 
 	public HomeInventory getHomeInventory(){
 		return _homeInventory;

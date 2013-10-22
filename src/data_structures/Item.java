@@ -41,6 +41,7 @@ public class Item implements Serializable{
 		_tagData.setTag(this);
 		_tagData.setBarcode(barcode.getBarcode());
 		_tagData.setEntryDate(new java.util.Date(entryDate.getDate().getTimeInMillis()));
+		_tagData.setExpirationDate(new java.util.Date(_expirationDate.getDate().getTimeInMillis()));
 		//TODO Make sure these work
 		_tagData.setStorageUnit(container.getStorageUnit().getName());
 		_tagData.setProductGroup(container.getName());

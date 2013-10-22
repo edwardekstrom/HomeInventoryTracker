@@ -104,14 +104,6 @@ public class ItemFacade extends Observable{
 		removeItem(item);
 		destination.addItem(item);
 	}
-	
-	/**
-	 * Prints the barcodes for the given items
-	 * @param toPrint
-	 */
-	public void printBatchBarcodes(List<Item> toPrint){
-		
-	}
 
 
 	public void registerAddItemBatchController(AddItemBatchController aibc){

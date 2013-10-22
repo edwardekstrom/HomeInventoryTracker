@@ -59,7 +59,7 @@ public class Date implements Serializable{
 	 */
 	public Date generateExperationDate(int shelfLife){
 		Date expDate = new Date(_date);
-		expDate.getDate().add(GregorianCalendar.DAY_OF_MONTH, shelfLife);
+		expDate.getDate().add(GregorianCalendar.MONTH, shelfLife);
 		return expDate;
 	}
 	

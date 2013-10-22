@@ -78,4 +78,13 @@ public class HomeInventory implements Serializable{
 	public void removeStorageUnit(StorageUnit su){
 		_storageUnits.remove(su);
 	}
+
+	public Product getProduct(String barcode){
+		for(StorageUnit u :_storageUnits){
+			Product p = u.getProduct(barcode);
+			if(p != null) 
+				return p;
+		}
+		return null;
+	}
 }

@@ -139,4 +139,8 @@ public class ProductFacade extends Observable {
 		// TODO Auto-generated method stub
 		super.notifyObservers();
 	}
+
+	public Product getProduct(String barcode){
+		return Configuration.getHIT().getProduct(barcode);
+	}
 }
