@@ -164,8 +164,6 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void useScannerChanged() {
-		
-
 	}
 
 	/**
@@ -200,11 +198,9 @@ public class AddItemBatchController extends Controller implements
 		else if(batchCurrent != null){
 			addCurrentItems(batchCurrent);
 		}
-
-		
+		if(current != null || batchCurrent != null)
+			reset();
 	}
-
-
 
 	public  void addCurrentItems(Product current){
 
@@ -233,14 +229,11 @@ public class AddItemBatchController extends Controller implements
 
 			displayItemsForProduct(current);
 		}
-
 	}
-
 
 	public void displayItemsForProduct(Product p){
 		ItemData[] items = getItemsFor(p);
 		getView().setItems(items);
-
 	}
 	
 	private ItemData[] getItemsFor(Product p){
@@ -255,8 +248,6 @@ public class AddItemBatchController extends Controller implements
 		ItemData[] itemsArray = items.toArray(new ItemData[items.size()]);
 		return itemsArray;
 	}
-
-
 
 	/**
 	 * This method is called when the user clicks the "Redo" button
@@ -293,14 +284,9 @@ public class AddItemBatchController extends Controller implements
 	}
 
 	public void addProduct(Product p){
-//		_products.add(p.getTagData());
-//		ProductData[] products = _products.toArray(new ProductData[_products.size()]);
-//		loadValues();
-		
 		_products.add(p.getTagData());
 		ProductData[] products = _products.toArray(new ProductData[_products.size()]);
 		getView().setProducts(products);
-
 	}
 
 	public Product getProduct(String barcode){
@@ -311,6 +297,11 @@ public class AddItemBatchController extends Controller implements
 		return null;
 	}
 
+	public void reset(){
+		getView().setCount("0");
+		getView().setEntryDate(new java.util.Date());
+		getView().setBarcode("");
+	}
 
 	
 }

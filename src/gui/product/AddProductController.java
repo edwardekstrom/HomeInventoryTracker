@@ -112,10 +112,6 @@ public class AddProductController extends Controller implements
 
 		changedUnit();
 		validateCurrentProduct();
-
-
-
-
 	}
 
 	private void changedUnit(){
@@ -140,8 +136,6 @@ public class AddProductController extends Controller implements
 		getView().enableOK(canAdd);
 	}
 
-
-	
 	/**
 	 * This method is called when the user clicks the "OK"
 	 * button in the add product view.

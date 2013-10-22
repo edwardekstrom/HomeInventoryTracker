@@ -52,6 +52,7 @@ public class ProductFacade extends Observable {
 		AddItemBatchController aibc = ItemFacade.getInstance().getAddItemBatchController();
 		aibc.addProduct(p);
 		aibc.addCurrentItems(p);
+		aibc.reset();
 	
 	}
 
