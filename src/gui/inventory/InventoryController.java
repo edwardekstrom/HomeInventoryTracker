@@ -112,6 +112,8 @@ public class InventoryController extends Controller
 			}
 
 			getView().setItems(itemDatas.toArray(new ItemData[itemDatas.size()]));
+		}else{
+			getView().setItems(new ItemData[0]);
 		}
 	}
 
@@ -257,6 +259,9 @@ public class InventoryController extends Controller
 			getView().setContextUnit("All");
 		}
 		
+		getView().setContextSupply("");
+		getView().setContextGroup("");
+		
 		HomeInventory homeInventory = Configuration.getInstance().getHomeInventory();
 		if(homeInventory.getStorageUnits().contains(selectedContainer.getTag())){
 			getView().setContextUnit(selectedContainer.getName());
@@ -270,24 +275,6 @@ public class InventoryController extends Controller
 		}else if(selectedContainer.getTag() instanceof HomeInventory){
 			loadAllProducts();
 		}
-//		if (selectedContainer != null) {
-//			int productCount = rand.nextInt(20) + 1;
-//			for (int i = 1; i <= productCount; ++i) {
-//				ProductData productData = new ProductData();			
-//				productData.setBarcode(getRandomBarcode());
-//				int itemCount = rand.nextInt(25) + 1;
-//				productData.setCount(Integer.toString(itemCount));
-//				productData.setDescription("Item " + i);
-//				productData.setShelfLife("3 months");
-//				productData.setSize("1 pounds");
-//				productData.setSupply("10 count");
-//				
-//				productDataList.add(productData);
-//			}
-//		}
-//		getView().setProducts(productDataList.toArray(new ProductData[0]));
-//		
-//		getView().setItems(new ItemData[0]);
 	}
 
 	private void loadAllProducts() {
