@@ -1041,7 +1041,7 @@ public class InventoryView extends View implements IInventoryView {
 		ProductContainerData target = getSelectedProductContainer();
 		DialogBox dialogBox = new DialogBox(_parent, "Add Items to " + target.getName());
 		AddItemBatchView dialogView = new AddItemBatchView(_parent, dialogBox, target);
-		dialogBox.display(dialogView, false);
+		dialogBox.display(dialogView, true);
 	}
 
 	@Override
