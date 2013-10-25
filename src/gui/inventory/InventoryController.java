@@ -18,6 +18,8 @@ import data_structures.ProductGroup;
 import data_structures.Serializer;
 import data_structures.StorageUnit;
 import singletons.Configuration;
+import singletons.ItemsManager;
+import singletons.ProductsManager;
 import sun.security.jca.GetInstance.Instance;
 import ui_interaction.ItemFacade;
 import ui_interaction.ProductFacade;
@@ -41,6 +43,7 @@ public class InventoryController extends Controller
 		construct();
 		
 		HomeInventory homeInventory = Serializer.deserializeHIT();
+		Serializer.de_storeManagers();
 		
 		StorageUnitFacade storageUnitFacade = StorageUnitFacade.getInstance();
 		storageUnitFacade.addObserver(this);
@@ -96,6 +99,18 @@ public class InventoryController extends Controller
 		getView().setProducts(products);
 	}
 	
+	private void loadAllProducts() {
+		ArrayList<ProductData> productDatas = new ArrayList<ProductData>();
+		HomeInventory homeInventory = Configuration.getInstance().getHomeInventory();
+		for(Product p: ProductsManager.getInstance().getAllProducts()){
+			ProductData pData = p.getTagData();
+			productDatas.add(pData);
+		}
+		ProductData[] products = productDatas.toArray(new ProductData[productDatas.size()]);
+		getView().setProducts(products);
+		
+	}
+	
 	private void loadItems(){
 		ArrayList<ItemData> itemDatas = new ArrayList<ItemData>();
 		
@@ -112,6 +127,25 @@ public class InventoryController extends Controller
 			}
 
 			getView().setItems(itemDatas.toArray(new ItemData[itemDatas.size()]));
+		}else{
+			getView().setItems(new ItemData[0]);
+		}
+	}
+	
+	private void loadAllItems(){
+		if (getView().getSelectedProduct() != null) {
+			ArrayList<ItemData> itemDatas = new ArrayList<ItemData>();
+			HomeInventory homeInventory = Configuration.getInstance()
+					.getHomeInventory();
+			Product product = (Product) getView().getSelectedProduct().getTag();
+			for (Item i : ItemsManager.getInstance().getAllItems()) {
+				if (i.getProduct() == product) {
+					itemDatas.add(i.getTagData());
+				}
+			}
+			ItemData[] items = itemDatas
+					.toArray(new ItemData[itemDatas.size()]);
+			getView().setItems(items);
 		}else{
 			getView().setItems(new ItemData[0]);
 		}
@@ -141,7 +175,7 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public boolean canAddStorageUnit() {
-		if(getView().getSelectedProductContainer().getName().equals("root"))
+		if(getView().getSelectedProductContainer().getTag() instanceof HomeInventory)
 			return true;
 		else
 			return false;
@@ -274,26 +308,10 @@ public class InventoryController extends Controller
 			getView().setContextSupply(threeMonth);
 		}else if(selectedContainer.getTag() instanceof HomeInventory){
 			loadAllProducts();
+			loadAllItems();
 		}
 	}
 
-	private void loadAllProducts() {
-		ArrayList<ProductData> productDatas = new ArrayList<ProductData>();
-		HomeInventory homeInventory = Configuration.getInstance().getHomeInventory();
-		for(StorageUnit su : homeInventory.getStorageUnits()){
-			for(Product p : su.getProducts()){
-				productDatas.add(p.getTagData());
-			}
-			for(ProductGroup pc : su.getProductGroups()){
-				for(Product p : pc.getProducts()){
-					productDatas.add(p.getTagData());
-				}
-			}
-		}
-		ProductData[] products = productDatas.toArray(new ProductData[productDatas.size()]);
-		getView().setProducts(products);
-		
-	}
 
 	/**
 	 * This method is called when the selected item changes.
@@ -321,7 +339,7 @@ public class InventoryController extends Controller
 //			}
 //		}
 		if(getView().getSelectedProductContainer().getTag() instanceof HomeInventory){
-					
+			loadAllItems();
 		}else{
 			loadItems();
 		}

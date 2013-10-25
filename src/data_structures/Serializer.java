@@ -6,6 +6,12 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import com.sun.org.apache.bcel.internal.generic.StoreInstruction;
+
+import singletons.BarcodeManager;
+import singletons.ItemsManager;
+import singletons.ProductsManager;
+
 public class Serializer {
 	
 	/**
@@ -13,8 +19,9 @@ public class Serializer {
 	 * @param homeInventory
 	 */
 	public static void serializeHIT(HomeInventory homeInventory){
-		//System.out.println(hi.getStorageUnitsCount());
 		String filename = "hit.ser";
+		
+		storeManagers();
 		
 		// Save the HomeInventory to file
 		FileOutputStream output = null;
@@ -30,6 +37,12 @@ public class Serializer {
 		}
 	}
 	
+	private static void storeManagers(){
+		BarcodeManager.getInstance().storeBarcodeList();
+		ItemsManager.getInstance().storeBarcodeList();
+		ProductsManager.getInstance().storeBarcodeList();
+	}
+	
 	
 	/**
 	 * Returns the last serialized HomeInventory
@@ -37,6 +50,7 @@ public class Serializer {
 	 */
 	public static HomeInventory deserializeHIT(){
 		String filename = "hit.ser";
+		
 		// Read the HomeInventory from file
 		HomeInventory homeInventory = null;
 		FileInputStream input = null;
@@ -52,5 +66,11 @@ public class Serializer {
 			return new HomeInventory();
 		}
 		return homeInventory;
+	}
+	
+	public static void de_storeManagers(){
+		BarcodeManager.getInstance().de_storeBarcodeList();
+		ItemsManager.getInstance().de_storeBarcodeList();
+		ProductsManager.getInstance().de_storeBarcodeList();
 	}
 }

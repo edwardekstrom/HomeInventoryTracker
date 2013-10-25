@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import data_structures.HomeInventory;
 import data_structures.Item;
 
 /**
@@ -101,6 +102,10 @@ public class ItemsManager {
 	public List<Item> getUnmodifiableAllItemsList(){
 		return Collections.unmodifiableList(_allItemsList);
 	}
+	
+	public List<Item> getAllItems(){
+		return _allItemsList;
+	}
 
 	public Item getItem(String barcode){
 		for(Item i : _allItemsList){
@@ -110,4 +115,16 @@ public class ItemsManager {
 		}
 		return null;
 	}	
+	
+	public void storeBarcodeList(){
+		HomeInventory hi = Configuration.getInstance().getHomeInventory();
+		hi.setStoreItemManagerList(_allItemsList);;
+	}
+	
+	public void de_storeBarcodeList(){
+		HomeInventory hi = Configuration.getInstance().getHomeInventory();
+		_allItemsList = hi.getStoreItemManagerList();
+	}
+	
+	
 }
