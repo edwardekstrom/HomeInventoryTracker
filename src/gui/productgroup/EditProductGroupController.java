@@ -100,7 +100,10 @@ public class EditProductGroupController extends Controller
 		String name = getView().getProductGroupName();
 		
 		boolean validName = _target.getContainer().canAddProductGroupWithName(name);
-		
+		//check if the name hasn't been changed
+		if (name.equals(_target.getName())){
+			validName = true;
+		}
 		//TODO fix when jay and chris get their crap together
 		String amount = getView().getSupplyValue();
 		String supplyUnit = getView().getSupplyUnit().toString();
