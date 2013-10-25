@@ -6,6 +6,8 @@ import gui.inventory.ProductContainerData;
 import java.io.Serializable;
 import java.util.List;
 
+import data_structures_tests.ItemTest;
+
 /**
  * @author nRitchie
  *An abstract class for StorageUnits and ProductGroups. These objects can "contain"
@@ -220,6 +222,8 @@ public abstract class ProductContainer implements Serializable{
 	 */
 	private void addProduct(Product product){
 		_products.add(product);
+		
+		
 	}
 	
 	/**
@@ -229,15 +233,15 @@ public abstract class ProductContainer implements Serializable{
 	 * @postcondition product will no longer be in products
 	 */
 	public void removeProduct(Product product){
-		Boolean productIsEmpty = true;
-		for(int i = 0; i < _items.size(); i++){
-			if(_items.get(i).getProduct() == product){
-				productIsEmpty = false;
-			}
-		}
-		if(productIsEmpty){
+//		Boolean productIsEmpty = true;
+//		for(int i = 0; i < _items.size(); i++){
+//			if(_items.get(i).getProduct() == product){
+//				productIsEmpty = false;
+//			}
+//		}
+//		if(productIsEmpty){
 			_products.remove(product);
-		}
+//		}
 	}
 	
 	/**
@@ -249,7 +253,7 @@ public abstract class ProductContainer implements Serializable{
 	 * @postcondition product will be moved to target and all items of that product that 
 	 * were in the target's storageUnit will be moved to target aswell
 	 */
-	protected void moveProduct(Product product, ProductContainer targetProductContainer) {
+	public void moveProduct(Product product, ProductContainer targetProductContainer) {
 		/*
 		 * if Product is already in a Product Container in
 		 *	the Target Storage Unit
@@ -263,11 +267,14 @@ public abstract class ProductContainer implements Serializable{
 			targetProductContainer.addProduct(product);
 			containerWithProduct.removeProduct(product);
 			
-			for (int i = 0; i < containerWithProduct.getItems().size(); i++) {
-				Item itemToTransfer = containerWithProduct.getItems().get(i);
-				
-				targetProductContainer.addItem(itemToTransfer);
-				containerWithProduct.removeItem(itemToTransfer);
+			for (Item itemToTransfer: containerWithProduct.getItems()){
+//			for (int i = 0; i < containerWithProduct.getItems().size(); i++) {
+//				Item itemToTransfer = containerWithProduct.getItems().get(i);
+				if(itemToTransfer.getProduct() == product){
+					targetProductContainer.addItem(itemToTransfer);
+					containerWithProduct.removeItem(itemToTransfer);
+				}
+
 			}
 		}else{
 			targetProductContainer.addProduct(product);
@@ -280,7 +287,8 @@ public abstract class ProductContainer implements Serializable{
 			}
 		}
 		if(itemWasTheLast){
-			this.removeProduct(product);
+//			THIS IS STILL WRONG STOP DOING IT
+//			this.removeProduct(product);
 		}
 	}
 	
