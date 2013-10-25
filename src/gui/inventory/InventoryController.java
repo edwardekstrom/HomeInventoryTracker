@@ -93,6 +93,8 @@ public class InventoryController extends Controller
 		List<Product> produList = selectedContainer.getProducts();
 		
 		for(Product product: selectedContainer.getProducts()){
+			int count = getProductItemCount(product);
+			product.getTagData().setCount("" + count);
 			productsList.add(product.getTagData());
 		}
 		ProductData[] products = productsList.toArray(new ProductData[productsList.size()]);
@@ -104,11 +106,34 @@ public class InventoryController extends Controller
 		HomeInventory homeInventory = Configuration.getInstance().getHomeInventory();
 		for(Product p: ProductsManager.getInstance().getAllProducts()){
 			ProductData pData = p.getTagData();
+			int count = getICountManager(p);
+			pData.setCount("" + count);
 			productDatas.add(pData);
 		}
 		ProductData[] products = productDatas.toArray(new ProductData[productDatas.size()]);
 		getView().setProducts(products);
 		
+	}
+	
+	private int getProductItemCount(Product product){
+		int count = 0;
+		ProductContainer selectedContainer = (ProductContainer) getView().getSelectedProductContainer().getTag();
+		for (Item item : selectedContainer.getItems()) {
+			if(item.getProduct() == product){
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	private int getICountManager(Product product){
+		int count = 0;
+		for (Item i : ItemsManager.getInstance().getAllItems()) {
+			if (i.getProduct() == product) {
+				count++;
+			}
+		}
+		return count;
 	}
 	
 	private void loadItems(){
