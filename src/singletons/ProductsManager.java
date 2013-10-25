@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import data_structures.HomeInventory;
 import data_structures.Item;
 import data_structures.Product;
 
@@ -100,5 +101,19 @@ public class ProductsManager {
 	 */
 	public List<Product> getUnmodifiableList(){
 		return Collections.unmodifiableList(_allProductsList);
+	}
+	
+	public List<Product> getAllProducts(){
+		return _allProductsList;
+	}
+	
+	public void storeBarcodeList(){
+		HomeInventory hi = Configuration.getInstance().getHomeInventory();
+		hi.setStoreProductManagerList(_allProductsList);;
+	}
+	
+	public void de_storeBarcodeList(){
+		HomeInventory hi = Configuration.getInstance().getHomeInventory();
+		_allProductsList = hi.getStoreProductManagerList();
 	}
 }

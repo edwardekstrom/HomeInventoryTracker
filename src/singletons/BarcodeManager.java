@@ -9,6 +9,7 @@ import java.util.Random;
 import com.sun.jdi.InvalidTypeException;
 import com.sun.tools.internal.ws.wsdl.document.jaxws.Exception;
 
+import data_structures.HomeInventory;
 import data_structures.Item;
 
 public class BarcodeManager {
@@ -149,5 +150,15 @@ public class BarcodeManager {
 	 */
 	public int barcodeListSize(){
 		return _allBarcodesList.size();
+	}
+	
+	public void storeBarcodeList(){
+		HomeInventory hi = Configuration.getInstance().getHomeInventory();
+		hi.setStoreBarcodeManagerList(_allBarcodesList);;
+	}
+	
+	public void de_storeBarcodeList(){
+		HomeInventory hi = Configuration.getInstance().getHomeInventory();
+		_allBarcodesList = hi.getStoreBarcodeManagerList();
 	}
 }

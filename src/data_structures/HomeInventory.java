@@ -14,6 +14,9 @@ import com.sun.tools.internal.jxc.gen.config.Config;
 public class HomeInventory implements Serializable{
 	private List<StorageUnit> _storageUnits;
 	private ProductContainerData _rootData;
+	private List<Product> _storeProductManagerList;
+	private List<Item> _storeItemManagerList;
+	private List<String> _storeBarcodeManagerList;
 	
 	/**
 	 * @precondition none
@@ -24,6 +27,9 @@ public class HomeInventory implements Serializable{
 		_rootData = new ProductContainerData();
 		_rootData.setName("root");
 		_rootData.setTag(this);
+		_storeBarcodeManagerList = new ArrayList<String>();
+		_storeItemManagerList = new ArrayList<Item>();
+		_storeProductManagerList = new ArrayList<Product>();
 		
 	}
 	
@@ -86,5 +92,47 @@ public class HomeInventory implements Serializable{
 				return p;
 		}
 		return null;
+	}
+
+	/**
+	 * @return the _storeItemManagerList
+	 */
+	public List<Item> getStoreItemManagerList() {
+		return _storeItemManagerList;
+	}
+
+	/**
+	 * @param _storeItemManagerList the _storeItemManagerList to set
+	 */
+	public void setStoreItemManagerList(List<Item> _storeItemManagerList) {
+		this._storeItemManagerList = _storeItemManagerList;
+	}
+
+	/**
+	 * @return the _storeProductManagerList
+	 */
+	public List<Product> getStoreProductManagerList() {
+		return _storeProductManagerList;
+	}
+
+	/**
+	 * @param _storeProductManagerList the _storeProductManagerList to set
+	 */
+	public void setStoreProductManagerList(List<Product> _storeProductManagerList) {
+		this._storeProductManagerList = _storeProductManagerList;
+	}
+
+	/**
+	 * @return the _storeBarcodeManagerList
+	 */
+	public List<String> getStoreBarcodeManagerList() {
+		return _storeBarcodeManagerList;
+	}
+
+	/**
+	 * @param _storeBarcodeManagerList the _storeBarcodeManagerList to set
+	 */
+	public void setStoreBarcodeManagerList(List<String> _storeBarcodeManagerList) {
+		this._storeBarcodeManagerList = _storeBarcodeManagerList;
 	}
 }
