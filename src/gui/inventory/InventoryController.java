@@ -535,8 +535,6 @@ public class InventoryController extends Controller
 	@Override
 	public void update(Observable o, Object arg) {
 		getView().setProductContainers(StorageUnitFacade.getInstance().getRootPCData());
-		loadProducts();
-		loadItems();
 	}
 	
 
