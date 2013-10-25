@@ -93,6 +93,7 @@ public class RemoveItemBatchController extends Controller implements
 			v.enableItemAction(false);
 			if(!v.getBarcode().equals(""))
 				removeItem();
+			reset();
 		}
 	}
 	
@@ -160,5 +161,9 @@ public class RemoveItemBatchController extends Controller implements
 		getView().close();
 	}
 
+	public void reset(){
+		getView().setBarcode("");
+		getView().giveBarcodeFocus();
+	}
 }
 
