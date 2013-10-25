@@ -151,5 +151,9 @@ public class ProductFacade extends Observable {
 			ProductContainer container) {
 		container.moveProduct(product, container);
 		
+		setChanged();
+		notifyObservers(this);
+		
+		
 	}
 }

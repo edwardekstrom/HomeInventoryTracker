@@ -557,11 +557,18 @@ public class InventoryController extends Controller
 	@Override
 	public void addProductToContainer(ProductData productData, 
 										ProductContainerData containerData) {
+		ProductContainerData pcd = getView().getSelectedProductContainer();
+
 		ProductFacade pFacade = ProductFacade.getInstance();
 		ProductContainer container = (ProductContainer)containerData.getTag();
 		Product product = (Product)productData.getTag();
 		pFacade.addProductToContainer(product, container);
 		//System.out.println("moveProductToContainer");
+		
+		
+		getView().selectProductContainer(pcd);
+		this.loadProducts();
+		this.loadItems();
 	}
 
 	/**
@@ -574,9 +581,15 @@ public class InventoryController extends Controller
 	@Override
 	public void moveItemToContainer(ItemData itemData,
 									ProductContainerData containerData) {
+		ProductContainerData pcd = getView().getSelectedProductContainer();
+		ProductData pd = getView().getSelectedProduct();
+		
 		ItemFacade itemFacade = ItemFacade.getInstance();
 		itemFacade.moveItemInTree((Item)itemData.getTag(), (ProductContainer)containerData.getTag());
 		//System.out.println("moveItemToContainer");
+		
+		getView().selectProductContainer(pcd);
+		getView().selectProduct(pd);
 	}
 
 	@Override
