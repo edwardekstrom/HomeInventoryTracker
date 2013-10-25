@@ -56,18 +56,29 @@ public class ProductGroupFacade extends Observable {
 		
 	}
 
+	public void removeProductGroup(ProductGroup toRemove){
+		ProductContainerData pcData = toRemove.getTagData();
+		
+		toRemove.getContainer().removeProductGroup(toRemove);
+
+		
+		setChanged();
+		notifyObservers(this);
+		
+	}
+	
 	/**
 	 * removes the ProductGroup from the tree
 	 * @param toRemove
 	 */
-	public void removeProductGroupFromTree(ProductGroup toRemove){
+	private void removeProductGroupFromTree(ProductGroup toRemove){
 		
 	}
 	/**
 	 * removes the ProductGroup from the manager
 	 * @param toRemove
 	 */
-	public void removeProductGroupFromManager(ProductGroup toRemove){
+	private void removeProductGroupFromManager(ProductGroup toRemove){
 		
 	}
 	/**

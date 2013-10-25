@@ -266,6 +266,9 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void deleteProductGroup() {
+		ProductGroupFacade pgFacade = ProductGroupFacade.getInstance();
+		ProductGroup productContainer = (ProductGroup) getView().getSelectedProductContainer().getTag();
+		pgFacade.removeProductGroup(productContainer);
 	}
 
 	private Random rand = new Random();
@@ -457,9 +460,13 @@ public class InventoryController extends Controller
 		ProductData pd = getView().getSelectedProduct();
 		
 		getView().displayAddItemBatchView();
+
 		
 		getView().selectProductContainer(pcd);
 		getView().selectProduct(pd);
+
+		productContainerSelectionChanged();
+
 	}
 	
 	/**
@@ -541,7 +548,9 @@ public class InventoryController extends Controller
 
 	@Override
 	public void update(Observable o, Object arg) {
+		ProductContainerData pcData = getView().getSelectedProductContainer();
 		getView().setProductContainers(StorageUnitFacade.getInstance().getRootPCData());
+		getView().selectProductContainer(pcData);	
 	}
 	
 

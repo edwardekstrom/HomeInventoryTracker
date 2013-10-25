@@ -81,6 +81,7 @@ public class TransferItemBatchController extends Controller implements
 		v.enableRedo(false);
 		v.enableUndo(false);
 		v.enableItemAction(false);
+		v.setUseScanner(true);
 	}
 
 	/**
@@ -90,8 +91,13 @@ public class TransferItemBatchController extends Controller implements
 	@Override
 	public void barcodeChanged() {
 		ITransferItemBatchView v = getView();
-		Item item = ItemsManager.getInstance().getItem(v.getBarcode());
-		v.enableItemAction(item != null);
+		if(!v.getUseScanner())
+			v.enableItemAction(!v.getBarcode().equals(""));
+		else{
+			v.enableItemAction(false);
+			if(!v.getBarcode().equals(""))
+				transferItem();
+		}
 
 	}
 	
@@ -119,13 +125,19 @@ public class TransferItemBatchController extends Controller implements
 	public void transferItem() {
 		ITransferItemBatchView v = getView();
 		Item item = ItemsManager.getInstance().getItem(v.getBarcode());
-		ItemData empty = item.getTagData();
-		Product p = item.getProduct();
+		if(item == null){
+			v.setBarcode("");
+			v.displayErrorMessage("The specified item does not exist.");
+		}
+		else{
+			ItemData empty = item.getTagData();
+			Product p = item.getProduct();
 
-		ItemFacade.getInstance().moveItemInTree(item,(ProductContainer)_target.getTag());
-		_items.add(empty);
-		_products.add(p.getTagData());
-		loadValues();
+			ItemFacade.getInstance().moveItemInTree(item,(ProductContainer)_target.getTag());
+			_items.add(empty);
+			_products.add(p.getTagData());
+			loadValues();
+		}
 	}
 	
 	/**

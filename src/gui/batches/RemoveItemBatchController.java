@@ -122,7 +122,7 @@ public class RemoveItemBatchController extends Controller implements
 		Item item = ItemsManager.getInstance().getItem(v.getBarcode());
 		if(item == null){
 			v.setBarcode("");
-			v.displayErrorMessage("The specified item does not exist");
+			v.displayErrorMessage("The specified item does not exist.");
 		}
 		else{
 			ItemData empty = item.getTagData();
