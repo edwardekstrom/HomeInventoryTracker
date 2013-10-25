@@ -135,7 +135,12 @@ public class Product implements Serializable{
 	 */
 	public void setShelfLife(String shelfLife) throws InvalidShelfLifeException{
 		if(isValidShelfLife(shelfLife)){
-			_shelfLife = Integer.parseInt(shelfLife);
+			int newShelfLife = Integer.parseInt(shelfLife);
+			if(newShelfLife >= 0){
+				_shelfLife = newShelfLife;
+			}else{
+				throw new InvalidShelfLifeException();
+			}
 		}else{
 			throw new InvalidShelfLifeException();
 		}
@@ -155,7 +160,12 @@ public class Product implements Serializable{
 	 */
 	public void setThreeMonthSupply(String threeMonthSupply) throws InvalidThreeMonthSupplyException {
 		if(isValidThreeMonthSupply(threeMonthSupply)){
-			_threeMonthSupply = Integer.parseInt(threeMonthSupply);
+			int newThreeMonthsupply = Integer.parseInt(threeMonthSupply);
+			if(newThreeMonthsupply >= 0){
+				_threeMonthSupply = newThreeMonthsupply;
+			}else{
+				throw new InvalidThreeMonthSupplyException();
+			}
 		}else{
 			throw new InvalidThreeMonthSupplyException();
 		}
@@ -211,8 +221,12 @@ public class Product implements Serializable{
 	 */
 	public static boolean isValidShelfLife(String shelfLife){
 		try{
-			Integer.parseInt(shelfLife);
-			return true;
+			int newShelfLife = Integer.parseInt(shelfLife);
+			if(newShelfLife < 0){
+				return false;
+			}else{
+				return true;
+			}
 		}catch(NumberFormatException nfe){
 			return false;
 		}
@@ -224,8 +238,12 @@ public class Product implements Serializable{
 	 */
 	public static boolean isValidThreeMonthSupply(String threeMonthSupply){
 		try{
-			Integer.parseInt(threeMonthSupply);
-			return true;
+			int newThreeMonthsupply = Integer.parseInt(threeMonthSupply);
+			if(newThreeMonthsupply < 0){
+				return false;
+			}else{
+				return true;
+			}
 		}catch(NumberFormatException nfe){
 			return false;
 		}

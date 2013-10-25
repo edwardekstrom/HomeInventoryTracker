@@ -158,10 +158,10 @@ public class AddProductController extends Controller implements
 			ProductData pd = new ProductData();
 
 			pd.setBarcode(barcode);
-			pd.setSize(amount);
+			pd.setSize(amount + " " + unit);
 			pd.setShelfLife(shelfLife);
 			pd.setSupply(threeMonthSupply);
-			pd.setCount(unit);
+			//pd.setCount(unit);
 			pd.setDescription(desc);
 			pd.setTag(p);
 			p.setTagData(pd);

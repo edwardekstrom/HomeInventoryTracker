@@ -73,10 +73,13 @@ public class ProductFacade extends Observable {
 			ProductData pd = p.getTagData();
 			
 			pd.setDescription(desc);
-			pd.setCount(sizeValue);
-			pd.setSize(sizeUnit);
+			//pd.setCount();
+			pd.setSize(sizeValue + " " + sizeUnit);
 			pd.setSupply(supply);
 			pd.setShelfLife(shelfLife);
+			
+			setChanged();
+			notifyObservers(this);
 			
 		} catch (InvalidAmountException e) {
 			// TODO Auto-generated catch block
