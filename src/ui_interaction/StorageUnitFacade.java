@@ -116,4 +116,17 @@ public class StorageUnitFacade extends Observable {
 		
 		return this.config.getHomeInventory().getIsoRoots();
 	}
+
+	public ProductContainer getChangedPC(){
+		List<StorageUnit> suList = Configuration.getInstance().getHomeInventory().getStorageUnits();
+
+		ProductContainer changed;
+		for( StorageUnit s: suList){
+			changed = s.getChangedPC();
+			if( changed != null)
+				return changed;
+		}
+		return null;
+
+	}
 }

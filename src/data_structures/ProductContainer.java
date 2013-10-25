@@ -23,6 +23,30 @@ public abstract class ProductContainer implements Serializable{
 	protected ProductContainerData _tagData = new ProductContainerData();
 	protected StorageUnit _storageUnit;
 
+	public boolean _changed = true;
+
+
+
+	public boolean changed(){
+		return _changed;
+	}
+	public void setChanged(boolean t){
+		_changed = t;
+	}
+
+
+	public ProductContainer getChangedPC(){
+		if (this._changed)
+			return this;
+		for(int i = 0; i < _productGroups.size(); i++){
+			ProductContainer current = _productGroups.get(i);
+			if(current.changed()){
+				return current;
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * finds the productGroup with the item's product in it
 	 * adds an Item to the list of items in the productGroup
@@ -80,7 +104,6 @@ public abstract class ProductContainer implements Serializable{
 	 * @postcondition none
 	 */
 	public boolean containsProduct(String barcode) {
-		System.out.println(barcode);
 		for(Product p:_products){
 			if(p.getBarcode().getBarcode().equals(barcode)){
 				return true;

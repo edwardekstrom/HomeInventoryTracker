@@ -26,6 +26,8 @@ import ui_interaction.ProductFacade;
 import ui_interaction.ProductGroupFacade;
 import ui_interaction.StorageUnitFacade;
 
+import gui.inventory.ProductContainerData;
+
 /**
  * Controller class for inventory view.
  */
@@ -591,6 +593,16 @@ public class InventoryController extends Controller
 	@Override
 	public void update(Observable o, Object arg) {
 		ProductContainerData pcData = getView().getSelectedProductContainer();
+
+		// if (o instanceof StorageUnitFacade || o instanceof ProductGroupFacade ){
+		// 	ProductContainer changed = StorageUnitFacade.getInstance().getChangedPC();
+		// 	ProductContainerData changedData = changed.getTagData();
+
+		// 	ProductContainerData  rootData = StorageUnitFacade.getInstance().getRootPCData();
+		// 	if(changed instanceof StorageUnit)
+		// 		getView().insertProductContainer(rootData,changedData,0);
+		// }
+
 		getView().setProductContainers(StorageUnitFacade.getInstance().getRootPCData());
 		getView().selectProductContainer(pcData);	
 	}
