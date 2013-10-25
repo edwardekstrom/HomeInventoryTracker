@@ -146,4 +146,10 @@ public class ProductFacade extends Observable {
 	public Product getProduct(String barcode){
 		return Configuration.getHIT().getProduct(barcode);
 	}
+
+	public void addProductToContainer(Product product,
+			ProductContainer container) {
+		container.moveProduct(product, container);
+		
+	}
 }

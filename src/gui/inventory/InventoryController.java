@@ -527,7 +527,11 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void addProductToContainer(ProductData productData, 
-										ProductContainerData containerData) {	
+										ProductContainerData containerData) {
+		ProductFacade pFacade = ProductFacade.getInstance();
+		ProductContainer container = (ProductContainer)containerData.getTag();
+		Product product = (Product)productData.getTag();
+		pFacade.addProductToContainer(product, container);
 		//System.out.println("moveProductToContainer");
 	}
 
