@@ -64,6 +64,8 @@ public class ItemFacade extends Observable{
 	public void removeItem(Item item){
 		removeItemFromTree(item);
 		removeItemFromManager(item);
+		setChanged();
+		notifyObservers(this);
 	}	
 	
 	/**
@@ -103,6 +105,10 @@ public class ItemFacade extends Observable{
 	public void moveItemInTree(Item item, ProductContainer destination ){
 		removeItem(item);
 		destination.addItem(item);
+
+		
+		setChanged();
+		notifyObservers(this);
 	}
 
 
