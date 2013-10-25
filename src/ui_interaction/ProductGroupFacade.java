@@ -108,4 +108,6 @@ public class ProductGroupFacade extends Observable {
 	protected synchronized void setChanged() {
 		super.setChanged();
 	}
+
+	
 }
