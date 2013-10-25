@@ -40,6 +40,7 @@ public class EditProductController extends Controller
 		getView().enableBarcode(false);
 		_productfacade = ProductFacade.getInstance();
 		valuesChanged();
+		
 	}
 
 	//
