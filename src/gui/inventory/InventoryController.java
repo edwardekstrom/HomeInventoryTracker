@@ -410,7 +410,15 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public boolean canRemoveItem() {
-		return true;
+		try{
+			ItemData id = getView().getSelectedItem();
+			Item item = (Item)id.getTag();
+			
+			return true;
+			
+		}catch (NullPointerException npe){
+			return false;
+		}
 	}
 
 	/**

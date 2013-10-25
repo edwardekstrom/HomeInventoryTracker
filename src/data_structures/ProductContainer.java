@@ -163,7 +163,8 @@ public abstract class ProductContainer implements Serializable{
 			}
 		}
 		if(itemWasTheLast){
-			this.removeProduct(item.getProduct());
+//			DONT DO ANYTHING THIS WAS WRONG
+//			this.removeProduct(item.getProduct());
 		}
 		
 	}

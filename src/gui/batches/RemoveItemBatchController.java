@@ -87,8 +87,13 @@ public class RemoveItemBatchController extends Controller implements
 	@Override
 	public void barcodeChanged() {
 		IRemoveItemBatchView v = getView();
-		Item item = ItemsManager.getInstance().getItem(v.getBarcode());
-		v.enableItemAction(item != null);
+		if(!v.getUseScanner())
+			v.enableItemAction(!v.getBarcode().equals(""));
+		else{
+			v.enableItemAction(false);
+			if(!v.getBarcode().equals(""))
+				removeItem();
+		}
 	}
 	
 	/**
@@ -115,13 +120,19 @@ public class RemoveItemBatchController extends Controller implements
 	public void removeItem() {
 		IRemoveItemBatchView v = getView();
 		Item item = ItemsManager.getInstance().getItem(v.getBarcode());
-		ItemData empty = item.getTagData();
-		Product p = item.getProduct();
+		if(item == null){
+			v.setBarcode("");
+			v.displayErrorMessage("The specified item does not exist");
+		}
+		else{
+			ItemData empty = item.getTagData();
+			Product p = item.getProduct();
 
-		ItemFacade.getInstance().removeItem(item);
-		_items.add(empty);
-		_products.add(p.getTagData());
-		loadValues();
+			ItemFacade.getInstance().removeItem(item);
+			_items.add(empty);
+			_products.add(p.getTagData());
+			loadValues();
+		}
 	}
 	
 	/**
