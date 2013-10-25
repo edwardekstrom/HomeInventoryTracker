@@ -59,6 +59,8 @@ public class InventoryController extends Controller
 		ProductFacade productFacade = ProductFacade.getInstance();
 		productFacade.addObserver(this);
 		
+		ItemFacade.getInstance().registerInventoryController(this);
+
 		update(null, null);
 		
 	}

@@ -15,6 +15,7 @@ import data_structures.Item;
 import data_structures.Product;
 import data_structures.ProductContainer;
 import gui.batches.AddItemBatchController;
+import gui.inventory.InventoryController;
 
 /**
  * @author Capchu
@@ -27,6 +28,7 @@ public class ItemFacade extends Observable{
 	private static ItemFacade _instance = null;
 	private Configuration _config;
 	private ItemsManager _itemsManager;
+	public InventoryController _inventoryController;
 
 	private AddItemBatchController _addItemBatchController;
 	
@@ -42,6 +44,11 @@ public class ItemFacade extends Observable{
 		return _instance;
 	}
 	
+
+	public void registerInventoryController(InventoryController ic){
+		_inventoryController = ic;
+	}
+
 	/**
 	 * Add the given item
 	 * @param toAdd
@@ -54,9 +61,11 @@ public class ItemFacade extends Observable{
 		addItemToTree(itemToAdd);
 		addItemToManager(itemToAdd);
 		
-		setChanged();
-		notifyObservers(this);
-		
+		// setChanged();
+		// notifyObservers(this);
+		_inventoryController.productContainerSelectionChanged();
+
+
 		return itemToAdd;
 		
 	}
@@ -64,8 +73,9 @@ public class ItemFacade extends Observable{
 	public void removeItem(Item item){
 		removeItemFromTree(item);
 		removeItemFromManager(item);
-		setChanged();
-		notifyObservers(this);
+		// setChanged();
+		// notifyObservers(this);
+		_inventoryController.productContainerSelectionChanged();
 	}	
 	
 	/**
@@ -106,9 +116,9 @@ public class ItemFacade extends Observable{
 		removeItem(item);
 		destination.addItem(item);
 
-		
-		setChanged();
-		notifyObservers(this);
+		_inventoryController.productContainerSelectionChanged();
+		// setChanged();
+		// notifyObservers(this)an;
 	}
 
 
