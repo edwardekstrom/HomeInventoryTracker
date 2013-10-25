@@ -266,6 +266,9 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void deleteProductGroup() {
+		ProductGroupFacade pgFacade = ProductGroupFacade.getInstance();
+		ProductGroup productContainer = (ProductGroup) getView().getSelectedProductContainer().getTag();
+		pgFacade.removeProductGroup(productContainer);
 	}
 
 	private Random rand = new Random();

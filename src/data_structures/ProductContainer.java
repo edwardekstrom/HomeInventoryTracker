@@ -271,6 +271,12 @@ public abstract class ProductContainer implements Serializable{
 		_productGroups.add(productGroup);
 		productGroup._storageUnit = _storageUnit;
 	}
+	
+	public void removeProductGroup(ProductGroup productGroup){
+		_productGroups.remove(productGroup);
+		ProductContainerData parentPCData = productGroup.getContainer().getTagData();
+		parentPCData.removeChildPCData(productGroup.getTagData());
+	}
 
 	public boolean canAddProductGroupWithName(String name) {
 		if(name.equals("")) return false;
