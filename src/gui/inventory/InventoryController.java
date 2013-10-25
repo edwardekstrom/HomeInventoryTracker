@@ -457,6 +457,7 @@ public class InventoryController extends Controller
 	@Override
 	public void addItems() {
 		getView().displayAddItemBatchView();
+		productContainerSelectionChanged();
 	}
 	
 	/**
@@ -534,7 +535,9 @@ public class InventoryController extends Controller
 
 	@Override
 	public void update(Observable o, Object arg) {
+		ProductContainerData pcData = getView().getSelectedProductContainer();
 		getView().setProductContainers(StorageUnitFacade.getInstance().getRootPCData());
+		getView().selectProductContainer(pcData);	
 	}
 	
 
