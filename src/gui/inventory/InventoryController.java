@@ -453,7 +453,13 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void addItems() {
+		ProductContainerData pcd = getView().getSelectedProductContainer();
+		ProductData pd = getView().getSelectedProduct();
+		
 		getView().displayAddItemBatchView();
+		
+		getView().selectProductContainer(pcd);
+		getView().selectProduct(pd);
 	}
 	
 	/**
@@ -514,7 +520,8 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void addProductToContainer(ProductData productData, 
-										ProductContainerData containerData) {		
+										ProductContainerData containerData) {	
+		//System.out.println("moveProductToContainer");
 	}
 
 	/**
@@ -527,6 +534,9 @@ public class InventoryController extends Controller
 	@Override
 	public void moveItemToContainer(ItemData itemData,
 									ProductContainerData containerData) {
+		ItemFacade itemFacade = ItemFacade.getInstance();
+		itemFacade.moveItemInTree((Item)itemData.getTag(), (ProductContainer)containerData.getTag());
+		//System.out.println("moveItemToContainer");
 	}
 
 	@Override
