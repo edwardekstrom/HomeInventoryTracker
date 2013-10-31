@@ -6,7 +6,6 @@ import gui.inventory.ProductContainerData;
 import java.io.Serializable;
 import java.util.List;
 
-import data_structures_tests.ItemTest;
 
 /**
  * @author nRitchie

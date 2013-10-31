@@ -26,8 +26,6 @@ import ui_interaction.ProductFacade;
 import ui_interaction.ProductGroupFacade;
 import ui_interaction.StorageUnitFacade;
 
-import gui.inventory.ProductContainerData;
-
 /**
  * Controller class for inventory view.
  */
@@ -316,7 +314,7 @@ public class InventoryController extends Controller
 	public void productContainerSelectionChanged() {
 		List<ProductData> productDataList = new ArrayList<ProductData>();		
 		ProductContainerData selectedContainer = getView().getSelectedProductContainer();
-		if(!selectedContainer.getName().equals("root")){
+		if(!(selectedContainer.getTag() instanceof HomeInventory)){
 			loadProducts();
 			loadItems();
 		}else{
@@ -350,24 +348,7 @@ public class InventoryController extends Controller
 	public void productSelectionChanged() {
 		List<ItemData> itemDataList = new ArrayList<ItemData>();		
 		ProductData selectedProduct = getView().getSelectedProduct();
-//		if (selectedProduct != null) {
-//			Date now = new Date();
-//			GregorianCalendar cal = new GregorianCalendar();
-//			int itemCount = Integer.parseInt(selectedProduct.getCount());
-//			for (int i = 1; i <= itemCount; ++i) {
-//				cal.setTime(now);
-//				ItemData itemData = new ItemData();
-//				itemData.setBarcode(getRandomBarcode());
-//				cal.add(Calendar.MONTH, -rand.nextInt(12));
-//				itemData.setEntryDate(cal.getTime());
-//				cal.add(Calendar.MONTH, 3);
-//				itemData.setExpirationDate(cal.getTime());
-//				itemData.setProductGroup("Some Group");
-//				itemData.setStorageUnit("Some Unit");
-//				
-//				itemDataList.add(itemData);
-//			}
-//		}
+
 		if(getView().getSelectedProductContainer().getTag() instanceof HomeInventory){
 			loadAllItems();
 		}else{
@@ -483,17 +464,8 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void addItems() {
-		ProductContainerData pcd = getView().getSelectedProductContainer();
-		ProductData pd = getView().getSelectedProduct();
-		
 		getView().displayAddItemBatchView();
-
-		
-		getView().selectProductContainer(pcd);
-		getView().selectProduct(pd);
-
 		productContainerSelectionChanged();
-
 	}
 	
 	/**
@@ -554,12 +526,7 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void addProductToContainer(ProductData productData, 
-										ProductContainerData containerData) {
-		ProductFacade pFacade = ProductFacade.getInstance();
-		ProductContainer container = (ProductContainer)containerData.getTag();
-		Product product = (Product)productData.getTag();
-		pFacade.addProductToContainer(product, container);
-		//System.out.println("moveProductToContainer");
+										ProductContainerData containerData) {		
 	}
 
 	/**
@@ -572,24 +539,11 @@ public class InventoryController extends Controller
 	@Override
 	public void moveItemToContainer(ItemData itemData,
 									ProductContainerData containerData) {
-		ItemFacade itemFacade = ItemFacade.getInstance();
-		itemFacade.moveItemInTree((Item)itemData.getTag(), (ProductContainer)containerData.getTag());
-		//System.out.println("moveItemToContainer");
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		ProductContainerData pcData = getView().getSelectedProductContainer();
-
-		// if (o instanceof StorageUnitFacade || o instanceof ProductGroupFacade ){
-		// 	ProductContainer changed = StorageUnitFacade.getInstance().getChangedPC();
-		// 	ProductContainerData changedData = changed.getTagData();
-
-		// 	ProductContainerData  rootData = StorageUnitFacade.getInstance().getRootPCData();
-		// 	if(changed instanceof StorageUnit)
-		// 		getView().insertProductContainer(rootData,changedData,0);
-		// }
-
 		getView().setProductContainers(StorageUnitFacade.getInstance().getRootPCData());
 		getView().selectProductContainer(pcData);	
 	}

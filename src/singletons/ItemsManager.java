@@ -118,7 +118,7 @@ public class ItemsManager {
 	
 	public void storeBarcodeList(){
 		HomeInventory hi = Configuration.getInstance().getHomeInventory();
-		hi.setStoreItemManagerList(_allItemsList);;
+		hi.setStoreItemManagerList(_allItemsList);
 	}
 	
 	public void de_storeBarcodeList(){
