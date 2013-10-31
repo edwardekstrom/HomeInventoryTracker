@@ -67,29 +67,6 @@ public class ProductGroupFacade extends Observable {
 		notifyObservers(this);
 		
 	}
-	
-	/**
-	 * removes the ProductGroup from the tree
-	 * @param toRemove
-	 */
-	private void removeProductGroupFromTree(ProductGroup toRemove){
-		
-	}
-	/**
-	 * removes the ProductGroup from the manager
-	 * @param toRemove
-	 */
-	private void removeProductGroupFromManager(ProductGroup toRemove){
-		
-	}
-	/**
-	 * Moves the ProductGroup from start container to finish
-	 * @param start
-	 * @param finish
-	 */
-	public void moveProductGroupInTree(ProductContainer start, ProductContainer finish){
-		
-	}
 
 	public boolean canCreateChildWithName(ProductContainer productContainer, String name) {
 		return productContainer.canAddProductGroupWithName(name);

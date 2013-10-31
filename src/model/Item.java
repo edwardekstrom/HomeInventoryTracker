@@ -149,13 +149,5 @@ public class Item implements Serializable{
 		}
 	}
 	
-	/**@precondition none
-	 * @postcondition returns true if you can move this item
-	 * 
-	 * @return true if you can move this item
-	 */
-	public boolean canMove(){
-		return true;
-	}
 	
 }

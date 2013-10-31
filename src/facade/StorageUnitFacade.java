@@ -90,7 +90,6 @@ public class StorageUnitFacade extends Observable {
 		ProductContainerData root = Configuration.getInstance().getHomeInventory().getRootData();
 		root.removeChildPCData(pcData);
 		
-		removeStorageUnitFromTree(toRemove);
 		setChanged();
 		notifyObservers(this);
 		
@@ -105,13 +104,7 @@ public class StorageUnitFacade extends Observable {
 		config.getHomeInventory().addStorageUnit(toAdd);
 	}
 
-	/**
-	 * removes the StorageUnit from the tree
-	 * @param toRemove
-	 */
-	private void removeStorageUnitFromTree(StorageUnit toRemove){
-		
-	}
+
 
 	public List<ProductContainerData> getIsoRoots(){
 		
