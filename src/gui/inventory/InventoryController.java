@@ -88,10 +88,19 @@ public class InventoryController extends Controller
 		getView().setProductContainers(root);
 	}
 	
+
+	private ProductContainer getSelectedContainer(){
+		IInventoryView view = getView();
+		ProductContainerData currentData = view.getSelectedProductContainer();
+		ProductContainer selectedContainer = (ProductContainer)currentData.getTag();
+		return selectedContainer;
+	}
+
 	private void loadProducts(){
+
 		ArrayList<ProductData> productsList = new ArrayList<ProductData>();
-		
-		ProductContainer selectedContainer = (ProductContainer) getView().getSelectedProductContainer().getTag();
+		ProductContainer selectedContainer = getSelectedContainer();
+
 		StorageUnit storageUnit = selectedContainer.getStorageUnit();
 		
 		List<Product> produList = selectedContainer.getProducts();
@@ -121,7 +130,7 @@ public class InventoryController extends Controller
 	
 	private int getProductItemCount(Product product){
 		int count = 0;
-		ProductContainer selectedContainer = (ProductContainer) getView().getSelectedProductContainer().getTag();
+		ProductContainer selectedContainer = getSelectedContainer();
 		for (Item item : selectedContainer.getItems()) {
 			if(item.getProduct() == product){
 				count++;
@@ -143,7 +152,7 @@ public class InventoryController extends Controller
 	private void loadItems(){
 		ArrayList<ItemData> itemDatas = new ArrayList<ItemData>();
 		
-		ProductContainer selectedContainer = (ProductContainer) getView().getSelectedProductContainer().getTag();
+		ProductContainer selectedContainer = getSelectedContainer();
 		StorageUnit storageUnit = selectedContainer.getStorageUnit();
 		
 		if(getView().getSelectedProduct()!=null){
@@ -243,7 +252,7 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public boolean canDeleteStorageUnit() {
-		ProductContainer su = (ProductContainer) getView().getSelectedProductContainer().getTag();
+		ProductContainer su = getSelectedContainer();
 		return su.canBeDeleted();
 		//TODO test this
 	}
@@ -254,7 +263,7 @@ public class InventoryController extends Controller
 	@Override
 	public void deleteStorageUnit() {
 		StorageUnitFacade storageUnitFacade = StorageUnitFacade.getInstance();
-		StorageUnit productContainer = (StorageUnit) getView().getSelectedProductContainer().getTag();
+		StorageUnit productContainer = (StorageUnit)getSelectedContainer();
 		storageUnitFacade.removeStorageUnit(productContainer);
 	}
 
@@ -296,7 +305,7 @@ public class InventoryController extends Controller
 	@Override
 	public void deleteProductGroup() {
 		ProductGroupFacade pgFacade = ProductGroupFacade.getInstance();
-		ProductGroup productContainer = (ProductGroup) getView().getSelectedProductContainer().getTag();
+		ProductGroup productContainer = (ProductGroup) getSelectedContainer();
 		pgFacade.removeProductGroup(productContainer);
 	}
 
@@ -352,30 +361,12 @@ public class InventoryController extends Controller
 	public void productSelectionChanged() {
 		List<ItemData> itemDataList = new ArrayList<ItemData>();		
 		ProductData selectedProduct = getView().getSelectedProduct();
-//		if (selectedProduct != null) {
-//			Date now = new Date();
-//			GregorianCalendar cal = new GregorianCalendar();
-//			int itemCount = Integer.parseInt(selectedProduct.getCount());
-//			for (int i = 1; i <= itemCount; ++i) {
-//				cal.setTime(now);
-//				ItemData itemData = new ItemData();
-//				itemData.setBarcode(getRandomBarcode());
-//				cal.add(Calendar.MONTH, -rand.nextInt(12));
-//				itemData.setEntryDate(cal.getTime());
-//				cal.add(Calendar.MONTH, 3);
-//				itemData.setExpirationDate(cal.getTime());
-//				itemData.setProductGroup("Some Group");
-//				itemData.setStorageUnit("Some Unit");
-//				
-//				itemDataList.add(itemData);
-//			}
-//		}
+
 		if(getView().getSelectedProductContainer().getTag() instanceof HomeInventory){
 			loadAllItems();
 		}else{
 			loadItems();
 		}
-		//getView().setItems(itemDataList.toArray(new ItemData[0]));
 	}
 
 	/**
@@ -392,7 +383,7 @@ public class InventoryController extends Controller
 	@Override
 	public boolean canDeleteProduct() {
 		Product p = (Product) getView().getSelectedProduct().getTag();
-		ProductContainer pc = (ProductContainer)getView().getSelectedProductContainer().getTag();
+		ProductContainer pc = getSelectedContainer();
 		List<Item> iList = pc.getItems();
 		boolean canDelete = true;
 		
@@ -410,7 +401,7 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void deleteProduct() {
-		ProductContainer pc = (ProductContainer)getView().getSelectedProductContainer().getTag();
+		ProductContainer pc = getSelectedContainer();
 		Product p = (Product) getView().getSelectedProduct().getTag();
 		ProductFacade.getInstance().romoveProduct(p, pc);
 		
