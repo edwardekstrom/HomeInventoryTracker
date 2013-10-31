@@ -327,7 +327,7 @@ public class InventoryController extends Controller
 	public void productContainerSelectionChanged() {
 		List<ProductData> productDataList = new ArrayList<ProductData>();		
 		ProductContainerData selectedContainer = getView().getSelectedProductContainer();
-		if(!selectedContainer.getName().equals("root")){
+		if(!(selectedContainer.getTag() instanceof HomeInventory)){
 			loadProducts();
 			loadItems();
 		}else{
