@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import data_structures.HomeInventory;
-import data_structures.Item;
+import model.HomeInventory;
+import model.Item;
 
 /**
  * 

@@ -6,9 +6,10 @@ import hit_exceptions.InvalidUnitException;
 
 import java.util.List;
 
+import model.*;
+
 import org.junit.Test;
 
-import data_structures.*;
 import singletons.ItemsManager;
 
 public class ItemsManagerTest {

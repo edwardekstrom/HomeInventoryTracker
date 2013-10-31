@@ -1,4 +1,4 @@
-package data_structures;
+package model;
 
 import hit_exceptions.InvalidAmountException;
 import hit_exceptions.InvalidShelfLifeException;

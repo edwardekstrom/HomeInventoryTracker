@@ -1,7 +1,7 @@
 package singletons;
 
-import data_structures.HomeInventory;
-import data_structures.Serializer;
+import model.HomeInventory;
+import model.Serializer;
 
 public class Configuration {
 	private static Configuration _instance = null;

@@ -1,19 +1,19 @@
 /**
  * 
  */
-package ui_interaction;
+package facade;
 
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import model.Barcode;
+import model.Date;
+import model.Item;
+import model.Product;
+import model.ProductContainer;
 import singletons.Configuration;
 import singletons.ItemsManager;
-import data_structures.Barcode;
-import data_structures.Date;
-import data_structures.Item;
-import data_structures.Product;
-import data_structures.ProductContainer;
 import gui.batches.AddItemBatchController;
 import gui.inventory.InventoryController;
 

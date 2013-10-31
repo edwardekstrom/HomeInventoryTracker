@@ -2,12 +2,11 @@
 
 package gui.product;
 
+import model.Barcode;
+import model.Date;
+import model.Product;
+import facade.ProductFacade;
 import gui.common.*;
-import ui_interaction.ProductFacade;
-
-import data_structures.Product;
-import data_structures.Barcode;
-import data_structures.Date;
 
 /**
  * Controller class for the add item view.

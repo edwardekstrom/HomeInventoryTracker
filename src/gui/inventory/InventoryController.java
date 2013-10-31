@@ -1,31 +1,31 @@
 package gui.inventory;
 
+import facade.ItemFacade;
+import facade.ProductFacade;
+import facade.ProductGroupFacade;
+import facade.StorageUnitFacade;
 import gui.common.*;
 import gui.item.*;
 import gui.product.*;
 
 import java.util.*;
 
+import model.HomeInventory;
+import model.Item;
+import model.Product;
+import model.ProductContainer;
+import model.ProductGroup;
+import model.Serializer;
+import model.StorageUnit;
+
 import org.omg.CORBA._PolicyStub;
 
 import com.sun.tools.internal.jxc.gen.config.Config;
 
-import data_structures.HomeInventory;
-import data_structures.Item;
-import data_structures.Product;
-import data_structures.ProductContainer;
-import data_structures.ProductGroup;
-import data_structures.Serializer;
-import data_structures.StorageUnit;
 import singletons.Configuration;
 import singletons.ItemsManager;
 import singletons.ProductsManager;
 import sun.security.jca.GetInstance.Instance;
-import ui_interaction.ItemFacade;
-import ui_interaction.ProductFacade;
-import ui_interaction.ProductGroupFacade;
-import ui_interaction.StorageUnitFacade;
-
 import gui.inventory.ProductContainerData;
 
 /**

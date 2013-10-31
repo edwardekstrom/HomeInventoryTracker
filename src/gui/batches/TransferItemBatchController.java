@@ -1,17 +1,16 @@
 package gui.batches;
 
+import facade.*;
 import gui.common.*;
 import gui.inventory.*;
 import gui.product.*;
-
 import singletons.*;
 import gui.product.ProductData;
 import gui.item.ItemData;
 
-import data_structures.*;
-import ui_interaction.*;
-
 import java.util.ArrayList;
+
+import model.*;
 
 /**
  * Controller class for the transfer item batch view.

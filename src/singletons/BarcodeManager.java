@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import model.HomeInventory;
+import model.Item;
+
 import com.sun.jdi.InvalidTypeException;
 import com.sun.tools.internal.ws.wsdl.document.jaxws.Exception;
-
-import data_structures.HomeInventory;
-import data_structures.Item;
 
 public class BarcodeManager {
 

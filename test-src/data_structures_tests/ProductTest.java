@@ -8,17 +8,16 @@ import hit_exceptions.InvalidAmountException;
 import hit_exceptions.InvalidShelfLifeException;
 import hit_exceptions.InvalidThreeMonthSupplyException;
 import hit_exceptions.InvalidUnitException;
+import model.Barcode;
+import model.Date;
+import model.Product;
+import model.UnitSize;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import data_structures.Barcode;
-import data_structures.Date;
-import data_structures.Product;
-import data_structures.UnitSize;
 
 /**
  * @author Capchu

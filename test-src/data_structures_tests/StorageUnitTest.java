@@ -4,16 +4,13 @@
 package data_structures_tests;
 
 import static org.junit.Assert.*;
-
-
+import model.*;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import data_structures.*;
 
 /**
  * @author nritchie

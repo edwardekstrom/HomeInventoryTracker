@@ -3,6 +3,12 @@ package singletons_tests;
 import static org.junit.Assert.*;
 import hit_exceptions.InvalidAmountException;
 import hit_exceptions.InvalidUnitException;
+import model.Barcode;
+import model.Date;
+import model.Item;
+import model.Product;
+import model.StorageUnit;
+import model.UnitSize;
 
 import org.junit.Test;
 
@@ -10,12 +16,6 @@ import com.sun.source.tree.AssertTree;
 
 import singletons.ItemsManager;
 import singletons.ProductsManager;
-import data_structures.Barcode;
-import data_structures.Date;
-import data_structures.Item;
-import data_structures.Product;
-import data_structures.StorageUnit;
-import data_structures.UnitSize;
 
 public class ProductsManagerTest {
 	@Test

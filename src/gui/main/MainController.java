@@ -1,8 +1,8 @@
 package gui.main;
 
+import model.HomeInventory;
+import model.Serializer;
 import singletons.Configuration;
-import data_structures.HomeInventory;
-import data_structures.Serializer;
 import gui.common.*;
 
 /**

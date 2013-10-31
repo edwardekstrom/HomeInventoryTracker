@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ui_interaction;
+package facade;
 
 import gui.inventory.ProductContainerData;
 
@@ -10,10 +10,11 @@ import java.util.Observable;
 import java.util.Observer;
 
 
+
+import model.ProductContainer;
+import model.ProductGroup;
+import model.StorageUnit;
 import singletons.Configuration;
-import data_structures.ProductGroup;
-import data_structures.ProductContainer;
-import data_structures.StorageUnit;
 
 /**
  * @author Capchu

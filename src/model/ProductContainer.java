@@ -1,4 +1,4 @@
-package data_structures;
+package model;
 
 import gui.common.Tagable;
 import gui.inventory.ProductContainerData;

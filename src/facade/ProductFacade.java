@@ -1,17 +1,17 @@
 /**
  * 
  */
-package ui_interaction;
+package facade;
 
 
 import java.util.Observable;
 import java.util.Observer;
 
+import model.Barcode;
+import model.Date;
+import model.Product;
+import model.ProductContainer;
 import singletons.Configuration;
-import data_structures.Product;
-import data_structures.ProductContainer;
-import data_structures.Date;
-import data_structures.Barcode;
 import gui.inventory.ProductContainerData;
 import gui.product.*;
 import gui.batches.AddItemBatchController;

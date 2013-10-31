@@ -6,21 +6,19 @@ package data_structures_tests;
 import static org.junit.Assert.*;
 import hit_exceptions.InvalidAmountException;
 import hit_exceptions.InvalidUnitException;
+import model.Barcode;
+import model.Date;
+import model.Item;
+import model.Product;
+import model.ProductGroup;
+import model.StorageUnit;
+import model.UnitSize;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import data_structures.Barcode;
-import data_structures.Date;
-import data_structures.Item;
-import data_structures.Product;
-import data_structures.ProductGroup;
-import data_structures.ProductGroup;
-import data_structures.StorageUnit;
-import data_structures.UnitSize;
 
 /**
  * @author nritchie

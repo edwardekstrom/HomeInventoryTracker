@@ -1,4 +1,4 @@
-package data_structures;
+package model;
 
 import gui.item.ItemData;
 import hit_exceptions.NullContainerException;

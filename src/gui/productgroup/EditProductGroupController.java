@@ -1,12 +1,12 @@
 package gui.productgroup;
 
-import ui_interaction.ProductGroupFacade;
-import ui_interaction.StorageUnitFacade;
-import data_structures.Item;
-import data_structures.ProductContainer;
-import data_structures.ProductGroup;
-import data_structures.StorageUnit;
-import data_structures.UnitSize;
+import model.Item;
+import model.ProductContainer;
+import model.ProductGroup;
+import model.StorageUnit;
+import model.UnitSize;
+import facade.ProductGroupFacade;
+import facade.StorageUnitFacade;
 import gui.common.*;
 import gui.inventory.*;
 
