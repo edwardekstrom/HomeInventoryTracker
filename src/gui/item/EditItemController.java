@@ -1,11 +1,11 @@
 package gui.item;
 
+import facade.*;
 import gui.common.*;
-import data_structures.*;
 
 import java.util.Date;
 
-import ui_interaction.*;
+import model.*;
 
 /**
  * Controller class for the edit item view.
@@ -112,7 +112,7 @@ public class EditItemController extends Controller
 		Date entryDate = getView().getEntryDate();
 
 		Item item = (Item)_target.getTag();
-		data_structures.Date entry = new data_structures.Date(entryDate);
+		model.Date entry = new model.Date(entryDate);
 		try{
 			item.setEntryDate(entry);
 			_target.setEntryDate(entryDate);

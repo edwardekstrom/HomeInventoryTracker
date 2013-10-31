@@ -1,16 +1,17 @@
 package gui.batches;
 
+import facade.*;
 import gui.common.*;
 import gui.inventory.*;
 import gui.item.ItemData;
 import gui.product.*;
-import data_structures.*;
-import ui_interaction.*;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.GregorianCalendar;
+
+import model.*;
 
 
 

@@ -1,30 +1,32 @@
 package gui.inventory;
 
+import facade.ItemFacade;
+import facade.ProductFacade;
+import facade.ProductGroupFacade;
+import facade.StorageUnitFacade;
 import gui.common.*;
 import gui.item.*;
 import gui.product.*;
 
 import java.util.*;
 
+import model.HomeInventory;
+import model.Item;
+import model.Product;
+import model.ProductContainer;
+import model.ProductGroup;
+import model.Serializer;
+import model.StorageUnit;
+
 import org.omg.CORBA._PolicyStub;
 
 import com.sun.tools.internal.jxc.gen.config.Config;
 
-import data_structures.HomeInventory;
-import data_structures.Item;
-import data_structures.Product;
-import data_structures.ProductContainer;
-import data_structures.ProductGroup;
-import data_structures.Serializer;
-import data_structures.StorageUnit;
 import singletons.Configuration;
 import singletons.ItemsManager;
 import singletons.ProductsManager;
 import sun.security.jca.GetInstance.Instance;
-import ui_interaction.ItemFacade;
-import ui_interaction.ProductFacade;
-import ui_interaction.ProductGroupFacade;
-import ui_interaction.StorageUnitFacade;
+import gui.inventory.ProductContainerData;
 
 /**
  * Controller class for inventory view.
@@ -57,6 +59,8 @@ public class InventoryController extends Controller
 		ProductFacade productFacade = ProductFacade.getInstance();
 		productFacade.addObserver(this);
 		
+		ItemFacade.getInstance().registerInventoryController(this);
+
 		update(null, null);
 		
 	}
@@ -84,10 +88,19 @@ public class InventoryController extends Controller
 		getView().setProductContainers(root);
 	}
 	
+
+	private ProductContainer getSelectedContainer(){
+		IInventoryView view = getView();
+		ProductContainerData currentData = view.getSelectedProductContainer();
+		ProductContainer selectedContainer = (ProductContainer)currentData.getTag();
+		return selectedContainer;
+	}
+
 	private void loadProducts(){
+
 		ArrayList<ProductData> productsList = new ArrayList<ProductData>();
-		
-		ProductContainer selectedContainer = (ProductContainer) getView().getSelectedProductContainer().getTag();
+		ProductContainer selectedContainer = getSelectedContainer();
+
 		StorageUnit storageUnit = selectedContainer.getStorageUnit();
 		
 		List<Product> produList = selectedContainer.getProducts();
@@ -117,7 +130,7 @@ public class InventoryController extends Controller
 	
 	private int getProductItemCount(Product product){
 		int count = 0;
-		ProductContainer selectedContainer = (ProductContainer) getView().getSelectedProductContainer().getTag();
+		ProductContainer selectedContainer = getSelectedContainer();
 		for (Item item : selectedContainer.getItems()) {
 			if(item.getProduct() == product){
 				count++;
@@ -139,7 +152,7 @@ public class InventoryController extends Controller
 	private void loadItems(){
 		ArrayList<ItemData> itemDatas = new ArrayList<ItemData>();
 		
-		ProductContainer selectedContainer = (ProductContainer) getView().getSelectedProductContainer().getTag();
+		ProductContainer selectedContainer = getSelectedContainer();
 		StorageUnit storageUnit = selectedContainer.getStorageUnit();
 		
 		if(getView().getSelectedProduct()!=null){
@@ -239,7 +252,7 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public boolean canDeleteStorageUnit() {
-		ProductContainer su = (ProductContainer) getView().getSelectedProductContainer().getTag();
+		ProductContainer su = getSelectedContainer();
 		return su.canBeDeleted();
 		//TODO test this
 	}
@@ -250,7 +263,7 @@ public class InventoryController extends Controller
 	@Override
 	public void deleteStorageUnit() {
 		StorageUnitFacade storageUnitFacade = StorageUnitFacade.getInstance();
-		StorageUnit productContainer = (StorageUnit) getView().getSelectedProductContainer().getTag();
+		StorageUnit productContainer = (StorageUnit)getSelectedContainer();
 		storageUnitFacade.removeStorageUnit(productContainer);
 	}
 
@@ -292,7 +305,7 @@ public class InventoryController extends Controller
 	@Override
 	public void deleteProductGroup() {
 		ProductGroupFacade pgFacade = ProductGroupFacade.getInstance();
-		ProductGroup productContainer = (ProductGroup) getView().getSelectedProductContainer().getTag();
+		ProductGroup productContainer = (ProductGroup) getSelectedContainer();
 		pgFacade.removeProductGroup(productContainer);
 	}
 
@@ -314,7 +327,7 @@ public class InventoryController extends Controller
 	public void productContainerSelectionChanged() {
 		List<ProductData> productDataList = new ArrayList<ProductData>();		
 		ProductContainerData selectedContainer = getView().getSelectedProductContainer();
-		if(!(selectedContainer.getTag() instanceof HomeInventory)){
+		if(!selectedContainer.getName().equals("root")){
 			loadProducts();
 			loadItems();
 		}else{
@@ -354,7 +367,6 @@ public class InventoryController extends Controller
 		}else{
 			loadItems();
 		}
-		//getView().setItems(itemDataList.toArray(new ItemData[0]));
 	}
 
 	/**
@@ -371,7 +383,7 @@ public class InventoryController extends Controller
 	@Override
 	public boolean canDeleteProduct() {
 		Product p = (Product) getView().getSelectedProduct().getTag();
-		ProductContainer pc = (ProductContainer)getView().getSelectedProductContainer().getTag();
+		ProductContainer pc = getSelectedContainer();
 		List<Item> iList = pc.getItems();
 		boolean canDelete = true;
 		
@@ -389,7 +401,7 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void deleteProduct() {
-		ProductContainer pc = (ProductContainer)getView().getSelectedProductContainer().getTag();
+		ProductContainer pc = getSelectedContainer();
 		Product p = (Product) getView().getSelectedProduct().getTag();
 		ProductFacade.getInstance().romoveProduct(p, pc);
 		
@@ -464,8 +476,17 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void addItems() {
+		ProductContainerData pcd = getView().getSelectedProductContainer();
+		ProductData pd = getView().getSelectedProduct();
+		
 		getView().displayAddItemBatchView();
+
+		
+		getView().selectProductContainer(pcd);
+		getView().selectProduct(pd);
+
 		productContainerSelectionChanged();
+
 	}
 	
 	/**
@@ -526,7 +547,19 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void addProductToContainer(ProductData productData, 
-										ProductContainerData containerData) {		
+										ProductContainerData containerData) {
+		ProductContainerData pcd = getView().getSelectedProductContainer();
+
+		ProductFacade pFacade = ProductFacade.getInstance();
+		ProductContainer container = (ProductContainer)containerData.getTag();
+		Product product = (Product)productData.getTag();
+		pFacade.addProductToContainer(product, container);
+		//System.out.println("moveProductToContainer");
+		
+		
+		getView().selectProductContainer(pcd);
+		this.loadProducts();
+		this.loadItems();
 	}
 
 	/**
@@ -539,11 +572,30 @@ public class InventoryController extends Controller
 	@Override
 	public void moveItemToContainer(ItemData itemData,
 									ProductContainerData containerData) {
+		ProductContainerData pcd = getView().getSelectedProductContainer();
+		ProductData pd = getView().getSelectedProduct();
+		
+		ItemFacade itemFacade = ItemFacade.getInstance();
+		itemFacade.moveItemInTree((Item)itemData.getTag(), (ProductContainer)containerData.getTag());
+		//System.out.println("moveItemToContainer");
+		
+		getView().selectProductContainer(pcd);
+		getView().selectProduct(pd);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		ProductContainerData pcData = getView().getSelectedProductContainer();
+
+		// if (o instanceof StorageUnitFacade || o instanceof ProductGroupFacade ){
+		// 	ProductContainer changed = StorageUnitFacade.getInstance().getChangedPC();
+		// 	ProductContainerData changedData = changed.getTagData();
+
+		// 	ProductContainerData  rootData = StorageUnitFacade.getInstance().getRootPCData();
+		// 	if(changed instanceof StorageUnit)
+		// 		getView().insertProductContainer(rootData,changedData,0);
+		// }
+
 		getView().setProductContainers(StorageUnitFacade.getInstance().getRootPCData());
 		getView().selectProductContainer(pcData);	
 	}

@@ -9,15 +9,15 @@ import hit_exceptions.InvalidUnitException;
 
 import java.util.Date;
 
+import model.Barcode;
+import model.Product;
+import model.UnitSize;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import data_structures.Barcode;
-import data_structures.Product;
-import data_structures.UnitSize;
 
 /**
  * @author Capchu

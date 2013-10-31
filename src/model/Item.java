@@ -1,4 +1,4 @@
-package data_structures;
+package model;
 
 import gui.item.ItemData;
 import hit_exceptions.NullContainerException;
@@ -149,13 +149,5 @@ public class Item implements Serializable{
 		}
 	}
 	
-	/**@precondition none
-	 * @postcondition returns true if you can move this item
-	 * 
-	 * @return true if you can move this item
-	 */
-	public boolean canMove(){
-		return true;
-	}
 	
 }

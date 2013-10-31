@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ui_interaction;
+package facade;
 
 import gui.inventory.ProductContainerData;
 
@@ -10,10 +10,11 @@ import java.util.Observable;
 import java.util.Observer;
 
 
+
+import model.ProductContainer;
+import model.ProductGroup;
+import model.StorageUnit;
 import singletons.Configuration;
-import data_structures.ProductGroup;
-import data_structures.ProductContainer;
-import data_structures.StorageUnit;
 
 /**
  * @author Capchu
@@ -64,29 +65,6 @@ public class ProductGroupFacade extends Observable {
 		
 		setChanged();
 		notifyObservers(this);
-		
-	}
-	
-	/**
-	 * removes the ProductGroup from the tree
-	 * @param toRemove
-	 */
-	private void removeProductGroupFromTree(ProductGroup toRemove){
-		
-	}
-	/**
-	 * removes the ProductGroup from the manager
-	 * @param toRemove
-	 */
-	private void removeProductGroupFromManager(ProductGroup toRemove){
-		
-	}
-	/**
-	 * Moves the ProductGroup from start container to finish
-	 * @param start
-	 * @param finish
-	 */
-	public void moveProductGroupInTree(ProductContainer start, ProductContainer finish){
 		
 	}
 

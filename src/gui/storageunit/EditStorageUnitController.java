@@ -1,7 +1,7 @@
 package gui.storageunit;
 
-import data_structures.StorageUnit;
-import ui_interaction.StorageUnitFacade;
+import model.StorageUnit;
+import facade.StorageUnitFacade;
 import gui.common.*;
 import gui.inventory.*;
 

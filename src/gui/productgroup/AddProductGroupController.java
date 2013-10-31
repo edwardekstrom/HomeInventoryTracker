@@ -1,9 +1,9 @@
 package gui.productgroup;
 
-import data_structures.ProductContainer;
-import data_structures.ProductGroup;
-import data_structures.UnitSize;
-import ui_interaction.ProductGroupFacade;
+import model.ProductContainer;
+import model.ProductGroup;
+import model.UnitSize;
+import facade.ProductGroupFacade;
 import gui.common.*;
 import gui.inventory.*;
 

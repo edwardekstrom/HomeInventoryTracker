@@ -1,7 +1,7 @@
 package gui.product;
 
-import ui_interaction.ProductFacade;
-import data_structures.Product;
+import model.Product;
+import facade.ProductFacade;
 import gui.common.*;
 
 /**

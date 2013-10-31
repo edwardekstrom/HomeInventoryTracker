@@ -1,4 +1,4 @@
-package data_structures;
+package model;
 
 import gui.common.Tagable;
 import gui.inventory.ProductContainerData;
@@ -180,17 +180,6 @@ public abstract class ProductContainer implements Serializable{
 
 		_items.remove(item);
 		
-		boolean itemWasTheLast = true;
-		for (int i = 0; i < _items.size(); i++) {
-			if(_items.get(i).getProduct() == item.getProduct()){
-				itemWasTheLast = false;
-			}
-		}
-		if(itemWasTheLast){
-//			DONT DO ANYTHING THIS WAS WRONG
-//			this.removeProduct(item.getProduct());
-		}
-		
 	}
 	
 	/**
@@ -279,16 +268,7 @@ public abstract class ProductContainer implements Serializable{
 			targetProductContainer.addProduct(product);
 		}
 		
-		boolean itemWasTheLast = true;
-		for (int i = 0; i < _items.size(); i++) {
-			if(_items.get(i).getProduct() == product){
-				itemWasTheLast = false;
-			}
-		}
-		if(itemWasTheLast){
-//			THIS IS STILL WRONG STOP DOING IT
-//			this.removeProduct(product);
-		}
+
 	}
 	
 /*/**************Product Groups****************************/

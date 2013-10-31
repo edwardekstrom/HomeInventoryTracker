@@ -1,7 +1,7 @@
 /**
  * 
  */
-package data_structures;
+package model;
 
 import java.io.Serializable;
 import java.util.GregorianCalendar;

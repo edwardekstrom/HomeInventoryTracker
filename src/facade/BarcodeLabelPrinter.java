@@ -1,4 +1,4 @@
-package ui_interaction;
+package facade;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
@@ -7,18 +7,16 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.Font;
 
 
-import java.io.*;
 
+import java.io.*;
 import java.awt.*;
 import java.util.*;
 
-
-import data_structures.Barcode;
-import data_structures.Date;
-import data_structures.*;
 import hit_exceptions.InvalidShelfLifeException;
 
 import java.text.SimpleDateFormat;
+
+import model.*;
 
 
 public class BarcodeLabelPrinter {

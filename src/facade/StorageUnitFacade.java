@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ui_interaction;
+package facade;
 
 import gui.inventory.InventoryController;
 import gui.inventory.ProductContainerData;
@@ -11,13 +11,14 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import model.HomeInventory;
+import model.ProductContainer;
+import model.StorageUnit;
+
 import com.sun.org.apache.bcel.internal.generic.StoreInstruction;
 
 import singletons.Configuration;
 import singletons.ItemsManager;
-import data_structures.HomeInventory;
-import data_structures.StorageUnit;
-import data_structures.ProductContainer;
 
 /**
  * @author Capchu
@@ -89,7 +90,6 @@ public class StorageUnitFacade extends Observable {
 		ProductContainerData root = Configuration.getInstance().getHomeInventory().getRootData();
 		root.removeChildPCData(pcData);
 		
-		removeStorageUnitFromTree(toRemove);
 		setChanged();
 		notifyObservers(this);
 		
@@ -104,13 +104,7 @@ public class StorageUnitFacade extends Observable {
 		config.getHomeInventory().addStorageUnit(toAdd);
 	}
 
-	/**
-	 * removes the StorageUnit from the tree
-	 * @param toRemove
-	 */
-	private void removeStorageUnitFromTree(StorageUnit toRemove){
-		
-	}
+
 
 	public List<ProductContainerData> getIsoRoots(){
 		
