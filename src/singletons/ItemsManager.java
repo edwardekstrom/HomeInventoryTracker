@@ -1,9 +1,14 @@
 package singletons;
 
+import hit_exceptions.NullExitDateException;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.List;
 
+import visitor.ReportVisitor;
+import model.DateTime;
 import model.HomeInventory;
 import model.Item;
 
@@ -17,6 +22,7 @@ public class ItemsManager {
 	
 	private static ItemsManager _instance = null;
 	private List<Item> _allItemsList;
+	private List<Item> _deletedItemsList;
 	
 	/**
 	 * This method instantiates the instance of ItemsManager.
@@ -78,6 +84,7 @@ public class ItemsManager {
 	 */
 	public void removeItem(Item item){
 		_allItemsList.remove(item);
+		_deletedItemsList.add(item);
 	}
 	
 	/**
@@ -124,6 +131,16 @@ public class ItemsManager {
 	public void de_storeBarcodeList(){
 		HomeInventory hi = Configuration.getInstance().getHomeInventory();
 		_allItemsList = hi.getStoreItemManagerList();
+	}
+	
+	public void accept(ReportVisitor visitor){
+		for (Item i : _allItemsList){
+			i.accept(visitor);
+		}
+	}
+	
+	public void addToDeletedItems(Item deletedItem){
+		_deletedItemsList.add(deletedItem);
 	}
 	
 	

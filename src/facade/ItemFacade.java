@@ -9,6 +9,7 @@ import java.util.Observer;
 
 import model.Barcode;
 import model.Date;
+import model.DateTime;
 import model.Item;
 import model.Product;
 import model.ProductContainer;
@@ -16,6 +17,7 @@ import singletons.Configuration;
 import singletons.ItemsManager;
 import gui.batches.AddItemBatchController;
 import gui.inventory.InventoryController;
+import hit_exceptions.NullExitDateException;
 
 /**
  * @author Capchu
@@ -73,6 +75,7 @@ public class ItemFacade extends Observable{
 	public void removeItem(Item item){
 		removeItemFromTree(item);
 		removeItemFromManager(item);
+
 		// setChanged();
 		// notifyObservers(this);
 		_inventoryController.productContainerSelectionChanged();
@@ -105,7 +108,14 @@ public class ItemFacade extends Observable{
 	 * @param toRemove
 	 */
 	private void removeItemFromManager(Item toRemove){
-		ItemsManager.getInstance().removeItem(toRemove);
+		try{
+			toRemove.setExitTime(new DateTime());
+			ItemsManager iMgr = ItemsManager.getInstance();
+			iMgr.removeItem(toRemove);
+			iMgr.addToDeletedItems(toRemove);
+		}catch(NullExitDateException n){
+			
+		}
 	}
 	/**
 	 * Moves the Item from start container to finish

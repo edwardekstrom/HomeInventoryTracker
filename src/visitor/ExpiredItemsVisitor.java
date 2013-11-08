@@ -2,6 +2,10 @@ package visitor;
 
 import java.util.List;
 
+import model.Item;
+import model.Product;
+import model.ProductContainer;
+
 public class ExpiredItemsVisitor implements ReportVisitor {
 
 	/**gathers the data from the model for the implemented report type
@@ -14,6 +18,24 @@ public class ExpiredItemsVisitor implements ReportVisitor {
 	public List gatherReportData() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void visit(Item i) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visit(Product p) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visit(ProductContainer pc) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

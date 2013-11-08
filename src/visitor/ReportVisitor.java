@@ -2,6 +2,10 @@ package visitor;
 
 import java.util.List;
 
+import model.Item;
+import model.Product;
+import model.ProductContainer;
+
 public interface ReportVisitor {
 
 	/**gathers the data from the model for the implemented report type
@@ -12,4 +16,7 @@ public interface ReportVisitor {
 	 */
 	public List gatherReportData();
 	
+	public void visit(Item i);
+	public void visit(Product p);
+	public void visit(ProductContainer pc);
 }

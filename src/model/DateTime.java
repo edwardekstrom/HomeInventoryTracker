@@ -18,7 +18,7 @@ public class DateTime implements Serializable{
 	 * @postcondition makes a new DateTime using the current GregorianCalendar time
 	 * 
 	 */
-	DateTime(){
+	public DateTime(){
 		//make a new date with the current time
 		_exitDate = new GregorianCalendar();
 	}	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import visitor.ReportVisitor;
 import model.HomeInventory;
 import model.Item;
 import model.Product;
@@ -115,5 +116,11 @@ public class ProductsManager {
 	public void de_storeBarcodeList(){
 		HomeInventory hi = Configuration.getInstance().getHomeInventory();
 		_allProductsList = hi.getStoreProductManagerList();
+	}
+	
+	public void accept(ReportVisitor visitor){
+		for (Product p : _allProductsList){
+			p.accept(visitor);
+		}
 	}
 }

@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.TreeMap;
 
+import visitor.ReportVisitor;
 import gui.product.*;
 
 /**
@@ -259,6 +260,10 @@ public class Product implements Serializable{
 
 	public ProductData getTagData(){
 		return this._tagData;
+	}
+	
+	public void accept(ReportVisitor visitor){
+		visitor.visit(this);
 	}
 
 	

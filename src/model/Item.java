@@ -7,6 +7,9 @@ import hit_exceptions.NullExitDateException;
 
 import java.io.Serializable;
 
+import visitor.ReportVisitor;
+
+
 /**
  * @author Capchu
  * This class manages Items in storage
@@ -16,7 +19,7 @@ public class Item implements Serializable{
 	private Product _product;
 	private Barcode _barcode;
 	private Date _entryDate;
-	private Date _exitTime;
+	private DateTime _exitTime;
 	private Date _expirationDate;
 	private ProductContainer _container;
 	private ItemData _tagData;
@@ -105,7 +108,7 @@ public class Item implements Serializable{
 	 * @postcondition gives the exit time
 	 * @return the _exitTime
 	 */
-	public Date getExitTime() {
+	public DateTime getExitTime() {
 		return _exitTime;
 	}
 
@@ -113,7 +116,7 @@ public class Item implements Serializable{
 	 * @postcondition sets the _exitTime
 	 * @param _exitTime the _exitTime to set
 	 */
-	public void setExitTime(Date exitTime) throws NullExitDateException{
+	public void setExitTime(DateTime exitTime) throws NullExitDateException{
 		if(exitTime == null){
 			throw new NullExitDateException();
 		}else{
@@ -147,6 +150,10 @@ public class Item implements Serializable{
 		}else{
 			_container = container;
 		}
+	}
+	
+	public void accept(ReportVisitor visitor){
+		visitor.visit(this);
 	}
 	
 	

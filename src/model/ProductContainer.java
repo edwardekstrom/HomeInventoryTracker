@@ -6,6 +6,8 @@ import gui.inventory.ProductContainerData;
 import java.io.Serializable;
 import java.util.List;
 
+import visitor.ReportVisitor;
+
 
 /**
  * @author nRitchie
@@ -378,5 +380,22 @@ public abstract class ProductContainer implements Serializable{
 	public StorageUnit getStorageUnit(){
 		return this._storageUnit;
 	}
+	
+	
+/*/**************Visitor stuff****************************/
+	
+	public void accept(ReportVisitor visitor){
+		for(ProductGroup pg : _productGroups){
+			pg.accept(visitor);
+		}
+		for(Product p : _products){
+			p.accept(visitor);
+		}
+		for(Item i : _items){
+			i.accept(visitor);
+		}
+		visitor.visit(this);
+	}
+	
 	
 }
