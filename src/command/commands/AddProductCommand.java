@@ -17,6 +17,8 @@ public class AddProductCommand extends Command{
 
 	private ImportProductCommand _ipCommand;
 	private AddItemBatchController _aibc;
+	private StorageUnit _su;
+	private Product _product;
 
 	/**
 	 *	A constructor that holds onto arguments
@@ -44,7 +46,7 @@ public class AddProductCommand extends Command{
 			Integer sl = Integer.parseInt(shelfLife);
 			Integer tms = Integer.parseInt(threeMonthSupply);
 
-			Product p = new Product(new Date(),new Barcode(barcode),desc,sl,tms,amount,unit);
+			_product = new Product(new Date(),new Barcode(barcode),desc,sl,tms,amount,unit);
 			
 
 			pd.setBarcode(barcode);
@@ -53,9 +55,9 @@ public class AddProductCommand extends Command{
 			pd.setSupply(threeMonthSupply);
 			//pd.setCount(unit);
 			pd.setDescription(desc);
-			pd.setTag(p);
-			p.setTagData(pd);
-			ProductFacade.getInstance().addProduct(p);
+			pd.setTag(_product);
+			_product.setTagData(pd);
+			ProductFacade.getInstance().addProduct(_product);
 
 		}catch (Exception e){}
 		_ipCommand = new ImportProductCommand(pd,_aibc);
@@ -66,6 +68,7 @@ public class AddProductCommand extends Command{
 	 * Undo the Command
 	 */
 	public void executeInverse(){
-		
+		_ipCommand.executeInverse();
+		ProductFacade.getInstance().recursiveRemoveProduct(_product);
 	}
 }
