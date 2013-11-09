@@ -59,16 +59,30 @@ public abstract class ProductContainer implements Serializable{
 	 * @postcondition the item will be added into the list _items
 	 */
 	public void addItem(Item item){
+
+		// If it contains the product
 		if(_products.contains(item.getProduct())){
+			try{
+				item.setContainer(this);
+
+			}catch(Exception e){System.out.println("could not set container");}
 			_items.add(item);
-		}else
-		if(this.containsProduct(item.getProduct())){
+
+		} 
+		// Traverses itself and below in tree
+		else if(this.containsProduct(item.getProduct())){
 
 			this.productGroupWithProduct(item.getProduct()).addItem(item);
 
-		}else{
+		}
+		// if the product is not already in the tree
+		else{
 			this.addProduct(item.getProduct());
 			_items.add(item);
+			try{
+				item.setContainer(this);
+
+			}catch(Exception e){System.out.println("could not set container");}
 		}
 	}
 	
@@ -82,7 +96,7 @@ public abstract class ProductContainer implements Serializable{
 	 * @precondition none
 	 * @postcondition none
 	 */
-	protected boolean containsProduct(Product product) {
+	public boolean containsProduct(Product product) {
 			if(_products.contains(product)){
 				return true;
 			}else

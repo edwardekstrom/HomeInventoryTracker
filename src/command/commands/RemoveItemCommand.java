@@ -17,6 +17,7 @@ public class RemoveItemCommand extends Command{
 	private ItemData _item;
 	private ProductData _product;
 	private RemoveItemBatchController _ric;
+	private boolean _addedProductToView;
 
 	/**
 	 *	A constructor that holds onto arguments
@@ -34,8 +35,7 @@ public class RemoveItemCommand extends Command{
 
 		ItemFacade.getInstance().removeItem((Item)_item.getTag());
 		_ric.addItem(_item);
-		_ric.addProduct(_product);
-			
+		_addedProductToView = _ric.addProduct(_product);
 	}
 
 	/**
@@ -44,7 +44,8 @@ public class RemoveItemCommand extends Command{
 	public void executeInverse(){
 		ItemFacade.getInstance().addItem((Item)_item.getTag());
 		_ric.removeItem(_item);
-		_ric.removeProduct(_product);
+		if (_addedProductToView)
+			_ric.removeProduct(_product);
 	}
 
 }
