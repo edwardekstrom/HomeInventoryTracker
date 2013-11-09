@@ -11,7 +11,10 @@ import model.Barcode;
 import model.Date;
 import model.Product;
 import model.ProductContainer;
+import model.HomeInventory;
 import singletons.Configuration;
+
+
 import gui.inventory.ProductContainerData;
 import gui.product.*;
 import gui.batches.AddItemBatchController;
@@ -92,12 +95,19 @@ public class ProductFacade extends Observable {
 		
 	}
 	
-	public void romoveProduct(Product toRemove, ProductContainer removeFrom){
+	public void removeProduct(Product toRemove, ProductContainer removeFrom){
 		removeProductFromManager(toRemove);
 		removeProductFromTree(toRemove, removeFrom);
 		
-		//toRemove.getTagData();
-		
+
+		setChanged();
+		notifyObservers(this);
+	}
+
+	public void recursiveRemoveProduct(Product toRemove){
+		removeProductFromManager(toRemove);
+		removeProductFromTree(toRemove);
+
 		setChanged();
 		notifyObservers(this);
 	}
@@ -118,6 +128,17 @@ public class ProductFacade extends Observable {
 	private void removeProductFromTree(Product toRemove, ProductContainer removeFrom){
 		removeFrom.removeProduct(toRemove);
 	}
+
+	/**
+	 * removes the Product from the tree
+	 * @param toRemove
+	 * @param removeFrom 
+	 */
+	private void removeProductFromTree(Product toRemove){
+		HomeInventory hi = config.getHomeInventory();
+		hi.recursiveRemoveProduct(toRemove);
+	}
+
 	/**
 	 * removes the Product from the manager
 	 * @param toRemove

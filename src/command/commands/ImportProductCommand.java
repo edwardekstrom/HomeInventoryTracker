@@ -30,13 +30,14 @@ public class ImportProductCommand extends Command{
 	public void execute(){
 		_aibController.addProduct(_pd);
 		_aibCommand = new AddItemBatchCommand(_pd,_aibController);
-		_aibCommand.execute();
+		_aibCommand.execute();	
 	}
 
 	/**
 	 * Undo the Command
 	 */
 	public void executeInverse(){
+		_aibCommand.executeInverse();
 		_aibController.removeProduct(_pd);
 	}
 }

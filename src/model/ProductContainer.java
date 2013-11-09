@@ -11,8 +11,8 @@ import visitor.ReportVisitor;
 
 /**
  * @author nRitchie
- *An abstract class for StorageUnits and ProductGroups. These objects can "contain"
-  Products and Items, and are referred to generically as "product containers".
+ * An abstract class for StorageUnits and ProductGroups. These objects can "contain"
+ * Products and Items, and are referred to generically as "product containers".
  */
 public abstract class ProductContainer implements Serializable{
 	
@@ -232,6 +232,17 @@ public abstract class ProductContainer implements Serializable{
 //		if(productIsEmpty){
 			_products.remove(product);
 //		}
+	}
+
+	/**
+	 *	Recursively removes the product from self and all children
+	 *  @param product to be removed
+	 */
+	public void recursiveRemoveProduct(Product product){
+		_products.remove(product);
+		for(ProductContainer pc: _productGroups)
+			pc.recursiveRemoveProduct(product);
+
 	}
 	
 	/**

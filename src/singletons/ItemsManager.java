@@ -33,6 +33,7 @@ public class ItemsManager {
 	private ItemsManager(){
 		assert true;
 		_allItemsList = new ArrayList<Item>();
+		_deletedItemsList = new ArrayList<Item>();
 	}
 	
 	/**

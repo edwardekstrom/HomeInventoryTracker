@@ -94,6 +94,11 @@ public class HomeInventory implements Serializable{
 		return null;
 	}
 
+	public void recursiveRemoveProduct(Product toRemove){
+		for(StorageUnit u :_storageUnits)
+			u.recursiveRemoveProduct(toRemove);
+	}
+
 	/**
 	 * @return the _storeItemManagerList
 	 */

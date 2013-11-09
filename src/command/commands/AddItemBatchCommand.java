@@ -56,7 +56,10 @@ public class AddItemBatchCommand extends Command{
 	 * Undo the Command
 	 */
 	public void executeInverse(){
-		
+		for (ItemData id : _items){
+			_aibc.removeItem(id);
+			ItemFacade.getInstance().removeItem((Item)id.getTag());
+		}
 	}
 
 }
