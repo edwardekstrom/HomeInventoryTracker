@@ -97,6 +97,7 @@ public class ItemFacade extends Observable{
 	private void addItemToTree(Item toAdd){
 		toAdd.getContainer().addItem(toAdd);
 	}
+
 	/**
 	 * add the Item to the manager
 	 * @param toAdd
@@ -104,6 +105,7 @@ public class ItemFacade extends Observable{
 	private void addItemToManager(Item toAdd){
 		_itemsManager.addItem(toAdd);
 	}
+
 	/**
 	 * removes the item from the tree
 	 * @param toRemove
@@ -112,6 +114,7 @@ public class ItemFacade extends Observable{
 		ProductContainer pc = item.getContainer();
 		pc.removeItem(item);
 	}
+
 	/**
 	 * removes the item from the manager
 	 * @param toRemove
@@ -126,6 +129,7 @@ public class ItemFacade extends Observable{
 			
 		}
 	}
+	
 	/**
 	 * Moves the Item from start container to finish
 	 * @param start
@@ -137,7 +141,7 @@ public class ItemFacade extends Observable{
 
 		_inventoryController.update(null,null);
 		// setChanged();
-		// notifyObservers(this)an;
+		// notifyObservers(this);
 	}
 
 

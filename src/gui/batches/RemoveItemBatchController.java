@@ -191,8 +191,11 @@ public class RemoveItemBatchController extends Controller implements
 	 *	Add a ProductData to the local list
 	 *  @param product (ProductData ) the ___ to be added to the list
 	 */
-	public void addProduct(ProductData pd){
-		_products.add(pd);
+	public boolean addProduct(ProductData pd){
+		boolean containsPD = _products.contains(pd);
+		if (!containsPD)
+			_products.add(pd);
+		return !containsPD;
 	}
 
 	/**
