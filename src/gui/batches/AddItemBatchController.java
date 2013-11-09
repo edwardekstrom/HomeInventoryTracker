@@ -171,13 +171,21 @@ public class AddItemBatchController extends Controller implements
 		if(modelProduct == null && viewProduct == null){
 			getView().displayAddProductView();
 		}
-		// else if(modelProduct != null && viewProduct == null){
-		// 	addProduct(current);
-		// 	addCurrentItems(current);
-		// }
-		// else{
-		// 	addCurrentItems(batchCurrent);
-		// }
+		// The product exists only in the model
+		else if(modelProduct != null && viewProduct == null){
+			ImportProductCommand ipCommand = new ImportProductCommand(
+				modelProduct.getTagData(),
+				this);
+			performAction(ipCommand);
+		}
+		// The product exists in 
+		else{
+			AddItemBatchCommand aibCommand = new AddItemBatchCommand(
+				viewProduct,
+				this
+			);
+			performAction(aibCommand);
+		}
 	}
 
 	/**

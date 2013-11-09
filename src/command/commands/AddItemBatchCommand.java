@@ -29,12 +29,14 @@ public class AddItemBatchCommand extends Command{
 	public AddItemBatchCommand(ProductData pd, AddItemBatchController aibc){
 		_pd = pd;
 		_aibc = aibc;
+		_items = new ArrayList<ItemData>();
 	}
 
 	/**
 	 * Run the Command
 	 */
 	public void execute(){
+		_items = new ArrayList<ItemData>();
 		_args = _aibc.getAIBCInfo();
 		
 		Date entryDate = (Date)_args.get("entryDate");
