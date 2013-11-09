@@ -1,5 +1,9 @@
 package facade;
 
+import reports.ReportInterface;
+import reports.ThisIsATestReport;
+import visitor.ReportVisitor;
+
 public class ReportFacade {
 	
 	/**Generates the report type in the passed builder format
@@ -32,7 +36,8 @@ public class ReportFacade {
 	 */
 	public void generateNoticesReport(int type){
 		
-	
+		ReportInterface rf = new ThisIsATestReport();
+		rf.generateReport(rf, null);
 	}
 	
 	/**Generates the report type in the passed builder format

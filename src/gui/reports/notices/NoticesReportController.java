@@ -1,5 +1,6 @@
 package gui.reports.notices;
 
+import facade.ReportFacade;
 import gui.common.*;
 
 /**
@@ -78,6 +79,8 @@ public class NoticesReportController extends Controller implements
 	 */
 	@Override
 	public void display() {
+		ReportFacade rf = new ReportFacade();
+		rf.generateNoticesReport(3);
 	}
 
 }

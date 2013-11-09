@@ -9,6 +9,7 @@ import hit_exceptions.NullEntryDateException;
 import hit_exceptions.NullExitDateException;
 import model.Barcode;
 import model.Date;
+import model.DateTime;
 import model.Item;
 import model.Product;
 import model.ProductContainer;
@@ -133,7 +134,7 @@ public class ItemTest {
 		assertTrue(_testItem.getExitTime() == null);
 		
 		//change ProductGroup
-		Date exitDate = new Date();
+		DateTime exitDate = new DateTime();
 		try {
 			_testItem.setExitTime(exitDate);
 		} catch (NullExitDateException e) {
