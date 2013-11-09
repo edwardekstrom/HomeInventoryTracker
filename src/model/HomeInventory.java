@@ -11,7 +11,7 @@ import singletons.Configuration;
 
 import com.sun.tools.internal.jxc.gen.config.Config;
 
-public class HomeInventory implements Serializable{
+public class HomeInventory extends ProductContainer implements Serializable{
 	private List<StorageUnit> _storageUnits;
 	private ProductContainerData _rootData;
 	private List<Product> _storeProductManagerList;

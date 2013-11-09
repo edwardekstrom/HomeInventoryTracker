@@ -186,6 +186,8 @@ public class AddItemBatchController extends Controller implements
 			);
 			performAction(aibCommand);
 		}
+
+		setDefaultValues();
 	}
 
 	/**
@@ -195,6 +197,7 @@ public class AddItemBatchController extends Controller implements
 	@Override
 	public void redo() {
 		_commandCenter.redo();
+		setDefaultValues();
 	}
 
 	/**
@@ -204,6 +207,7 @@ public class AddItemBatchController extends Controller implements
 	@Override
 	public void undo() {
 		_commandCenter.undo();
+		setDefaultValues();
 	}
 
 	/**
@@ -300,8 +304,10 @@ public class AddItemBatchController extends Controller implements
 		getView().selectProduct(selected);
 
 		loadItems();
+		
 		this.enableDisableDos();
 		this.enableDisableAddItem();
+
 		_updatingView = false;
 	}
 
@@ -384,9 +390,9 @@ public class AddItemBatchController extends Controller implements
 		getView().setCount("1");
 		getView().setEntryDate(new java.util.Date());
 		getView().setBarcode("");
+		getView().giveBarcodeFocus();
 		this.enableDisableDos();
 		this.enableDisableAddItem();
-		getView().giveBarcodeFocus();
 	}
 }
 

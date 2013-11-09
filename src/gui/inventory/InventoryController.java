@@ -92,6 +92,7 @@ public class InventoryController extends Controller
 	private ProductContainer getSelectedContainer(){
 		IInventoryView view = getView();
 		ProductContainerData currentData = view.getSelectedProductContainer();
+		Object tag = currentData.getTag();
 		ProductContainer selectedContainer = (ProductContainer)currentData.getTag();
 		return selectedContainer;
 	}
@@ -387,11 +388,12 @@ public class InventoryController extends Controller
 		List<Item> iList = pc.getItems();
 		boolean canDelete = true;
 		
-		for(Item item : iList){
-			if(item.getProduct() == p){
-				canDelete = false;
+		if(iList != null)
+			for(Item item : iList){
+				if(item.getProduct() == p){
+					canDelete = false;
+				}
 			}
-		}
 		
 		return canDelete;
 	}
@@ -403,7 +405,7 @@ public class InventoryController extends Controller
 	public void deleteProduct() {
 		ProductContainer pc = getSelectedContainer();
 		Product p = (Product) getView().getSelectedProduct().getTag();
-		ProductFacade.getInstance().romoveProduct(p, pc);
+		ProductFacade.getInstance().removeProduct(p, pc);
 		
 		getView().selectProductContainer(pc.getTagData());
 		loadProducts();

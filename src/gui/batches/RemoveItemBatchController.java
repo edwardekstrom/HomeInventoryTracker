@@ -8,6 +8,11 @@ import gui.product.ProductData;
 import gui.item.ItemData;
 
 import java.util.ArrayList;
+import java.util.Observer;
+import java.util.Observable;
+
+import command.*;
+import command.commands.*;
 
 import model.*;
 
@@ -15,10 +20,12 @@ import model.*;
  * Controller class for the remove item batch view.
  */
 public class RemoveItemBatchController extends Controller implements
-		IRemoveItemBatchController {
+		IRemoveItemBatchController, Observer {
 	
 	private ArrayList<ItemData> _items;
 	private ArrayList<ProductData> _products;
+	private boolean _updatingView = false;
+	private CommandCenter _commandCenter;
 
 	/**
 	 * Constructor.
@@ -30,7 +37,11 @@ public class RemoveItemBatchController extends Controller implements
 
 		_items = new ArrayList<ItemData>();
 		_products = new ArrayList<ProductData>();
+		
+		_commandCenter = new CommandCenter(this);
 		construct();
+
+
 	}
 	
 	/**
@@ -50,13 +61,6 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void loadValues() {
-		ItemData[] items = _items.toArray(new ItemData[_items.size()]);
-		getView().setItems(items);
-
-		ProductData[] products = _products.toArray(new ProductData[_products.size()]);
-		getView().setProducts(products);
-
-
 	}
 
 	/**
@@ -72,9 +76,7 @@ public class RemoveItemBatchController extends Controller implements
 	@Override
 	protected void enableComponents() {
 		IRemoveItemBatchView v = getView();
-		v.enableRedo(false);
-		v.enableUndo(false);
-		v.enableItemAction(false);
+		setDefaultValues();
 		v.setUseScanner(true);
 	}
 
@@ -91,7 +93,7 @@ public class RemoveItemBatchController extends Controller implements
 			v.enableItemAction(false);
 			if(!v.getBarcode().equals(""))
 				removeItem();
-			reset();
+			setDefaultValues();
 		}
 	}
 	
@@ -109,6 +111,8 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	public void selectedProductChanged() {
+		if(!_updatingView)
+			this.updateView();
 	}
 	
 	/**
@@ -120,17 +124,17 @@ public class RemoveItemBatchController extends Controller implements
 		IRemoveItemBatchView v = getView();
 		Item item = ItemsManager.getInstance().getItem(v.getBarcode());
 		if(item == null){
-			v.setBarcode("");
+			setDefaultValues();
 			v.displayErrorMessage("The specified item does not exist.");
 		}
 		else{
-			ItemData empty = item.getTagData();
-			Product p = item.getProduct();
+			RemoveItemCommand ric = new RemoveItemCommand(
+				item.getTagData(),
+				item.getProduct().getTagData(),
+				this);
+			_commandCenter.doIt(ric);
 
-			ItemFacade.getInstance().removeItem(item);
-			_items.add(empty);
-			_products.add(p.getTagData());
-			loadValues();
+			setDefaultValues();
 		}
 	}
 	
@@ -140,6 +144,8 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	public void redo() {
+		_commandCenter.redo();
+		setDefaultValues();
 	}
 
 	/**
@@ -148,6 +154,8 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	@Override
 	public void undo() {
+		_commandCenter.undo();
+		setDefaultValues();
 	}
 
 	/**
@@ -159,9 +167,107 @@ public class RemoveItemBatchController extends Controller implements
 		getView().close();
 	}
 
-	public void reset(){
+	
+
+	//__________________________________ Observer functions ________________________________
+
+	@Override
+	public void update(Observable o, Object arg) {
+		this.updateView();	
+	}
+
+	//_____________________________ Public "US IMPLEMENTED" methods _______________________
+
+
+	/**
+	 *	Add a ItemData to the local list
+	 *  @param item (ItemData ) the ___ to be added to the list
+	 */
+	public void addItem(ItemData id){
+		_items.add(id);
+	}
+
+	/**
+	 *	Add a ProductData to the local list
+	 *  @param product (ProductData ) the ___ to be added to the list
+	 */
+	public void addProduct(ProductData pd){
+		_products.add(pd);
+	}
+
+	/**
+	 *	Remove a ItemData from the local list
+	 *  @param item (ItemData ) the ___ to be added removed from list
+	 */
+	public void removeItem(ItemData id){
+		_items.remove(id);
+	}
+
+	/**
+	 *	Remove a ProductData to the local list
+	 *  @param product (ProductData ) the ___ to be removed from the the list
+	 */
+	public void removeProduct(ProductData pd){
+		_products.remove(pd);
+	}
+
+	/**
+	 *  Updates the view to reflect the current state
+	 */
+	public void updateView(){
+		_updatingView = true;
+
+		ProductData selected = getView().getSelectedProduct();
+	
+		ItemData[] items = _items.toArray(new ItemData[_items.size()]);
+		getView().setItems(items);
+
+		ProductData[] products = _products.toArray(new ProductData[_products.size()]);
+		getView().setProducts(products);
+		getView().selectProduct(selected);
+
+
+		this.enableDisableDos();
+		this.enableDisableItemAction();
+
+		_updatingView = false;
+	}
+
+	//_____________________________  Private Methods  ________________________________
+
+	/**
+	 * Enables or disables the Remove Item button as appropriate
+	 * @return whether Add Item is enabled or disabled
+	 */
+	private boolean enableDisableItemAction(){
+		boolean legalBarcode = false;
+		String barcode = getView().getBarcode();
+
+
+		if(!barcode.equals("")) 
+			legalBarcode = true;
+		getView().enableItemAction(legalBarcode);
+		return legalBarcode;
+	}
+
+	/**
+	 * Disable or enable both the do buttons
+	 */
+	private void enableDisableDos(){
+		boolean enableUndo = _commandCenter.canUndo();
+		boolean enableRedo = _commandCenter.canRedo();
+
+		getView().enableUndo(enableUndo);
+		getView().enableRedo(enableRedo);
+	}
+
+	private void setDefaultValues(){
 		getView().setBarcode("");
 		getView().giveBarcodeFocus();
+		this.enableDisableDos();
+		this.enableDisableItemAction();
 	}
+
+
 }
 
