@@ -3,6 +3,8 @@
  */
 package builder;
 
+import reports.ReportInterface;
+
 /**
  * @author Capchu
  *
@@ -15,9 +17,9 @@ public class PDFBuilder implements ReportBuilder {
 	 * @postcondition the data given in the desired format
 	 */ 
 	@Override
-	public void buildReport() {
+	public void buildReport(ReportInterface report) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }
