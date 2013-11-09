@@ -49,11 +49,6 @@ public class ProductFacade extends Observable {
 		setChanged();
 		notifyObservers(this);
 
-		AddItemBatchController aibc = ItemFacade.getInstance().getAddItemBatchController();
-		aibc.addProduct(p);
-		aibc.addCurrentItems(p);
-		aibc.reset();
-	
 	}
 
 	public boolean canAddProduct(String shelfLife, String threeMonthSupply, 

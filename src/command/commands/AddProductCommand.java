@@ -38,13 +38,14 @@ public class AddProductCommand extends Command{
 		String barcode = _args.get("barcode");
 		String desc = _args.get("desc");
 
+		ProductData pd = new ProductData();
 		try{
 
 			Integer sl = Integer.parseInt(shelfLife);
 			Integer tms = Integer.parseInt(threeMonthSupply);
 
 			Product p = new Product(new Date(),new Barcode(barcode),desc,sl,tms,amount,unit);
-			ProductData pd = new ProductData();
+			
 
 			pd.setBarcode(barcode);
 			pd.setSize(amount + " " + unit);

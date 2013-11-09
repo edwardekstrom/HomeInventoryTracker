@@ -29,8 +29,8 @@ public class ImportProductCommand extends Command{
 	 */
 	public void execute(){
 		_aibController.addProduct(_pd);
-		_aibCommand = new AddItemBatchCommand(_aibController);
-		_aibController.performAction(_aibCommand);
+		_aibCommand = new AddItemBatchCommand(_pd,_aibController);
+		_aibCommand.execute();
 	}
 
 	/**
