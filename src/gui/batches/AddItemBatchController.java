@@ -300,7 +300,8 @@ public class AddItemBatchController extends Controller implements
 		getView().selectProduct(selected);
 
 		loadItems();
-
+		this.enableDisableDos();
+		this.enableDisableAddItem();
 		_updatingView = false;
 	}
 
