@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.GregorianCalendar;
 
 import model.*;
+import command.*;
+import command.commands.*;
 
 
 
@@ -27,6 +29,9 @@ public class AddItemBatchController extends Controller implements
 	private ArrayList<ItemData> _items;
 
 	private ItemFacade _itemFacade;
+	private CommandCenter _commandCenter;
+
+	private boolean _updatingView;
 
 	/**
 	 * Constructor.
@@ -44,15 +49,11 @@ public class AddItemBatchController extends Controller implements
 		ItemFacade.getInstance().registerAddItemBatchController(this);
 		_products =  new ArrayList<ProductData>();
 		_items = new ArrayList<ItemData>();
-
-		
-		//loadValues();
-		getView().setCount("1");
+		_updatingView = false;
 
 
-		getView().setUseScanner(true);
 		construct();
-		barcodeChanged();
+		
 	}
 
 	/**
@@ -72,28 +73,10 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void loadValues() {
-		//loadProducts();
-		loadItems();
-	}
-	
-	private void loadProducts(){
-		ArrayList<ProductData> productsList = new ArrayList<ProductData>();
 		
-		for(Product product: _storageUnit.getProducts()){
-			productsList.add(product.getTagData());
-		}
-		ProductData[] products = productsList.toArray(new ProductData[productsList.size()]);
-		getView().setProducts(products);
 	}
 	
-	private void loadItems(){
-		ProductData pd = getView().getSelectedProduct();
-		Product product = null;
-		if(pd != null)
-			product = (Product) pd.getTag();
-		if(product != null)
-			displayItemsForProduct(product);
-	}
+
 
 	/**
 	 * Sets the enable/disable state of all components in the controller's view.
@@ -107,8 +90,8 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	protected void enableComponents() {
-		getView().enableUndo(false);
-		getView().enableRedo(false);
+		this.setDefaultValues();
+		getView().setUseScanner(true);
 	}
 
 	/**
@@ -128,12 +111,11 @@ public class AddItemBatchController extends Controller implements
 		boolean validCount = false;
 		String count = getView().getCount();
 		try{
-			if(!count.equals("")){
+			if(!count.equals(""))
 				Integer.parseInt(count);
-			}
+
 		}catch(NumberFormatException nfe){
 			getView().displayErrorMessage("Invalid Count: Reseting Count to 1");
-			//getView().selectProduct(null);
 			getView().setCount("1");
 		}
 	}
@@ -144,15 +126,10 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void barcodeChanged() {
-		boolean legalBarcode = false;
-		String barcode = getView().getBarcode();
+		boolean addEnabled = this.enableDisableAddItem();
 
-
-		if(!barcode.equals("")) legalBarcode = true;
-		getView().enableItemAction(legalBarcode);
-
-		if(getView().getUseScanner() && legalBarcode){
-			addItem();
+		if(getView().getUseScanner() && addEnabled){
+			this.addItem();
 		}
 	}
 
@@ -170,7 +147,8 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void selectedProductChanged() {
-		loadItems();
+		if(!_updatingView)
+			this.updateView();
 	}
 
 	/**
@@ -184,71 +162,27 @@ public class AddItemBatchController extends Controller implements
 		String count = getView().getCount();
 
 
-		Product current = ProductFacade.getInstance().getProduct(barcode);
-		Product batchCurrent = getProduct(barcode);
+		Product modelProduct = ProductFacade.getInstance().getProduct(barcode);
+		ProductData viewProduct = productInView(barcode);
 
+		if(count.equals("0")){
+			this.setDefaultValues();
+			return;
+		}
 
-		if(count.equals("")){
-			getView().displayErrorMessage("Invalid Count: Reseting Count to 1");
-			getView().setCount("1");
-			reset();
-		}
-		else if(count.equals("0")){
-			reset();
-		}
-		else if(current == null && batchCurrent == null){
+		// The product exists in neither the model nor the view
+		if(modelProduct == null && viewProduct == null){
 			getView().displayAddProductView();
-
 		}
-		else if(current != null){
-			addProduct(current);
-			addCurrentItems(current);
-		}
-		else if(batchCurrent != null){
-			addCurrentItems(batchCurrent);
-		}
-		if(current != null || batchCurrent != null)
-			reset();
+		// else if(modelProduct != null && viewProduct == null){
+		// 	addProduct(current);
+		// 	addCurrentItems(current);
+		// }
+		// else{
+		// 	addCurrentItems(batchCurrent);
+		// }
 	}
-
-	public  void addCurrentItems(Product current){
-
-		Date entryDate = new Date(getView().getEntryDate()); 
-		String count = getView().getCount();
-
-
-		StorageUnit currUnit = _storageUnit;
-
-		int numItems = Integer.parseInt(count);
-
-		for (int i = 0; i < numItems; i++){
-			Item item = _itemFacade.addItem(current, entryDate, _storageUnit);
-			_items.add(item.getTagData());
-
-
-		}
-		loadValues();
-		//displayItemsForProduct(current);
-		
-	}
-
-	public void displayItemsForProduct(Product p){
-		ItemData[] items = getItemsFor(p);
-		getView().setItems(items);
-	}
-	
-	private ItemData[] getItemsFor(Product p){
-		ArrayList<ItemData> items = new ArrayList<ItemData>();
-		for(ItemData i: _items){
-			Product product = ((Item)i.getTag()).getProduct();
-
-			if(product == p)
-				items.add(i);
-		}
-
-		ItemData[] itemsArray = items.toArray(new ItemData[items.size()]);
-		return itemsArray;
-	}
+ 
 
 	/**
 	 * This method is called when the user clicks the "Redo" button
@@ -256,6 +190,7 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void redo() {
+		_commandCenter.redo();
 	}
 
 	/**
@@ -264,6 +199,7 @@ public class AddItemBatchController extends Controller implements
 	 */
 	@Override
 	public void undo() {
+		_commandCenter.undo();
 	}
 
 	/**
@@ -284,6 +220,119 @@ public class AddItemBatchController extends Controller implements
 
 	}
 
+	// Public "US IMPLEMENTED" methods
+
+	/**
+	 *  Updates the view to reflect the current state
+	 */
+	public void updateView(){
+		_updatingView = true;
+
+		ProductData selected = getView().getSelectedProduct();
+		
+		loadProducts();
+		getView().selectProduct(selected);
+
+		loadItems();
+
+		_updatingView = false;
+	}
+
+	// Private Methods
+
+
+	/**
+	 * Enables or disables the Add Item button as appropriate
+	 * @return whether Add Item is enabled or disabled
+	 */
+	private boolean enableDisableAddItem(){
+		boolean legalBarcode = false;
+		String barcode = getView().getBarcode();
+
+
+		if(!barcode.equals("")) 
+			legalBarcode = true;
+		getView().enableItemAction(legalBarcode);
+		return legalBarcode;
+	}
+
+	/**
+	 * Disable or enable both the do buttons
+	 */
+	private void enableDisableDos(){
+		boolean enableUndo = _commandCenter.canUndo();
+		boolean enableRedo = _commandCenter.canRedo();
+
+		getView().enableUndo(enableUndo);
+		getView().enableRedo(enableRedo);
+	}
+
+	/**
+	 *	 Find the product from the View
+	 *   @return the productData with the barcode if it's in _products else null
+	 */
+	private ProductData productInView(String barcode){
+		for (ProductData pd: _products){
+			if(pd.getBarcode().equals(barcode))
+				return pd;
+		}
+		return null;
+	}
+
+	/**
+	 *   Loads the correct Items into the view
+	 */
+	private void loadItems(){
+		ProductData pd = getView().getSelectedProduct();
+		Product product = null;
+		ArrayList<ItemData> items;
+
+		if(pd != null)
+			product = (Product) pd.getTag();
+
+		if(product != null){
+			items = new ArrayList<ItemData>();
+			for(ItemData i : _items){
+				Item item = (Item)i.getTag();
+				if(item.getProduct() == product)
+					items.add(item.getTagData());
+			}
+		}
+		ItemData[] ids = items.toArray(new ItemData[items.size()]);
+		getView().setItems(ids);
+	}
+
+	/**
+	 *   Loads all products currently being used in the view
+	 */
+	private void loadProducts(){
+		ProductData[] products;
+		products = _products.toArray(new ProductData[_products.size()]);
+		getView().setProducts(products);
+	}
+
+	
+
+	/**
+	 * Sets the default values in all the fields
+	 */ 
+	private void setDefaultValues(){
+		getView().setCount("1");
+		getView().setEntryDate(new java.util.Date());
+		getView().setBarcode("");
+		this.enableDisableDos();
+		this.enableDisableAddItem();
+		getView().giveBarcodeFocus();
+	}
+
+	
+
+
+	//_________________________________________________________________________________
+	// THE LINE
+
+
+
 	public void addProduct(Product p){
 		ProductData pd = p.getTagData();
 		if(!_products.contains(pd)){
@@ -293,20 +342,18 @@ public class AddItemBatchController extends Controller implements
 		}
 	}
 
-	public Product getProduct(String barcode){
-		for (ProductData pd: _products){
-			if(pd.getBarcode().equals(barcode))
-				return (Product)pd.getTag();
-		}
-		return null;
+	public void resetControls(){
+		
+		
 	}
 
-	public void reset(){
-		getView().setCount("1");
-		getView().setEntryDate(new java.util.Date());
-		getView().setBarcode("");
-		getView().giveBarcodeFocus();
-	}
+
+
+
+
+
+
+
 
 	
 }

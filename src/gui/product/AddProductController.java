@@ -8,6 +8,14 @@ import model.Product;
 import facade.ProductFacade;
 import gui.common.*;
 
+import command.commands.*;
+import command.*;
+
+import java.util.HashMap;
+
+import facade.*;
+import gui.batches.AddItemBatchController;
+
 /**
  * Controller class for the add item view.
  */
@@ -15,6 +23,7 @@ public class AddProductController extends Controller implements
 		IAddProductController {
 	
 	private ProductFacade _productFacade;
+	private CommandCenter _commandCenter;
 
 	/**
 	 * Constructor.
@@ -27,7 +36,6 @@ public class AddProductController extends Controller implements
 		super(view);
 		construct();
 
-		
 		setDefaults(barcode);
 
 		// Ours
@@ -142,30 +150,21 @@ public class AddProductController extends Controller implements
 	@Override
 	public void addProduct() {
 
-		try{
-			String shelfLife = getView().getShelfLife();
-			String threeMonthSupply = getView().getSupply();
-			String amount = getView().getSizeValue();
-			String unit = getView().getSizeUnit().toString();
-			String barcode = getView().getBarcode();
-			String desc = getView().getDescription();
+		HashMap<String,String> args = new HashMap<String,String>();
 
-			Integer sl = Integer.parseInt(shelfLife);
-			Integer tms = Integer.parseInt(threeMonthSupply);
+		args.put("shelfLife",getView().getShelfLife());
+		args.put("threeMonthSupply",getView().getSupply());
+		args.put("amount",getView().getSizeValue());
+		args.put("unit",getView().getSizeUnit().toString());
+		args.put("barcode",getView().getBarcode());
+		args.put("desc",getView().getDescription());
 
-			Product p = new Product(new Date(),new Barcode(barcode),desc,sl,tms,amount,unit);
-			ProductData pd = new ProductData();
+		AddProductCommand command = new AddProductCommand(args);
+		AddItemBatchController  controller = ItemFacade.getInstance().getAddItemBatchController();
+		
+		controller.
 
-			pd.setBarcode(barcode);
-			pd.setSize(amount + " " + unit);
-			pd.setShelfLife(shelfLife);
-			pd.setSupply(threeMonthSupply);
-			//pd.setCount(unit);
-			pd.setDescription(desc);
-			pd.setTag(p);
-			p.setTagData(pd);
-			_productFacade.addProduct(p);
-		}catch (Exception e){}
+
 	}
 
 }
