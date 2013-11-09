@@ -2,6 +2,7 @@ package visitor;
 
 import java.util.List;
 
+import model.HomeInventory;
 import model.Item;
 import model.Product;
 import model.ProductContainer;
@@ -35,6 +36,12 @@ public class RemovedItemsVisitor implements ReportVisitor {
 
 	@Override
 	public void visit(ProductContainer pc) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visit(HomeInventory hi) {
 		// TODO Auto-generated method stub
 		
 	}

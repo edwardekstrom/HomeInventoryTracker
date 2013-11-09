@@ -2,6 +2,7 @@ package visitor;
 
 import java.util.List;
 
+import model.HomeInventory;
 import model.Item;
 import model.Product;
 import model.ProductContainer;
@@ -19,4 +20,5 @@ public interface ReportVisitor {
 	public void visit(Item i);
 	public void visit(Product p);
 	public void visit(ProductContainer pc);
+	public void visit(HomeInventory hi);
 }

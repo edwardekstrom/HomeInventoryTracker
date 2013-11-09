@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Collections;
 
 import singletons.Configuration;
+import visitor.ReportVisitor;
 
 import com.sun.tools.internal.jxc.gen.config.Config;
 
@@ -139,5 +140,9 @@ public class HomeInventory extends ProductContainer implements Serializable{
 	 */
 	public void setStoreBarcodeManagerList(List<String> _storeBarcodeManagerList) {
 		this._storeBarcodeManagerList = _storeBarcodeManagerList;
+	}
+	
+	public void accept(ReportVisitor visitor){
+		visitor.visit(this);
 	}
 }
