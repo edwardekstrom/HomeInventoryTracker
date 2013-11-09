@@ -17,25 +17,27 @@ public class TestBuilder implements ReportBuilder {
 		String header = "<h1>" + report.getHeader() + "</h1><br><br>";
 		System.out.println(header);
 		
-		System.out.println("<table>");
+		
 		ArrayList<ArrayList<String>> colNames = report.getColumnNames();
 		int numTables = report.getNumTables();
 		int numColumns = report.getNumColumns();
 		
 		int i = 0;
 		for(ArrayList<String> tableHead : colNames){
+			System.out.println("<table>");
 			for(String col : tableHead){
-				System.out.println("	<tr>" + col + "</tr>");
+				System.out.println("  <tr>" + col + "</tr>");
 			}
 			ArrayList<String> tableData = report.getTableData().get(i);
 			
 			for(String colData : tableData){
-				System.out.println("		<td>" + colData + "</td>");
+				System.out.println("    <td>" + colData + "</td>");
 			}
 			
+			System.out.println("</table>");
 			i++;
 		}
-		System.out.println("</table>");
+		
 		
 
 	}

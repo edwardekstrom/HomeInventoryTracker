@@ -37,7 +37,7 @@ public class ReportFacade {
 	public void generateNoticesReport(int type){
 		
 		ReportInterface rf = new ThisIsATestReport();
-		rf.generateReport(null, null);
+		rf.generateReport(rf, null);
 	}
 	
 	/**Generates the report type in the passed builder format
