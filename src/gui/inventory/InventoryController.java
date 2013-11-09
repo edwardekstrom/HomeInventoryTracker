@@ -101,6 +101,7 @@ public class InventoryController extends Controller
 
 		ArrayList<ProductData> productsList = new ArrayList<ProductData>();
 		ProductContainer selectedContainer = getSelectedContainer();
+		ProductData selectedProduct = getView().getSelectedProduct();
 
 		StorageUnit storageUnit = selectedContainer.getStorageUnit();
 		
@@ -113,6 +114,7 @@ public class InventoryController extends Controller
 		}
 		ProductData[] products = productsList.toArray(new ProductData[productsList.size()]);
 		getView().setProducts(products);
+		getView().selectProduct(selectedProduct);
 	}
 	
 	private void loadAllProducts() {
@@ -326,8 +328,10 @@ public class InventoryController extends Controller
 	 */
 	@Override
 	public void productContainerSelectionChanged() {
+		
 		List<ProductData> productDataList = new ArrayList<ProductData>();		
 		ProductContainerData selectedContainer = getView().getSelectedProductContainer();
+		if(selectedContainer == null){}else{
 		if(!(selectedContainer.getTag() instanceof HomeInventory)){
 			loadProducts();
 			loadItems();
@@ -352,22 +356,16 @@ public class InventoryController extends Controller
 			loadAllProducts();
 			loadAllItems();
 		}
+		}
 	}
 
 
 	/**
-	 * This method is called when the selected item changes.
+	 * This method is called when the selected product changes.
 	 */
 	@Override
 	public void productSelectionChanged() {
-		List<ItemData> itemDataList = new ArrayList<ItemData>();		
-		ProductData selectedProduct = getView().getSelectedProduct();
-
-		if(getView().getSelectedProductContainer().getTag() instanceof HomeInventory){
-			loadAllItems();
-		}else{
-			loadItems();
-		}
+		update(null, null);
 	}
 
 	/**
@@ -453,7 +451,7 @@ public class InventoryController extends Controller
 
 		ItemFacade.getInstance().removeItem(item);
 
-		loadItems();
+		update(null, null);
 
 	}
 
@@ -487,7 +485,7 @@ public class InventoryController extends Controller
 		getView().selectProductContainer(pcd);
 		getView().selectProduct(pd);
 
-		productContainerSelectionChanged();
+		update(null,null);
 
 	}
 	
@@ -560,8 +558,7 @@ public class InventoryController extends Controller
 		
 		
 		getView().selectProductContainer(pcd);
-		this.loadProducts();
-		this.loadItems();
+		update(null, null);
 	}
 
 	/**
@@ -588,6 +585,8 @@ public class InventoryController extends Controller
 	@Override
 	public void update(Observable o, Object arg) {
 		ProductContainerData pcData = getView().getSelectedProductContainer();
+		ProductData productData = getView().getSelectedProduct();
+		ItemData itemData = getView().getSelectedItem();
 
 		// if (o instanceof StorageUnitFacade || o instanceof ProductGroupFacade ){
 		// 	ProductContainer changed = StorageUnitFacade.getInstance().getChangedPC();
@@ -597,9 +596,11 @@ public class InventoryController extends Controller
 		// 	if(changed instanceof StorageUnit)
 		// 		getView().insertProductContainer(rootData,changedData,0);
 		// }
-
+		productContainerSelectionChanged();
 		getView().setProductContainers(StorageUnitFacade.getInstance().getRootPCData());
 		getView().selectProductContainer(pcData);	
+		getView().selectProduct(productData);
+		getView().selectItem(itemData);
 	}
 	
 

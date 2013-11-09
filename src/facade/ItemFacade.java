@@ -65,7 +65,7 @@ public class ItemFacade extends Observable{
 		
 		// setChanged();
 		// notifyObservers(this);
-		_inventoryController.productContainerSelectionChanged();
+		_inventoryController.update(null,null);
 
 
 		return itemToAdd;
@@ -87,7 +87,7 @@ public class ItemFacade extends Observable{
 
 		// setChanged();
 		// notifyObservers(this);
-		_inventoryController.productContainerSelectionChanged();
+		_inventoryController.update(null,null);
 	}	
 	
 	/**
@@ -135,7 +135,7 @@ public class ItemFacade extends Observable{
 		removeItem(item);
 		destination.addItem(item);
 
-		_inventoryController.productContainerSelectionChanged();
+		_inventoryController.update(null,null);
 		// setChanged();
 		// notifyObservers(this)an;
 	}
