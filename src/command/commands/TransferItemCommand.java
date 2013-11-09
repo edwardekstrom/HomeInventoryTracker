@@ -20,6 +20,8 @@ public class TransferItemCommand extends Command{
 	private ProductContainerData _targetPCD;
 	private ProductContainerData _sourcePCD;
 	private TransferItemBatchController _tibc;
+	private boolean _addedProductToView = true;
+	private boolean _addedProductToModel = true;
 
 	/**
 	 *	A constructor that holds onto arguments
@@ -38,13 +40,19 @@ public class TransferItemCommand extends Command{
 	public void execute(){
 
 		Item item = (Item)_item.getTag();
-		_sourcePCD = item.getContainer().getTagData();
+		ProductContainer sourcePC = item.getContainer();
+		_sourcePCD = sourcePC.getTagData();
+
+		// should be done in the facade....
+		ProductContainer targetPC = (ProductContainer)_targetPCD.getTag();
+		_addedProductToModel = !targetPC.containsProduct(item.getProduct());
+
 
 		ItemFacade.getInstance().moveItemInTree(
 			item,
 			(ProductContainer)_targetPCD.getTag());
 		_tibc.addItem(_item);
-		_tibc.addProduct(_product);
+		_addedProductToView = _tibc.addProduct(_product);
 	}
 
 	/**
@@ -56,7 +64,17 @@ public class TransferItemCommand extends Command{
 			(Item)_item.getTag(),
 			(ProductContainer)_sourcePCD.getTag());
 		_tibc.removeItem(_item);
-		_tibc.removeProduct(_product);
+
+
+		if (_addedProductToView)
+			_tibc.removeProduct(_product);
+
+		if (_addedProductToModel){// should be in the facade...
+			ProductContainer pc = (ProductContainer)_targetPCD.getTag();
+			pc.removeProduct((Product)_product.getTag());
+			// System.out.println("yo man");
+		}
+
 	}
 
 }
