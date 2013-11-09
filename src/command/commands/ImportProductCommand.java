@@ -5,29 +5,38 @@ import model.*;
 import facade.*;
 import gui.batches.AddItemBatchController;
 
+import gui.product.ProductData;
+
 /**
   *	A Command holding all execution information
   */
 public class ImportProductCommand extends Command{
 
+	private ProductData _pd;
+	private AddItemBatchController _aibController;
+	private AddItemBatchCommand _aibCommand;
+
 	/**
 	 *	A constructor that holds onto arguments
 	 */
-	public ImportProductCommand(AddItemBatchController iController){
-		
+	public ImportProductCommand(ProductData pd, AddItemBatchController aibc){
+		_pd = pd;
+		_aibController = aibc;
 	}
 
 	/**
 	 * Run the Command
 	 */
 	public void execute(){
-		
+		_aibController.addProduct(_pd);
+		_aibCommand = new AddItemBatchCommand(_aibController);
+		_aibController.performAction(_aibCommand);
 	}
 
 	/**
 	 * Undo the Command
 	 */
 	public void executeInverse(){
-		
+		_aibController.removeProduct(_pd);
 	}
 }

@@ -159,10 +159,10 @@ public class AddProductController extends Controller implements
 		args.put("barcode",getView().getBarcode());
 		args.put("desc",getView().getDescription());
 
-		AddProductCommand command = new AddProductCommand(args);
 		AddItemBatchController  controller = ItemFacade.getInstance().getAddItemBatchController();
+		AddProductCommand command = new AddProductCommand(args, controller);
 		
-		controller.
+		controller.performAction(command);
 
 
 	}

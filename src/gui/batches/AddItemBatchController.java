@@ -7,9 +7,8 @@ import gui.item.ItemData;
 import gui.product.*;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.GregorianCalendar;
+import java.util.*;
+
 
 import model.*;
 import command.*;
@@ -21,7 +20,7 @@ import command.commands.*;
  * Controller class for the add item batch view.
  */
 public class AddItemBatchController extends Controller implements
-		IAddItemBatchController {
+		IAddItemBatchController, Observer{
 
 	private StorageUnit _storageUnit;
 	
@@ -52,8 +51,9 @@ public class AddItemBatchController extends Controller implements
 		_updatingView = false;
 
 
-		construct();
-		
+		_commandCenter = new CommandCenter(this);
+
+		construct();	
 	}
 
 	/**
@@ -72,12 +72,9 @@ public class AddItemBatchController extends Controller implements
 	 *  {@post The controller has loaded data into its view}
 	 */
 	@Override
-	protected void loadValues() {
-		
+	protected void loadValues() {	
 	}
 	
-
-
 	/**
 	 * Sets the enable/disable state of all components in the controller's view.
 	 * A component should be enabled only if the user is currently
@@ -182,7 +179,6 @@ public class AddItemBatchController extends Controller implements
 		// 	addCurrentItems(batchCurrent);
 		// }
 	}
- 
 
 	/**
 	 * This method is called when the user clicks the "Redo" button
@@ -220,7 +216,64 @@ public class AddItemBatchController extends Controller implements
 
 	}
 
-	// Public "US IMPLEMENTED" methods
+	//__________________________________ Observer functions ________________________________
+
+	@Override
+	public void update(Observable o, Object arg) {
+		this.updateView();	
+	}
+
+	//_____________________________ Public "US IMPLEMENTED" methods _______________________
+
+	/**
+	 *	Add a ItemData to the local list
+	 *  @param item (ItemData ) the ___ to be added to the list
+	 */
+	public void addItem(ItemData id){
+		_items.add(id);
+	}
+
+	/**
+	 *	Add a ProductData to the local list
+	 *  @param product (ProductData ) the ___ to be added to the list
+	 */
+	public void addProduct(ProductData pd){
+		_products.add(pd);
+	}
+
+	/**
+	  *		Gets the information needed for an addItemBatchCommand
+	  *  	@return a map of relevant info
+	  */
+	public Map<String,Object> getAIBCInfo(){
+		Map<String,Object> info = new HashMap<String,Object>();
+		
+
+		return info;
+	}
+
+	/**
+	 *	Performs the specified command
+	 */ 
+	public void performAction(Command c){
+		_commandCenter.doIt(c);
+	}
+
+	/**
+	 *	Remove a ItemData from the local list
+	 *  @param item (ItemData ) the ___ to be added removed from list
+	 */
+	public void removeItem(ItemData id){
+		_items.remove(id);
+	}
+
+	/**
+	 *	Remove a ProductData to the local list
+	 *  @param product (ProductData ) the ___ to be removed from the the list
+	 */
+	public void removeProduct(ProductData pd){
+		_products.remove(pd);
+	}
 
 	/**
 	 *  Updates the view to reflect the current state
@@ -238,8 +291,7 @@ public class AddItemBatchController extends Controller implements
 		_updatingView = false;
 	}
 
-	// Private Methods
-
+	//_____________________________  Private Methods  ________________________________
 
 	/**
 	 * Enables or disables the Add Item button as appropriate
@@ -311,8 +363,6 @@ public class AddItemBatchController extends Controller implements
 		getView().setProducts(products);
 	}
 
-	
-
 	/**
 	 * Sets the default values in all the fields
 	 */ 
@@ -324,37 +374,5 @@ public class AddItemBatchController extends Controller implements
 		this.enableDisableAddItem();
 		getView().giveBarcodeFocus();
 	}
-
-	
-
-
-	//_________________________________________________________________________________
-	// THE LINE
-
-
-
-	public void addProduct(Product p){
-		ProductData pd = p.getTagData();
-		if(!_products.contains(pd)){
-			_products.add(p.getTagData());
-			ProductData[] products = _products.toArray(new ProductData[_products.size()]);
-			getView().setProducts(products);
-		}
-	}
-
-	public void resetControls(){
-		
-		
-	}
-
-
-
-
-
-
-
-
-
-	
 }
 
