@@ -27,13 +27,7 @@ public class RemovedItemsReport implements ReportInterface {
 	}
 
 	@Override
-	public ArrayList<ArrayList<String>> getColumnNames() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<ArrayList<String>> getTableData() {
+	public ArrayList<ReportTable> getTableData() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -48,6 +42,12 @@ public class RemovedItemsReport implements ReportInterface {
 	public int getNumColumns() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public ArrayList<ReportNotice> getNotices() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

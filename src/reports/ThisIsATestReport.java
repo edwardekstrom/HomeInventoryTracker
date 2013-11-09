@@ -1,5 +1,7 @@
 package reports;
 
+import hit_exceptions.InvalidRowException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,77 +24,58 @@ public class ThisIsATestReport implements ReportInterface {
 	}
 
 	@Override
-	public ArrayList<ArrayList<String>> getColumnNames() {
+	public ArrayList<ReportTable> getTableData() {
 		
-		ArrayList<ArrayList<String>> tableHeaders = new ArrayList<ArrayList<String>>();
+		//Populate Table 1
+		int numCols1 = 5;
+		ArrayList<ReportTable> tableData = new ArrayList<ReportTable>();
 		
-		ArrayList<String> colNames = new ArrayList<String>();
-		//table 1
-		String firstCol = "Barcode";
-		colNames.add(firstCol);
-		String secondCol = "Count";
-		colNames.add(secondCol);
-		String thirdCol = "Unit";
-		colNames.add(thirdCol);
-		String fourthCol = "Name";
-		colNames.add(fourthCol);
-		String fifthCol = "Description";
-		colNames.add(fifthCol);
-		tableHeaders.add(colNames);
-		
-		ArrayList<String> colNames2 = new ArrayList<String>();
-		//table 2
-		String firstCol2 = "ID";
-		colNames2.add(firstCol2);
-		String secondCol2 = "Num";
-		colNames2.add(secondCol2);
-		String thirdCol2 = "Type";
-		colNames2.add(thirdCol2);
-		String fourthCol2 = "Name";
-		colNames2.add(fourthCol2);
-		String fifthCol2 = "Desc";
-		colNames2.add(fifthCol2);
-		tableHeaders.add(colNames2);
-		
-		return tableHeaders;
-	}
+		ReportTable table1 = new ReportTable(5);
 
-	@Override
-	public ArrayList<ArrayList<String>> getTableData() {
+		String[] headerRow1 = new String[numCols1];
+		String firstColName = "Barcode";
+		headerRow1[0] = firstColName;
+		String secondColName = "Count";
+		headerRow1[1] = secondColName;
+		String thirdColName = "Unit";
+		headerRow1[2] = thirdColName;
+		String fourthColName = "Name";
+		headerRow1[3] = fourthColName;
+		String fifthColName = "Description";
+		headerRow1[4] = fifthColName;
+		table1.setHeaderRow(headerRow1);
 		
-		ArrayList<ArrayList<String>> tableData = new ArrayList<ArrayList<String>>();
-		
-		ArrayList<String> rowData = new ArrayList<String>();
-		for(int i = 0;i<7;i++){		
+		for(int i = 0;i<7;i++){	
+			TableRow tableRow = new TableRow(numCols1);
+			String[] rowData = new String[numCols1];
+			int j = 0;
 			String firstCol = "Barcode " + i;
-			rowData.add(firstCol);
+			rowData[j] = firstCol;
+			j++;
 			String secondCol = "Count " + i;
-			rowData.add(secondCol);
+			rowData[j] = secondCol;
+			j++;
 			String thirdCol = "Unit " + i;
-			rowData.add(thirdCol);
+			rowData[j] = thirdCol;
+			j++;
 			String fourthCol = "Name " + i;
-			rowData.add(fourthCol);
+			rowData[j] = fourthCol;
+			j++;
 			String fifthCol = "Description " + i;
-			rowData.add(fifthCol);
+			rowData[j] = fifthCol;
+			j++;
+			tableRow.setData(rowData);
+			
+			try {
+				table1.addRow(tableRow);
+			} catch (InvalidRowException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
-		tableData.add(rowData);
-		
-		ArrayList<String> rowData2 = new ArrayList<String>();
-		for(int i = 0;i<17;i++){		
-			String firstCol = "ID " + i;
-			rowData2.add(firstCol);
-			String secondCol = "Num " + i;
-			rowData2.add(secondCol);
-			String thirdCol = "Type " + i;
-			rowData2.add(thirdCol);
-			String fourthCol = "Name " + i;
-			rowData2.add(fourthCol);
-			String fifthCol = "Desc " + i;
-			rowData2.add(fifthCol);
-
-		}			
-		tableData.add(rowData2);
+		tableData.add(table1);
+		//Finished Populating 1
 		
 		return tableData;
 	}
@@ -106,6 +89,12 @@ public class ThisIsATestReport implements ReportInterface {
 	public int getNumColumns() {
 		// TODO Auto-generated method stub
 		return 5;
+	}
+
+	@Override
+	public ArrayList<ReportNotice> getNotices() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
