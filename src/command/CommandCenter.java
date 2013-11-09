@@ -1,12 +1,14 @@
 package command;
 
 import java.util.Stack;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
   *	CommandCeter, a class encapsulating a double stack execution 
   * of facade functions
   */
-public class CommandCenter{
+public class CommandCenter extends Observable{
 
 	/**
 	 * The stack of commands that are done
@@ -22,9 +24,10 @@ public class CommandCenter{
 	/**
 	 * An Empty Constructor
 	 */
-	public CommandCenter(){
+	public CommandCenter(Observer o){
 		done = new Stack<Command>();
 		undone = new Stack<Command>();
+		addObserver(o);
 	}
 
 	/**
@@ -43,7 +46,6 @@ public class CommandCenter{
 		return (!undone.empty());
 	}
 
-
 	/**
 	 *	Execute a command and push it onto the done pile
 	 *  @param command - the command to be executed
@@ -52,8 +54,8 @@ public class CommandCenter{
 		todo.execute();
 		done.push(todo);
 		this.clearUndone();
+		actionPerformed();
 	}
-
 
 	/**
 	 * Pop a command off of the done stack and execute the inverse
@@ -62,6 +64,7 @@ public class CommandCenter{
 		Command c = done.pop();
 		c.executeInverse();
 		undone.push(c);
+		actionPerformed();
 	}
 
 	/**
@@ -71,10 +74,11 @@ public class CommandCenter{
 		Command c = undone.pop();
 		c.execute();
 		done.push(c);
+		actionPerformed();
 	}
 
-
-
+	//_____________________ PRIVATE METHODS ________________________
+	
 	/**
 	 * Clear the done stack(called after and do command)
 	 */
@@ -82,5 +86,11 @@ public class CommandCenter{
 		undone = new Stack<Command>();
 	}
 
-
+	/**
+	 * Handles notifying observers
+	 */
+	private void actionPerformed(){
+		setChanged();
+		notifyObservers();
+	}
 }
