@@ -32,6 +32,23 @@ public class AddItemBatchCommand extends Command{
 	public void execute(){
 		_args = _aibc.getAIBCInfo();
 		
+		// Date entryDate = new Date(getView().getEntryDate()); 
+		
+		// String count = getView().getCount();
+
+
+		// StorageUnit currUnit = _storageUnit;
+
+		// int numItems = Integer.parseInt(count);
+
+		// for (int i = 0; i < numItems; i++){
+		// 	Item item = _itemFacade.addItem(current, entryDate, _storageUnit);
+		// 	_items.add(item.getTagData());
+
+
+		// }
+		// loadValues();
+		// //displayItemsForProduct(current);
 	}
 
 	/**

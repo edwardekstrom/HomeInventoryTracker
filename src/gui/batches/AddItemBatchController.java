@@ -248,6 +248,9 @@ public class AddItemBatchController extends Controller implements
 	public Map<String,Object> getAIBCInfo(){
 		Map<String,Object> info = new HashMap<String,Object>();
 		
+		info.put("entryDate",getView().getEntryDate());
+		info.put("count",getView().getCount());
+		info.put("storageUnit",_storageUnit);
 
 		return info;
 	}
