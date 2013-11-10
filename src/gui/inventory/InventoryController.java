@@ -119,6 +119,7 @@ public class InventoryController extends Controller
 	
 	private void loadAllProducts() {
 		ArrayList<ProductData> productDatas = new ArrayList<ProductData>();
+		ProductData productD = getView().getSelectedProduct();
 		HomeInventory homeInventory = Configuration.getInstance().getHomeInventory();
 		for(Product p: ProductsManager.getInstance().getAllProducts()){
 			ProductData pData = p.getTagData();
@@ -128,6 +129,7 @@ public class InventoryController extends Controller
 		}
 		ProductData[] products = productDatas.toArray(new ProductData[productDatas.size()]);
 		getView().setProducts(products);
+		getView().selectProduct(productD);
 		
 	}
 	

@@ -59,7 +59,12 @@ public class TransferItemCommand extends Command{
 	 * Undo the Command
 	 */
 	public void executeInverse(){
-
+		if (_addedProductToModel){// should be in the facade...
+			ProductContainer pc = (ProductContainer)_targetPCD.getTag();
+			pc.removeProduct((Product)_product.getTag());
+			// System.out.println("yo man");
+		}
+		
 		ItemFacade.getInstance().moveItemInTree(
 			(Item)_item.getTag(),
 			(ProductContainer)_sourcePCD.getTag());
@@ -69,11 +74,7 @@ public class TransferItemCommand extends Command{
 		if (_addedProductToView)
 			_tibc.removeProduct(_product);
 
-		if (_addedProductToModel){// should be in the facade...
-			ProductContainer pc = (ProductContainer)_targetPCD.getTag();
-			pc.removeProduct((Product)_product.getTag());
-			// System.out.println("yo man");
-		}
+
 
 	}
 
