@@ -7,6 +7,7 @@ import java.util.ArrayList;
 //import java.util.List;
 
 public class ReportTable {
+	private String _tableName;
 	private String[] _headerRow;
 	private ArrayList<TableRow> _rows;
 	private int _numberOfColumns;
@@ -30,8 +31,8 @@ public class ReportTable {
 	/**
 	 * @param _headerRow the _headerRow to set
 	 */
-	public void setHeaderRow(String[] _headerRow) {
-		this._headerRow = _headerRow;
+	public void setHeaderRow(String[] headerRow) {
+		_headerRow = headerRow;
 	}
 
 	public ArrayList<TableRow> getRows(){
@@ -44,6 +45,20 @@ public class ReportTable {
 		}else{
 			throw new InvalidRowException("Incorrect number of columns!!!!");
 		}
+	}
+
+	/**
+	 * @return the _tableName
+	 */
+	public String getTableName() {
+		return _tableName;
+	}
+
+	/**
+	 * @param _tableName the _tableName to set
+	 */
+	public void setTableName(String tableName) {
+		_tableName = tableName;
 	}
 
 }

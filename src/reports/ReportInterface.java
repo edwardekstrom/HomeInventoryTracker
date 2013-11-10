@@ -23,15 +23,11 @@ public interface ReportInterface {
 	 */
 	public String getHeader();
 	
-	/**A list of the column names for the tables
-	 * 
-	 * @return
-	 */
-	public ArrayList<ArrayList<String>> getColumnNames();
+	public ArrayList<ReportTable> getTableData();
 	
-	public ArrayList<ArrayList<String>> getTableData();
+	public ArrayList<ReportNotice> getNotices();
 	
-	//currently doung for each
+	//currently doing for each
 	public int getNumTables();
 	
 	//returns the number of columns in the table (wont need if use double lists
