@@ -50,7 +50,7 @@ public class ReportFacade {
 			builder = new TestBuilder();
 		}
 			
-		rf.generateReport(rf, builder);
+		//rf.generateReport(rf, builder);
 	}
 	
 	/**Generates the report type in the passed builder format

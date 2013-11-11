@@ -16,7 +16,7 @@ public class NoticesReport implements ReportInterface {
 	 * @postcondition gives the correct report in the correct format
 	 */
 	@Override
-	public void generateReport(ReportVisitor visitor, ReportBuilder build) {
+	public void generateReport(ReportBuilder build) {
 		// TODO Auto-generated method stub
 		
 	}

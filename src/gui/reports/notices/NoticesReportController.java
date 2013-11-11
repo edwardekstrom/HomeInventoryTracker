@@ -1,6 +1,8 @@
 package gui.reports.notices;
 
-import facade.ReportFacade;
+import reports.ExpiredItemsReport;
+import reports.ThisIsATestReport;
+import builder.TestBuilder;
 import gui.common.*;
 
 /**
@@ -79,8 +81,9 @@ public class NoticesReportController extends Controller implements
 	 */
 	@Override
 	public void display() {
-		ReportFacade rf = new ReportFacade();
-		rf.generateNoticesReport(2);
+		
+		ThisIsATestReport report = new ThisIsATestReport();
+		report.generateReport(new TestBuilder());
 	}
 
 }

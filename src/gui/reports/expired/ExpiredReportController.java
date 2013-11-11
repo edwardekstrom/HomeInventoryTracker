@@ -2,6 +2,7 @@ package gui.reports.expired;
 
 
 import builder.HTMLBuilder;
+import builder.PDFBuilder;
 import builder.TestBuilder;
 import reports.ExpiredItemsReport;
 import gui.common.*;
@@ -84,7 +85,14 @@ public class ExpiredReportController extends Controller implements
 	@Override
 	public void display() {
 		ExpiredItemsReport report = new ExpiredItemsReport();
-		report.generateReport(null, new TestBuilder());
+//		report.generateReport(new TestBuilder());
+		FileFormat format = getView().getFormat();
+		if(format == FileFormat.HTML){
+			report.generateReport(new HTMLBuilder());
+		}else{
+			report.generateReport(new PDFBuilder());
+		}
+		
 	}
 
 }

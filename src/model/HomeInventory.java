@@ -144,5 +144,8 @@ public class HomeInventory extends ProductContainer implements Serializable{
 	
 	public void accept(ReportVisitor visitor){
 		visitor.visit(this);
+		for(StorageUnit su: _storageUnits){
+			su.accept(visitor);
+		}
 	}
 }

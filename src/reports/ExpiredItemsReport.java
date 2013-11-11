@@ -24,7 +24,7 @@ public class ExpiredItemsReport implements ReportInterface {
 	 * @postcondition gives the correct report in the correct format
 	 */
 	@Override
-	public void generateReport(ReportVisitor doNotUseThis, ReportBuilder build) {
+	public void generateReport(ReportBuilder build) {
 		HomeInventory hi = Configuration.getHIT();
 		hi.accept(_visitor);
 		build.buildReport(this);
@@ -45,6 +45,7 @@ public class ExpiredItemsReport implements ReportInterface {
 		reportTable.setHeaderRow(headerRow);
 		
 		for(Item i : _visitor.getExpiredList()){
+//			System.out.println("adding row!");
 			String description = i.getProduct().getDescription();
 			String storageUnit = i.getContainer().getStorageUnit().getName();
 			String productGroup = i.getContainer().getName();
