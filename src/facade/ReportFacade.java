@@ -1,5 +1,9 @@
 package facade;
 
+import builder.HTMLBuilder;
+import builder.PDFBuilder;
+import builder.ReportBuilder;
+import builder.TestBuilder;
 import reports.ReportInterface;
 import reports.ThisIsATestReport;
 import visitor.ReportVisitor;
@@ -37,7 +41,16 @@ public class ReportFacade {
 	public void generateNoticesReport(int type){
 		
 		ReportInterface rf = new ThisIsATestReport();
-		rf.generateReport(rf, null);
+		ReportBuilder builder;
+		if(type == 1){
+			builder = new PDFBuilder();
+		}else if(type == 2){
+			builder = new HTMLBuilder();
+		}else{
+			builder = new TestBuilder();
+		}
+			
+		rf.generateReport(rf, builder);
 	}
 	
 	/**Generates the report type in the passed builder format

@@ -80,7 +80,7 @@ public class NoticesReportController extends Controller implements
 	@Override
 	public void display() {
 		ReportFacade rf = new ReportFacade();
-		rf.generateNoticesReport(3);
+		rf.generateNoticesReport(2);
 	}
 
 }
