@@ -12,9 +12,9 @@ import builder.TestBuilder;
 public class ThisIsATestReport implements ReportInterface {
 
 	@Override
-	public void generateReport(ReportInterface report, ReportBuilder build) {
+	public void generateReport(ReportVisitor visitor, ReportBuilder build) {
 		TestBuilder tb = new TestBuilder();
-		tb.buildReport(report);
+		tb.buildReport(this);
 	}
 
 	@Override

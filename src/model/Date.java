@@ -80,4 +80,12 @@ public class Date implements Serializable{
 		java.util.Date dt = _date.getTime();
 		return sdf.format(dt);
 	}
+	
+	public boolean isAfter(Date toCompare){
+		if(this._date.compareTo(toCompare.getDate()) > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }

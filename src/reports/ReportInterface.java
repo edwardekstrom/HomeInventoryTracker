@@ -15,7 +15,7 @@ public interface ReportInterface {
 	 * @precondition given the correct ReportVisitor and ReportBuilder
 	 * @postcondition gives the correct report in the correct format
 	 */
-	public void generateReport(ReportInterface report, ReportBuilder build);
+	public void generateReport(ReportVisitor visitor, ReportBuilder build);
 	
 	/**
 	 * 

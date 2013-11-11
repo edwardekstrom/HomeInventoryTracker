@@ -1,6 +1,9 @@
 package gui.reports.expired;
 
 
+import builder.HTMLBuilder;
+import builder.TestBuilder;
+import reports.ExpiredItemsReport;
 import gui.common.*;
 
 
@@ -80,6 +83,8 @@ public class ExpiredReportController extends Controller implements
 	 */
 	@Override
 	public void display() {
+		ExpiredItemsReport report = new ExpiredItemsReport();
+		report.generateReport(null, new TestBuilder());
 	}
 
 }

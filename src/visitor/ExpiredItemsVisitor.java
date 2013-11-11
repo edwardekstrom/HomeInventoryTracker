@@ -1,13 +1,17 @@
 package visitor;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import model.Date;
 import model.HomeInventory;
 import model.Item;
 import model.Product;
 import model.ProductContainer;
 
 public class ExpiredItemsVisitor implements ReportVisitor {
+	
+	List<Item> _expiredItems = new ArrayList<Item>();
 
 	/**gathers the data from the model for the implemented report type
 	 * 
@@ -17,13 +21,16 @@ public class ExpiredItemsVisitor implements ReportVisitor {
 	 */
 	@Override
 	public List gatherReportData() {
-		// TODO Auto-generated method stub
+		// remove this from the interface.
 		return null;
 	}
 
 	@Override
 	public void visit(Item i) {
-		// TODO Auto-generated method stub
+		
+		if(i.getExpirationDate().isAfter(new Date())){
+			_expiredItems.add(i);
+		}
 		
 	}
 
@@ -43,6 +50,10 @@ public class ExpiredItemsVisitor implements ReportVisitor {
 	public void visit(HomeInventory hi) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public List<Item> getExpiredList(){
+		return _expiredItems;
 	}
 
 }

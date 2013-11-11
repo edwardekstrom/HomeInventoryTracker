@@ -2,10 +2,13 @@ package reports;
 
 import java.util.ArrayList;
 
+import visitor.ProuctStatsVisitor;
 import visitor.ReportVisitor;
 import builder.ReportBuilder;
 
 public class ProductStatsReport implements ReportInterface {
+	
+	ReportVisitor _visitor = new ProuctStatsVisitor();
 
 	/**generates the needed report using the correct visitor and builder
 	 * 
@@ -15,8 +18,7 @@ public class ProductStatsReport implements ReportInterface {
 	 * @postcondition gives the correct report in the correct format
 	 */
 	@Override
-	public void generateReport(ReportInterface report, ReportBuilder build) {
-		// TODO Auto-generated method stub
+	public void generateReport(ReportVisitor visitor, ReportBuilder build) {
 		
 	}
 
