@@ -29,16 +29,23 @@ public abstract class ReportBuilder {
 				
 				ArrayList<TableRow> tableRows = table.getRows();
 				String[] colHeaders = table.getHeaderRow();
+				
+				startTable();
+				openTableRow();
 				for(String colName : colHeaders){
 					//System.out.println(" <th>" + colName + "</th>");
 					printColName(colName);
 				}
+				closeTableRow();
 				for(TableRow row : tableRows){
+					openTableRow();
 					for(String column : row.getData()){
 						//System.out.println("  <td>" + column + "</td>");
 						printColData(column);
 					}
+					closeTableRow();
 				}
+				endTable();
 			}
 		}
 		
@@ -60,6 +67,8 @@ public abstract class ReportBuilder {
 				}
 			}
 		}
+		
+		createDocument();
 	}
 	
 	public abstract void printReportHeader(String header);
@@ -77,5 +86,15 @@ public abstract class ReportBuilder {
 	public abstract void printOffender(String offender);
 	
 	public abstract void printBlankLine();
+	
+	public abstract void startTable();
+	
+	public abstract void endTable();
+	
+	public abstract void openTableRow();
+	
+	public abstract void closeTableRow();
+	
+	public abstract void createDocument();
 	
 }
