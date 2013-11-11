@@ -12,13 +12,18 @@ public class ReportTable {
 	private ArrayList<TableRow> _rows;
 	private int _numberOfColumns;
 	
-	public ReportTable(int numberOfColumns){
+	public ReportTable(int numberOfColumns, String tableName){
 		_numberOfColumns = numberOfColumns;
+		_rows = new ArrayList<TableRow>();
+		_tableName = tableName;
+		setHeaderRow(new String[numberOfColumns]);
 	}
 	
-	public ReportTable(String[] headerRow){
+	public ReportTable(String[] headerRow, String tableName){
 		setHeaderRow(headerRow);
 		_numberOfColumns = headerRow.length;
+		_rows = new ArrayList<TableRow>();
+		_tableName = tableName;
 	}
 
 	/**
@@ -43,6 +48,7 @@ public class ReportTable {
 		if(tableRow.getnumberOfColumns() == _numberOfColumns){
 			_rows.add(tableRow);
 		}else{
+			//System.out.println(tableRow.getnumberOfColumns() + ":" + _numberOfColumns);
 			throw new InvalidRowException("Incorrect number of columns!!!!");
 		}
 	}

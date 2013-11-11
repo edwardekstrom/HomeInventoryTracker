@@ -12,6 +12,20 @@ public class NoticeData {
 	//<productgroup>::<itemname> (size: <num> <unit>)
 	ArrayList<String> _offenders;
 	
+	public NoticeData(){
+		_description = "";
+		_offenders = new ArrayList<String>();
+	}
+	
+	public NoticeData(String description){
+		_description = description;
+		_offenders = new ArrayList<String>();
+	}
+	
+	public NoticeData(String description, ArrayList<String> offenders){
+		_description = description;
+		_offenders = offenders;
+	}
 	/**
 	 * @return the _description
 	 */

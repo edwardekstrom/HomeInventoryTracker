@@ -7,6 +7,7 @@ public class TableRow {
 	
 	public TableRow(int numberOfColumns){
 		setData(new String[numberOfColumns]);
+		setNumberOfColumns(numberOfColumns);
 	}
 	
 	public TableRow(String[] theData){

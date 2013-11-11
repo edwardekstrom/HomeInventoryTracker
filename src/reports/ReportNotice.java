@@ -6,6 +6,21 @@ public class ReportNotice {
 	String _noticeType;
 	ArrayList<NoticeData> _notices;
 	
+	public ReportNotice(){
+		_noticeType = "";
+		_notices = new ArrayList<NoticeData>();
+	}
+	
+	public ReportNotice(String noticeType){
+		_noticeType = noticeType;
+		_notices = new ArrayList<NoticeData>();
+	}
+	
+	public ReportNotice(String noticeType, ArrayList<NoticeData> notices){
+		_noticeType = noticeType;
+		_notices = notices;
+	}
+	
 	/**
 	 * @return the _noticeType
 	 */

@@ -9,16 +9,55 @@ import reports.ReportInterface;
  * @author Capchu
  *
  */
-public class HTMLBuilder implements ReportBuilder {
+public class HTMLBuilder extends ReportBuilder {
 
-	/**uses the data that has been gathered to generate a report in the format that the concrete builder uses
-	 * @precondition data from the model gathered by the visitors
-	 * @postcondition the data given in the desired format
-	 */
 	@Override
-	public void buildReport(ReportInterface report) {
+	public void printReportHeader(String header) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void printTableName(String tableName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void printColName(String colName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void printColData(String colData) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void printNoticeType(String noticeType) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void printNoticeDesc(String noticeDesc) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void printOffender(String offender) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void printBlankLine() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }
