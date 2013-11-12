@@ -86,7 +86,6 @@ public class ItemsManager {
 	 */
 	public void removeItem(Item item){
 		_allItemsList.remove(item);
-		_deletedItemsList.add(item);
 	}
 	
 	/**

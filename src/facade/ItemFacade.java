@@ -143,7 +143,12 @@ public class ItemFacade extends Observable{
 		setChanged();
 		notifyObservers(this);
 	}
-
+	public void dragAndDropItem(Item item, ProductContainer origin, ProductContainer destination){
+		origin.moveItem(item, destination);
+		
+		setChanged();
+		notifyObservers(this);
+	}
 
 	public void registerAddItemBatchController(AddItemBatchController aibc){
 		_addItemBatchController =aibc;
