@@ -63,9 +63,9 @@ public class ItemFacade extends Observable{
 		addItemToTree(itemToAdd);
 		addItemToManager(itemToAdd);
 		
-		// setChanged();
-		// notifyObservers(this);
-		_inventoryController.update(null,null);
+		setChanged();
+		notifyObservers(this);
+		// _inventoryController.update(null,null);
 
 
 		return itemToAdd;
@@ -88,7 +88,7 @@ public class ItemFacade extends Observable{
 		// setChanged();
 		// notifyObservers(this);
 		_inventoryController.update(null,null);
-	}	
+	}
 	
 	/**
 	 * Add the given item to the tree
@@ -136,12 +136,12 @@ public class ItemFacade extends Observable{
 	 * @param finish
 	 */
 	public void moveItemInTree(Item item, ProductContainer destination ){
-		removeItem(item);
+		removeItemFromTree(item);
 		destination.addItem(item);
 
-		_inventoryController.update(null,null);
-		// setChanged();
-		// notifyObservers(this);
+		// _inventoryController.update(null,null);
+		setChanged();
+		notifyObservers(this);
 	}
 
 
