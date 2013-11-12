@@ -164,8 +164,8 @@ public class ThisIsATestReport implements ReportInterface {
 		//How The Tree Looks
 		/**
 		 * StorageUnits
-		 * -BagOfCookies (50 kg)
-		 *  ~ChocolateChip 
+		 * -BagOfCookies 
+		 *  ~ChocolateChip (50 kg)
 		 *   *HomeMade (1 Count)
 		 *    +Grandma'sCookies (5 grams)
 		 *    +MyHomeMadeCookies (1 count)
