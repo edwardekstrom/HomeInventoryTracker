@@ -410,6 +410,8 @@ public abstract class ProductContainer implements Serializable{
 /*/**************Visitor stuff****************************/
 	
 	public void accept(ReportVisitor visitor){
+		visitor.visit(this);
+
 		for(ProductGroup pg : _productGroups){
 			pg.accept(visitor);
 		}
@@ -419,7 +421,6 @@ public abstract class ProductContainer implements Serializable{
 		for(Item i : _items){
 			i.accept(visitor);
 		}
-		visitor.visit(this);
 	}
 	
 	
