@@ -2,9 +2,10 @@ package reports;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.SortedMap;
 
-import model.Date;
-import model.HomeInventory;
+import model.*;
 import singletons.Configuration;
 import singletons.ItemsManager;
 import visitor.ExpiredItemsVisitor;
@@ -39,13 +40,39 @@ public class RemovedItemsReport implements ReportInterface {
 	public String getHeader() {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
 		
-		return "Items Removed Since"+ sdf.format(_visitor.getDateAsString(sdf));
+		return "Items Removed Since"+ _visitor.getDateAsString(sdf);
 	}
 
 	@Override
 	public ArrayList<ReportTable> getTableData() {
-		// TODO Auto-generated method stub
-		return null;
+
+		SortedMap<Item,Integer> items = _visitor.getSortedItemMap();
+		ReportTable table = new ReportTable(5, "");
+		table.setHeaderRow(new String[] 
+			{"Description","Size","Product Barcode","Removed","Current Supply"} );
+
+
+
+		for (Item i: items.keySet()){
+
+			Product p = i.getProduct();
+			String desc = p.getDescription();
+			String size = p.getSizeAmount() + " " + p.getSizeUnit();
+			String p_bcode = p.getBarcode().getBarcode();
+			String removed = items.get(i) + "";
+			String supply =  p.getCurrentSupply() + "";
+
+			TableRow tr = new TableRow(5);
+			tr.setData(new String[] 
+				{desc,size,p_bcode,removed,supply});
+			try{
+				table.addRow(tr);
+			}catch(Exception e){System.out.println("Error CAUGHT:" + e.getMessage());}
+		}
+
+		ArrayList<ReportTable> ret = new ArrayList<ReportTable>();
+		ret.add(table);
+		return ret;
 	}
 
 	@Override

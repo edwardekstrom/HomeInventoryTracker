@@ -4,6 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.ArrayList;
+
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import model.Date;
 import model.HomeInventory;
@@ -16,8 +20,9 @@ public class RemovedItemsVisitor implements ReportVisitor {
 	private Date _date;
 	private List<Item> _removedItems;
 	
-	public RemovedItemsVisitor(Date date) {
+	public RemovedItemsVisitor(model.Date date) {
 		_date = date;
+		_removedItems = new ArrayList<Item>();
 	}
 
 	/**gathers the data from the model for the implemented report type
@@ -61,10 +66,16 @@ public class RemovedItemsVisitor implements ReportVisitor {
 		return _date.getDateAsString(sdf);
 	}
 	
-	public List<Item> getSortedItems(){
-		
-		Collections.sort(_removedItems);
-		return _removedItems;
+	public SortedMap<Item,Integer> getSortedItemMap(){
+		SortedMap<Item,Integer> ret = new TreeMap<Item,Integer>();
+
+		for (Item i: _removedItems){
+			if(ret.containsKey(i))
+				ret.put(i,ret.get(i) + 1);
+			else
+				ret.put(i,1);
+		}
+		return ret;
 	}
 
 }
