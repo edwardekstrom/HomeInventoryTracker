@@ -1,12 +1,25 @@
 package reports;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import model.Date;
+import model.HomeInventory;
+import singletons.Configuration;
+import singletons.ItemsManager;
+import visitor.ExpiredItemsVisitor;
+import visitor.RemovedItemsVisitor;
 import visitor.ReportVisitor;
 import builder.ReportBuilder;
 
 public class RemovedItemsReport implements ReportInterface {
-
+	
+	RemovedItemsVisitor _visitor;
+	
+	public RemovedItemsReport(Date date){
+		_visitor = new RemovedItemsVisitor(date);
+	}
+	
 	/**generates the needed report using the correct visitor and builder
 	 * 
 	 * @param visit
@@ -16,14 +29,17 @@ public class RemovedItemsReport implements ReportInterface {
 	 */
 	@Override
 	public void generateReport(ReportBuilder build) {
-		// TODO Auto-generated method stub
+		ItemsManager manager = ItemsManager.getInstance();
+		manager.acceptRemovedItemsVisitor(_visitor);
 		
+		build.buildReport(this);		
 	}
 
 	@Override
 	public String getHeader() {
-		// TODO Auto-generated method stub
-		return null;
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
+		
+		return "Items Removed Since"+ sdf.format(_visitor.getDateAsString(sdf));
 	}
 
 	@Override
@@ -34,19 +50,16 @@ public class RemovedItemsReport implements ReportInterface {
 
 	@Override
 	public int getNumTables() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public int getNumColumns() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 5;
 	}
 
 	@Override
 	public ArrayList<ReportNotice> getNotices() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
