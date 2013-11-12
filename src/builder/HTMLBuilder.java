@@ -3,6 +3,7 @@
  */
 package builder;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -79,7 +80,7 @@ public class HTMLBuilder extends ReportBuilder {
 	}
 
 	@Override
-	public void startTable() {
+	public void startTable(int numCols) {
 		_sb.append("<table border=\"1\">");
 	}
 
@@ -105,6 +106,7 @@ public class HTMLBuilder extends ReportBuilder {
 		_html.setWritable(true);
 		try {
 			Files.write(_html.toPath(), _sb.toString().getBytes(), StandardOpenOption.APPEND);
+			java.awt.Desktop.getDesktop().open(_html);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
