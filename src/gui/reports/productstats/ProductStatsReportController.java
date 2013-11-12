@@ -1,5 +1,10 @@
 package gui.reports.productstats;
 
+import reports.NMonthSupplyReport;
+import reports.ProductStatsReport;
+import builder.HTMLBuilder;
+import builder.PDFBuilder;
+import builder.ReportBuilder;
 import gui.common.*;
 
 /**
@@ -17,6 +22,8 @@ public class ProductStatsReportController extends Controller implements
 		super(view);
 		
 		construct();
+		getView().enableOK(false);
+
 	}
 
 	//
@@ -70,6 +77,17 @@ public class ProductStatsReportController extends Controller implements
 	 */
 	@Override
 	public void valuesChanged() {
+		try{
+			int n = Integer.parseInt(getView().getMonths());
+			if (n > 0){
+				getView().enableOK(true);
+			}else{
+				getView().enableOK(false);
+			}
+
+		}catch(NumberFormatException e){
+			getView().enableOK(false);
+		}
 	}
 	
 	/**
@@ -78,6 +96,26 @@ public class ProductStatsReportController extends Controller implements
 	 */
 	@Override
 	public void display() {
+		int n = 0;
+		try{
+			n = Integer.parseInt(getView().getMonths());
+			if (n <= 0){
+				n = -1;
+			}else{
+				ProductStatsReport report = new ProductStatsReport(n);
+				ReportBuilder builder;
+				if(getView().getFormat() == FileFormat.PDF){
+					builder = new PDFBuilder();
+				}else{
+					builder = new HTMLBuilder();
+				}
+				report.generateReport(builder);
+			
+			}
+		}catch(NumberFormatException e){
+			n = -1;
+		}
+		
 	}
 
 }

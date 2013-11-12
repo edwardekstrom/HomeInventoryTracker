@@ -1,5 +1,6 @@
 package visitor;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,8 +14,8 @@ import model.StorageUnit;
 
 public class NMonthSupplyVisitor implements ReportVisitor {
 	private int _n = -1;
-	private List<Product> _products;
-	private List<ProductGroup> _productGroups;
+	private List<Product> _products = new ArrayList<Product>();
+	private List<ProductGroup> _productGroups = new ArrayList<ProductGroup>();
 	
 	public NMonthSupplyVisitor(int n) {
 		_n = n;

@@ -88,4 +88,12 @@ public class Date implements Serializable{
 			return false;
 		}
 	}
+	
+	public boolean isBefore(Date toCompare){
+		if(this._date.compareTo(toCompare.getDate()) < 0){
+			return false;
+		}else{
+			return true;
+		}
+	}
 }

@@ -577,8 +577,10 @@ public class InventoryController extends Controller
 		ProductData pd = getView().getSelectedProduct();
 		
 		ItemFacade itemFacade = ItemFacade.getInstance();
-		itemFacade.moveItemInTree((Item)itemData.getTag(), (ProductContainer)containerData.getTag());
+//		itemFacade.moveItemInTree((Item)itemData.getTag(), (ProductContainer)containerData.getTag());
 		//System.out.println("moveItemToContainer");
+		Item item = (Item)itemData.getTag();
+		itemFacade.dragAndDropItem((Item)itemData.getTag(), item.getContainer(), (ProductContainer)containerData.getTag());
 		
 		getView().selectProductContainer(pcd);
 		getView().selectProduct(pd);
