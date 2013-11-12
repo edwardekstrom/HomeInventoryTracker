@@ -127,11 +127,13 @@ public class ItemsManager {
 	public void storeBarcodeList(){
 		HomeInventory hi = Configuration.getInstance().getHomeInventory();
 		hi.setStoreItemManagerList(_allItemsList);
+		hi.setStoreDeleted(_deletedItemsList);
 	}
 	
 	public void de_storeBarcodeList(){
 		HomeInventory hi = Configuration.getInstance().getHomeInventory();
 		_allItemsList = hi.getStoreItemManagerList();
+		_deletedItemsList = hi.getStoreDeleted();
 	}
 	
 	public void accept(ReportVisitor visitor){
