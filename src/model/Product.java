@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.TreeMap;
 
+import singletons.ItemsManager;
 import visitor.ReportVisitor;
 import gui.product.*;
 
@@ -16,7 +17,7 @@ import gui.product.*;
  * @author Capchu
  * This class is for storing objects
  */
-public class Product implements Serializable{
+public class Product implements Serializable, Comparable{
 
 	private Date _creationDate;
 	private Barcode _barcode;
@@ -266,5 +267,19 @@ public class Product implements Serializable{
 		visitor.visit(this);
 	}
 
+	public int compareTo(Object o) {
+		Product input = (Product)o;
+		int descriptionCompareResult = this.getDescription().compareTo(input.getDescription());
+
+		return descriptionCompareResult;
+	}
 	
+	public float getCurrentSupply(){
+		float itemsOfProduct = 0f;
+		ItemsManager im = ItemsManager.getInstance();
+		for(Item i : im.getAllItems()){
+			if(i.getProduct() == this) itemsOfProduct++;
+		}
+		return this.getSizeAmount() * itemsOfProduct;
+	}
 }
