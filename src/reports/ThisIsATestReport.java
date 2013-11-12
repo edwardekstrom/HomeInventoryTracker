@@ -138,7 +138,7 @@ public class ThisIsATestReport implements ReportInterface {
 		tableData.add(table2);
 		//Finished Populating 2
 
-		return tableData;
+		return null;
 	}
 
 	@Override
