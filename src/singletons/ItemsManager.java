@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import visitor.RemovedItemsVisitor;
 import visitor.ReportVisitor;
 import model.DateTime;
 import model.HomeInventory;
@@ -85,7 +86,6 @@ public class ItemsManager {
 	 */
 	public void removeItem(Item item){
 		_allItemsList.remove(item);
-		_deletedItemsList.add(item);
 	}
 	
 	/**
@@ -127,15 +127,22 @@ public class ItemsManager {
 	public void storeBarcodeList(){
 		HomeInventory hi = Configuration.getInstance().getHomeInventory();
 		hi.setStoreItemManagerList(_allItemsList);
+		hi.setStoreDeleted(_deletedItemsList);
 	}
 	
 	public void de_storeBarcodeList(){
 		HomeInventory hi = Configuration.getInstance().getHomeInventory();
 		_allItemsList = hi.getStoreItemManagerList();
+		_deletedItemsList = hi.getStoreDeleted();
 	}
 	
 	public void accept(ReportVisitor visitor){
 		for (Item i : _allItemsList){
+			i.accept(visitor);
+		}
+	}
+	public void acceptRemovedItemsVisitor(RemovedItemsVisitor visitor){
+		for (Item i : _deletedItemsList){
 			i.accept(visitor);
 		}
 	}

@@ -2,6 +2,14 @@ package gui.reports.removed;
 
 import gui.common.*;
 
+
+import builder.*;
+import reports.*;
+import model.*;
+import singletons.Configuration;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 /**
  * Controller class for the removed items report view.
  */
@@ -47,6 +55,16 @@ public class RemovedReportController extends Controller implements
 	 */
 	@Override
 	protected void enableComponents() {
+		HomeInventory hi = Configuration.getHIT();
+		model.Date d = hi.getLastRemovedItemsDate();
+		boolean enableLast = d != null;
+		getView().enableSinceLast(enableLast);
+		getView().setSinceDate(!enableLast);
+		getView().setSinceLast(enableLast);
+		if(enableLast){
+			getView().setSinceLastValue(d.getUtilDate());
+		}
+
 	}
 
 	/**
@@ -78,6 +96,26 @@ public class RemovedReportController extends Controller implements
 	 */
 	@Override
 	public void display() {
+
+		model.Date date = null;
+		if (getView().getSinceDate()){
+			java.util.Date d = getView().getSinceDateValue();
+			date = new model.Date(d);
+		}
+		else if(getView().getSinceLast()){
+			HomeInventory hi = Configuration.getHIT();
+			date =  hi.getLastRemovedItemsDate();
+		}
+		RemovedItemsReport report = new RemovedItemsReport(date);
+
+		FileFormat format = getView().getFormat();
+		if(format == FileFormat.HTML){
+			report.generateReport(new HTMLBuilder());
+		}else{
+			report.generateReport(new PDFBuilder());
+		}
+		HomeInventory hi = Configuration.getHIT();
+		hi.saveLastRemovedItemsDate(new model.Date(new java.util.Date()));
 	}
 
 }

@@ -10,15 +10,18 @@ import java.util.Collections;
 import singletons.Configuration;
 import visitor.ReportVisitor;
 
-import com.sun.tools.internal.jxc.gen.config.Config;
+// import com.sun.tools.internal.jxc.gen.config.Config;
 
 public class HomeInventory extends ProductContainer implements Serializable{
 	private List<StorageUnit> _storageUnits;
 	private ProductContainerData _rootData;
 	private List<Product> _storeProductManagerList;
 	private List<Item> _storeItemManagerList;
+	private List<Item> _storeDeleted;
 	private List<String> _storeBarcodeManagerList;
-	
+	private Date _lastRemovedItemsDate = null;
+
+
 	/**
 	 * @precondition none
 	 * @postcondition There is a new HomeInventory
@@ -30,6 +33,7 @@ public class HomeInventory extends ProductContainer implements Serializable{
 		_rootData.setTag(this);
 		_storeBarcodeManagerList = new ArrayList<String>();
 		_storeItemManagerList = new ArrayList<Item>();
+		setStoreDeleted(new ArrayList<Item>());
 		_storeProductManagerList = new ArrayList<Product>();
 		
 	}
@@ -147,5 +151,26 @@ public class HomeInventory extends ProductContainer implements Serializable{
 		for(StorageUnit su: _storageUnits){
 			su.accept(visitor);
 		}
+	}
+
+	public void saveLastRemovedItemsDate(Date date){
+		_lastRemovedItemsDate = date;
+	}
+	public Date getLastRemovedItemsDate(){
+		return _lastRemovedItemsDate;
+	}
+
+	/**
+	 * @return the _storeDeleted
+	 */
+	public List<Item> getStoreDeleted() {
+		return _storeDeleted;
+	}
+
+	/**
+	 * @param _storeDeleted the _storeDeleted to set
+	 */
+	public void setStoreDeleted(List<Item> _storeDeleted) {
+		this._storeDeleted = _storeDeleted;
 	}
 }
