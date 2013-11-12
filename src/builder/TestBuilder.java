@@ -73,7 +73,7 @@ public class TestBuilder extends ReportBuilder{
 
 
 	@Override
-	public void startTable() {
+	public void startTable(int col) {
 		_sb.append("<table>");
 	}
 

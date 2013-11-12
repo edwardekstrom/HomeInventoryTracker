@@ -30,7 +30,7 @@ public abstract class ReportBuilder {
 				ArrayList<TableRow> tableRows = table.getRows();
 				String[] colHeaders = table.getHeaderRow();
 				
-				startTable();
+				startTable(colHeaders.length);
 				openTableRow();
 				for(String colName : colHeaders){
 					//System.out.println(" <th>" + colName + "</th>");
@@ -87,7 +87,7 @@ public abstract class ReportBuilder {
 	
 	public abstract void printBlankLine();
 	
-	public abstract void startTable();
+	public abstract void startTable(int numCols);
 	
 	public abstract void endTable();
 	
