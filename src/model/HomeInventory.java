@@ -17,6 +17,7 @@ public class HomeInventory extends ProductContainer implements Serializable{
 	private ProductContainerData _rootData;
 	private List<Product> _storeProductManagerList;
 	private List<Item> _storeItemManagerList;
+	private List<Item> _storeDeleted;
 	private List<String> _storeBarcodeManagerList;
 	
 	/**
@@ -30,6 +31,7 @@ public class HomeInventory extends ProductContainer implements Serializable{
 		_rootData.setTag(this);
 		_storeBarcodeManagerList = new ArrayList<String>();
 		_storeItemManagerList = new ArrayList<Item>();
+		setStoreDeleted(new ArrayList<Item>());
 		_storeProductManagerList = new ArrayList<Product>();
 		
 	}
@@ -147,5 +149,19 @@ public class HomeInventory extends ProductContainer implements Serializable{
 		for(StorageUnit su: _storageUnits){
 			su.accept(visitor);
 		}
+	}
+
+	/**
+	 * @return the _storeDeleted
+	 */
+	public List<Item> getStoreDeleted() {
+		return _storeDeleted;
+	}
+
+	/**
+	 * @param _storeDeleted the _storeDeleted to set
+	 */
+	public void setStoreDeleted(List<Item> _storeDeleted) {
+		this._storeDeleted = _storeDeleted;
 	}
 }
