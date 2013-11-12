@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import visitor.RemovedItemsVisitor;
 import visitor.ReportVisitor;
 import model.DateTime;
 import model.HomeInventory;
@@ -138,6 +139,11 @@ public class ItemsManager {
 	
 	public void accept(ReportVisitor visitor){
 		for (Item i : _allItemsList){
+			i.accept(visitor);
+		}
+	}
+	public void acceptRemovedItemsVisitor(RemovedItemsVisitor visitor){
+		for (Item i : _deletedItemsList){
 			i.accept(visitor);
 		}
 	}

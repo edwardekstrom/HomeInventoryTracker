@@ -45,15 +45,14 @@ public class PDFBuilder extends ReportBuilder {
 		 try {
 			 _fileOutputStream = new FileOutputStream(_filePath);
 			_writer = PdfWriter.getInstance(_document, _fileOutputStream);
+			_writer.setPdfVersion(PdfWriter.VERSION_1_5);
+			 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("PDFProbs");;
 		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
-		_writer.setPdfVersion(PdfWriter.VERSION_1_5);
-		_document.open();    
+		 _document.open();   
 	}
 
 	@Override
@@ -139,13 +138,20 @@ public class PDFBuilder extends ReportBuilder {
 		
 		
 		try {
+			_document.close();
 			_writer.close();
 			_fileOutputStream.close();
-			_document.close();
+			
 			java.awt.Desktop.getDesktop().open(new File(_filePath));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			_document.close();
+			_writer.close();
 			e.printStackTrace();
+		} catch (NullPointerException npe) {
+			
+		}finally{
+			
 		}
 	}
 

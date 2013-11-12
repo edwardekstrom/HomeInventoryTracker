@@ -2,6 +2,13 @@ package gui.reports.removed;
 
 import gui.common.*;
 
+
+import builder.*;
+import reports.*;
+import model.*;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 /**
  * Controller class for the removed items report view.
  */
@@ -78,6 +85,16 @@ public class RemovedReportController extends Controller implements
 	 */
 	@Override
 	public void display() {
+		java.util.Date d = getView().getSinceDateValue();
+		model.Date date = new model.Date(d);
+		RemovedItemsReport report = new RemovedItemsReport(date);
+
+		FileFormat format = getView().getFormat();
+		if(format == FileFormat.HTML){
+			report.generateReport(new HTMLBuilder());
+		}else{
+			report.generateReport(new PDFBuilder());
+		}
 	}
 
 }
