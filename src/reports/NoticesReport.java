@@ -4,10 +4,13 @@ import java.util.ArrayList;
 
 import visitor.ReportVisitor;
 import builder.ReportBuilder;
+import visitor.*;
+import singletons.*;
+import model.*;
 
 public class NoticesReport implements ReportInterface {
 
-	
+	NoticesVisitor _visitor = new NoticesVisitor();
 	/**generates the needed report using the correct visitor and builder
 	 * 
 	 * @param visit
@@ -18,6 +21,9 @@ public class NoticesReport implements ReportInterface {
 	@Override
 	public void generateReport(ReportBuilder build) {
 		// TODO Auto-generated method stub
+		HomeInventory hi = Configuration.getHIT();
+		hi.accept(_visitor);
+		build.buildReport(this);	
 		
 	}
 
@@ -47,8 +53,8 @@ public class NoticesReport implements ReportInterface {
 
 	@Override
 	public ArrayList<ReportNotice> getNotices() {
-		// TODO Auto-generated method stub
-		return null;
+		return _visitor.getNoticeNotices();
+		
 	}
 
 }

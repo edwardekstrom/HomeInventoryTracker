@@ -5,9 +5,11 @@ import gui.inventory.ProductContainerData;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.ArrayList;
 
 import visitor.ReportVisitor;
 
+import java.util.Collections;
 
 /**
  * @author nRitchie
@@ -391,6 +393,14 @@ public abstract class ProductContainer implements Serializable{
 	 */
 	public List<Item> getItems() {
 		return _items;
+	}
+
+	public List<Item> getAllItems(){
+		List<Item> items = new ArrayList<Item>();
+		items.addAll(_items);
+		for(ProductContainer pc: _productGroups)
+			items.addAll(pc.getAllItems());
+		return items;
 	}
 	
 	/**

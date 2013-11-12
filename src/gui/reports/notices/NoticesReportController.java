@@ -7,6 +7,8 @@ import builder.PDFBuilder;
 import builder.TestBuilder;
 import gui.common.*;
 
+import reports.*;
+import builder.*;
 /**
  * Controller class for the notices report view.
  */
@@ -84,7 +86,7 @@ public class NoticesReportController extends Controller implements
 	@Override
 	public void display() {
 		
-		ThisIsATestReport report = new ThisIsATestReport();
+		NoticesReport report = new NoticesReport();
 		FileFormat format = getView().getFormat();
 		if(format == FileFormat.HTML){
 			report.generateReport(new HTMLBuilder());
