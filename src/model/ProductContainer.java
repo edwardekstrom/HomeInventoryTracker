@@ -210,8 +210,11 @@ public abstract class ProductContainer implements Serializable{
 	public void moveItem(Item item, ProductContainer productContainer){
 		this.moveProduct(item.getProduct(), productContainer);
 		
-		productContainer.addItem(item);
-		this.removeItem(item);
+		if(_items.contains(item)){
+			this.removeItem(item);
+			productContainer.addItem(item);
+		}
+
 	}
 	
 
@@ -279,18 +282,23 @@ public abstract class ProductContainer implements Serializable{
 			ProductContainer containerWithProduct = 
 					targetProductContainer._storageUnit.productGroupWithProduct(product);
 			
-			targetProductContainer.addProduct(product);
 			containerWithProduct.removeProduct(product);
+			targetProductContainer.addProduct(product);
 			
-			for (Item itemToTransfer: containerWithProduct.getItems()){
-//			for (int i = 0; i < containerWithProduct.getItems().size(); i++) {
-//				Item itemToTransfer = containerWithProduct.getItems().get(i);
+//			for (Item itemToTransfer: containerWithProduct.getItems()){
+			int size = containerWithProduct.getItems().size();
+			for (int i = 0; i < containerWithProduct.getItems().size(); i++) {
+				Item itemToTransfer = containerWithProduct.getItems().get(i);
+//				System.out.println(containerWithProduct.getName()+ i +" "+size + "containerWithProduct.getItems().size(): "+ containerWithProduct.getItems().size());
 				if(itemToTransfer.getProduct() == product){
 					targetProductContainer.addItem(itemToTransfer);
 					containerWithProduct.removeItem(itemToTransfer);
+					i--;
 				}
 
 			}
+			System.out.println(containerWithProduct.getName()+ "AFTER" +" "+size);
+
 		}else{
 			targetProductContainer.addProduct(product);
 		}
