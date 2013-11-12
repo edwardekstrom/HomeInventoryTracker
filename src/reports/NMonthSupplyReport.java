@@ -17,7 +17,7 @@ public class NMonthSupplyReport implements ReportInterface{
 	int _n = -1;
 	NMonthSupplyVisitor _visitor;
 
-	NMonthSupplyReport(int n){
+	public NMonthSupplyReport(int n){
 		_n = n;
 		_visitor =  new NMonthSupplyVisitor(_n);
 	}
@@ -43,8 +43,10 @@ public class NMonthSupplyReport implements ReportInterface{
 
 	@Override
 	public ArrayList<ReportTable> getTableData() {
-		
-		return null;
+		ArrayList<ReportTable> toReturn = new ArrayList<ReportTable>();
+		toReturn.add(generateNMonthProductsTable());
+		toReturn.add(generateNMonthProductGroupsTable());
+		return toReturn;
 	}
 	
 	private ReportTable generateNMonthProductsTable(){
@@ -77,9 +79,19 @@ public class NMonthSupplyReport implements ReportInterface{
 		nMonthProductGroupT.setHeaderRow(productGroupsName);
 		
 		for(ProductGroup pg : _visitor.getDeficientProductGroups()){
-			String description = pg.getName();
+			String productGroup = pg.getName();
 			String storageUnit = pg.getStorageUnit().getName();
-			String nMonthSupply = pg.getThreeMonthSup().getAmount() + "";
+			float supplyNeeded = (float)pg.getThreeMonthSup().getAmount()/3.0f * _n;
+			String nMonthSupply = supplyNeeded + " " + pg.getThreeMonthSup().getUnit();
+			String currentSupply = pg.getCurrentSupply() + "";
+			
+			String[] rowArray = {productGroup,storageUnit,nMonthSupply,currentSupply};
+			TableRow newRow = new TableRow(rowArray);
+			try{
+				nMonthProductGroupT.addRow(newRow);
+			}catch(InvalidRowException ire){
+				System.out.println("This was for you Chris");
+			}
 			
 		}
 		
