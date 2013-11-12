@@ -78,6 +78,21 @@ public class ProductGroup extends ProductContainer implements Serializable{
 		this._threeMonthSup = _threeMonthSup;
 	}
 	
+	public float getCurrentSupply(){
+		float totalSupply = 0;
+		for(Item i: this.getItems()){
+			if(i.getProduct().getSizeUnit().equals(this.getThreeMonthSup().getUnit()))
+				totalSupply += i.getProduct().getSizeAmount();
+		}
+		return totalSupply;
+	}
+
+//	@Override
+//	public int compareTo(Object o) {
+//		
+//		return 0;
+//	}
+//	
 
 	
 }

@@ -1,6 +1,7 @@
 package visitor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import model.Date;
@@ -31,9 +32,7 @@ public class ExpiredItemsVisitor implements ReportVisitor {
 		if(i.getExpirationDate().isAfter(new Date())){
 			_expiredItems.add(i);
 		}
-		
 	}
-
 	@Override
 	public void visit(Product p) {
 		// TODO Auto-generated method stub
@@ -53,6 +52,7 @@ public class ExpiredItemsVisitor implements ReportVisitor {
 	}
 	
 	public List<Item> getExpiredList(){
+		Collections.sort(_expiredItems);
 		return _expiredItems;
 	}
 

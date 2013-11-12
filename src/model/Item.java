@@ -14,7 +14,7 @@ import visitor.ReportVisitor;
  * @author Capchu
  * This class manages Items in storage
  */
-public class Item implements Serializable{
+public class Item implements Serializable, Comparable{
 
 	private Product _product;
 	private Barcode _barcode;
@@ -156,5 +156,16 @@ public class Item implements Serializable{
 		visitor.visit(this);
 	}
 	
-	
+
+
+	@Override
+	public int compareTo(Object o) {
+		Item input = (Item)o;
+		int descriptionCompareResult = 
+				this.getProduct().getDescription().compareTo(input.getProduct().getDescription());
+		if(descriptionCompareResult == 0){
+			return this.getEntryDate().getDate().compareTo(input.getEntryDate().getDate());
+		}
+		return descriptionCompareResult;
+	}
 }
