@@ -142,7 +142,7 @@ public class ItemsManager {
 			i.accept(visitor);
 		}
 	}
-	public void acceptRemovedItemsVisitor(RemovedItemsVisitor visitor){
+	public void acceptRemovedItemsVisitor(ReportVisitor visitor){
 		for (Item i : _deletedItemsList){
 			i.accept(visitor);
 		}
