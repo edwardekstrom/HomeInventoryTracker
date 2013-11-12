@@ -10,7 +10,7 @@ import java.util.Collections;
 import singletons.Configuration;
 import visitor.ReportVisitor;
 
-import com.sun.tools.internal.jxc.gen.config.Config;
+// import com.sun.tools.internal.jxc.gen.config.Config;
 
 public class HomeInventory extends ProductContainer implements Serializable{
 	private List<StorageUnit> _storageUnits;
@@ -18,7 +18,9 @@ public class HomeInventory extends ProductContainer implements Serializable{
 	private List<Product> _storeProductManagerList;
 	private List<Item> _storeItemManagerList;
 	private List<String> _storeBarcodeManagerList;
-	
+	private Date _lastRemovedItemsDate = null;
+
+
 	/**
 	 * @precondition none
 	 * @postcondition There is a new HomeInventory
@@ -147,5 +149,12 @@ public class HomeInventory extends ProductContainer implements Serializable{
 		for(StorageUnit su: _storageUnits){
 			su.accept(visitor);
 		}
+	}
+
+	public void saveLastRemovedItemsDate(Date date){
+		_lastRemovedItemsDate = date;
+	}
+	public Date getLastRemovedItemsDate(){
+		return _lastRemovedItemsDate;
 	}
 }
