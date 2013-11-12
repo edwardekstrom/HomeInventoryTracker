@@ -2,6 +2,8 @@ package gui.reports.notices;
 
 import reports.ExpiredItemsReport;
 import reports.ThisIsATestReport;
+import builder.HTMLBuilder;
+import builder.PDFBuilder;
 import builder.TestBuilder;
 import gui.common.*;
 
@@ -83,7 +85,12 @@ public class NoticesReportController extends Controller implements
 	public void display() {
 		
 		ThisIsATestReport report = new ThisIsATestReport();
-		report.generateReport(new TestBuilder());
+		FileFormat format = getView().getFormat();
+		if(format == FileFormat.HTML){
+			report.generateReport(new HTMLBuilder());
+		}else{
+			report.generateReport(new PDFBuilder());
+		}
 	}
 
 }
