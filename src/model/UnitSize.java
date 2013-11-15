@@ -120,4 +120,8 @@ public class UnitSize implements Serializable{
 		}
 		
 	}
+	
+//	public int getEnumeratedUnit(){
+//		
+//	}
 }

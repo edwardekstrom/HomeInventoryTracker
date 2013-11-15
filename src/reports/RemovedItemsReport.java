@@ -1,5 +1,7 @@
 package reports;
 
+import gui.common.SizeUnits;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,10 +59,15 @@ public class RemovedItemsReport implements ReportInterface {
 
 			Product p = i.getProduct();
 			String desc = p.getDescription();
-			String size = p.getSizeAmount() + " " + p.getSizeUnit();
+			String size;
+			if(p.getSizeUnit().equals("count")){			
+				size = (int)p.getSizeAmount() + " " + p.getSizeUnit();
+			}else{			
+				size = p.getSizeAmount() + " " + p.getSizeUnit();
+			}
 			String p_bcode = p.getBarcode().getBarcode();
 			String removed = items.get(i) + "";
-			String supply =  p.getCurrentSupply() + "";
+			String supply =  (int)p.getCurrentSupply() + "";
 
 			TableRow tr = new TableRow(5);
 			tr.setData(new String[] 

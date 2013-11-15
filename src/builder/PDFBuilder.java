@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Random;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -29,7 +30,7 @@ public class PDFBuilder extends ReportBuilder {
 	
 	private PdfWriter _writer;
 	private Document _document;
-	private final String _filePath = "PDFReport.pdf";
+	private String _filePath = "PDFReport";
 	private PdfPTable _table; 
 	private Font _fontCellHeaders = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 	private Font _fontCells = new Font(Font.FontFamily.TIMES_ROMAN, 12);
@@ -39,18 +40,24 @@ public class PDFBuilder extends ReportBuilder {
 	private FileOutputStream _fileOutputStream;
 	
 	public PDFBuilder(){
-		
+		Random rand = new Random();
 		_document = new Document();
+		_filePath = _filePath + rand.nextLong() + ".pdf";
 		
 		 try {
+			 
 			 _fileOutputStream = new FileOutputStream(_filePath);
 			_writer = PdfWriter.getInstance(_document, _fileOutputStream);
 			_writer.setPdfVersion(PdfWriter.VERSION_1_5);
 			 
 		} catch (FileNotFoundException e) {
 			System.out.println("PDFProbs");;
+			e.printStackTrace();
 		} catch (DocumentException e) {
-
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		 _document.open();   
 	}
@@ -133,16 +140,17 @@ public class PDFBuilder extends ReportBuilder {
 
 	@Override
 	public void createDocument() {
-		// TODO Auto-generated method stub
-		
-		
 		
 		try {
+			
 			_document.close();
 			_writer.close();
 			_fileOutputStream.close();
 			
-			java.awt.Desktop.getDesktop().open(new File(_filePath));
+			File f = new File(_filePath);
+			java.awt.Desktop.getDesktop().open(f);
+			f.deleteOnExit();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			_document.close();
