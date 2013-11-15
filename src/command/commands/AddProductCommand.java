@@ -15,7 +15,7 @@ public class AddProductCommand extends Command{
 	
 	private Map<String,String> _args;
 
-	private ImportProductCommand _ipCommand;
+	private ImportProductCommand _ipCommand = null;
 	private AddItemBatchController _aibc;
 	private StorageUnit _su;
 	private Product _product;
@@ -60,7 +60,8 @@ public class AddProductCommand extends Command{
 			ProductFacade.getInstance().addProduct(_product);
 
 		}catch (Exception e){}
-		_ipCommand = new ImportProductCommand(pd,_aibc);
+		if(_ipCommand == null)
+			_ipCommand = new ImportProductCommand(pd,_aibc);
 		_ipCommand.execute();
 	}
 

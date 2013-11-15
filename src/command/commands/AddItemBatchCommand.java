@@ -23,6 +23,7 @@ public class AddItemBatchCommand extends Command{
 	private AddItemBatchController _aibc;
 	private ProductData _pd;
 
+
 	/**
 	 *	A constructor that holds onto arguments
 	 */
@@ -30,6 +31,8 @@ public class AddItemBatchCommand extends Command{
 		_pd = pd;
 		_aibc = aibc;
 		_items = new ArrayList<ItemData>();
+		_args = _aibc.getAIBCInfo();
+		
 	}
 
 	/**
@@ -37,13 +40,13 @@ public class AddItemBatchCommand extends Command{
 	 */
 	public void execute(){
 		_items = new ArrayList<ItemData>();
-		_args = _aibc.getAIBCInfo();
+		
 		
 		Date entryDate = (Date)_args.get("entryDate");
-		int count = (Integer)_args.get("count");
+		
 		StorageUnit su = (StorageUnit)_args.get("storageUnit");
-
-		for (int i = 0; i < count; i++){
+		int _count = (Integer)_args.get("count");
+		for (int i = 0; i < _count; i++){
 			Item item = ItemFacade.getInstance().addItem((Product)_pd.getTag(), entryDate, su);
 			ItemData itemData = item.getTagData();
 			_items.add(itemData);

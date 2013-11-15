@@ -79,6 +79,8 @@ public class ItemFacade extends Observable{
 	public void addItem(Item toAdd){
 		addItemToTree(toAdd);
 		addItemToManager(toAdd);
+		setChanged();
+		notifyObservers(this);
 	}
 	
 	public void removeItem(Item item){
