@@ -64,6 +64,7 @@ public abstract class ReportBuilder {
 						//System.out.println(offender);
 						printOffender(offender);
 					}
+					//printBlankLine();
 				}
 			}
 		}
