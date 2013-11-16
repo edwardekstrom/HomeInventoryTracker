@@ -47,7 +47,9 @@ public class ProductStatsReport implements ReportInterface {
 	public ArrayList<ReportTable> getTableData() {
 		ArrayList<ReportTable> list = new ArrayList<ReportTable>();
 		ReportTable productReport = new ReportTable(getNumColumns(), "");
-		String[] productsName = {"Description", "Barcode", "Size", _months + "-Month Supply","Supply: Cur/Avg","Supply: Min/Max", "Supply: Used/Added", "Shelf Life", "Used Age: Avg/Max", "Cur Age: Avg/Max"};
+		String[] productsName = {"Description", "Barcode", "Size", _months 
+				+ "-Month Supply","Supply: Cur/Avg","Supply: Min/Max", "Supply: Used/Added"
+				, "Shelf Life", "Used Age: Avg/Max", "Cur Age: Avg/Max"};
 		productReport.setHeaderRow(productsName);
 		
 		for(Product p : _visitor.getProducts()){
@@ -59,8 +61,10 @@ public class ProductStatsReport implements ReportInterface {
 			String supplyMinMax = p.getCurrentSupply() / 2 + "/" + p.getCurrentSupply();
 			String supplyUsedAdded = p.getCurrentSupply() / 2 + "/" + p.getCurrentSupply();
 			String shelfLife = p.getShelfLife() +"";
-			String usedAgeAvgMax = p.getCurrentSupply() * 97 + " days/ " + p.getCurrentSupply()*111 + " days";
-			String curAgeAvgMax = p.getCurrentSupply() * 47 + " days/ " + p.getCurrentSupply() *61 + " days";
+			String usedAgeAvgMax = p.getCurrentSupply() * 97 + " days/ " 
+			                           + p.getCurrentSupply()*111 + " days";
+			String curAgeAvgMax = p.getCurrentSupply() * 47 + " days/ " 
+			                           + p.getCurrentSupply() *61 + " days";
 			
 			
 			String[] rowArray = {description,barcode,size,supplyNeeded + "", supplyCurAverage,

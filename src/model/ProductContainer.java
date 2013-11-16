@@ -293,7 +293,9 @@ public abstract class ProductContainer implements Serializable{
 				int size = containerWithProduct.getItems().size();
 				for (int i = 0; i < containerWithProduct.getItems().size(); i++) {
 					Item itemToTransfer = containerWithProduct.getItems().get(i);
-	//				System.out.println(containerWithProduct.getName()+ i +" "+size + "containerWithProduct.getItems().size(): "+ containerWithProduct.getItems().size());
+	//				System.out.println(containerWithProduct.getName()+ i +" 
+					//"+size + "containerWithProduct.getItems().size():
+					//"+ containerWithProduct.getItems().size());
 					if(itemToTransfer.getProduct() == product){
 						targetProductContainer.addItem(itemToTransfer);
 						containerWithProduct.removeItem(itemToTransfer);

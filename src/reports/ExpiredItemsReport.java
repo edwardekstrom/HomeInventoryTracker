@@ -53,10 +53,13 @@ public class ExpiredItemsReport implements ReportInterface {
 			if(i.getContainer() == i.getContainer().getStorageUnit()){
 				productGroup = "";
 			}
-			String entryDate = i.getEntryDate().getDateAsString(new SimpleDateFormat("MM/dd/yyyy"));
-			String expireDate = i.getExpirationDate().getDateAsString(new SimpleDateFormat("MM/dd/yyyy"));
+			String entryDate = i.getEntryDate().getDateAsString(
+					             new SimpleDateFormat("MM/dd/yyyy"));
+			String expireDate = i.getExpirationDate().getDateAsString(
+					               new SimpleDateFormat("MM/dd/yyyy"));
 			String itemBarcode = i.getBarcode().getBarcode();
-			String[] rowArray = {description,storageUnit,productGroup,entryDate,expireDate,itemBarcode};
+			String[] rowArray = {description,storageUnit,productGroup
+					             ,entryDate,expireDate,itemBarcode};
 			TableRow newRow = new TableRow(rowArray);
 			
 			try{

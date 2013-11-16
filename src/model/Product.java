@@ -160,7 +160,8 @@ public class Product implements Serializable, Comparable{
 	 * @postcondition sets the three month supply to the given value
 	 * @param _threeMonthSupply the _threeMonthSupply to set
 	 */
-	public void setThreeMonthSupply(String threeMonthSupply) throws InvalidThreeMonthSupplyException {
+	public void setThreeMonthSupply(String threeMonthSupply) 
+			            throws InvalidThreeMonthSupplyException {
 		if(isValidThreeMonthSupply(threeMonthSupply)){
 			int newThreeMonthsupply = Integer.parseInt(threeMonthSupply);
 			if(newThreeMonthsupply >= 0){

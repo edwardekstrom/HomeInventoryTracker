@@ -75,7 +75,8 @@ public class NMonthSupplyReport implements ReportInterface{
 	
 	private ReportTable generateNMonthProductGroupsTable(){
 		ReportTable nMonthProductGroupT = new ReportTable(getNumColumns(), "Product Groups");
-		String[] productGroupsName = {"Product Group","Storage Unit",_n + "-Month Supply","Current Supply"};
+		String[] productGroupsName = {"Product Group","Storage Unit",_n +
+				                      "-Month Supply","Current Supply"};
 		nMonthProductGroupT.setHeaderRow(productGroupsName);
 		
 		for(ProductGroup pg : _visitor.getDeficientProductGroups()){

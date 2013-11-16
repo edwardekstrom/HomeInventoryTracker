@@ -59,7 +59,8 @@ public class ProductFacade extends Observable {
 		return Product.willBeValidProduct(shelfLife,threeMonthSupply,amount,unit,desc);
 	}
 
-	public void editProduct(Product p, String desc, String sizeValue, String sizeUnit, String shelfLife, String supply){
+	public void editProduct(Product p, String desc, String sizeValue, String sizeUnit
+			              , String shelfLife, String supply){
 		
 		try {
 			p.setDescription(desc);

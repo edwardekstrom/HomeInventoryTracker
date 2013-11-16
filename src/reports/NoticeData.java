@@ -5,7 +5,8 @@ import java.util.ArrayList;
 public class NoticeData {
 
 	//FORMAT:
-	//Product group <storageunit>::<prodgroup> has a <n>-month supply (<supply>) that is inconsistent with the following products:
+	//Product group <storageunit>::<prodgroup> has a <n>-month supply (<supply>) 
+	//that is inconsistent with the following products:
 	String _description;
 	
 	//FORMAT:

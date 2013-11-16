@@ -176,8 +176,10 @@ public class ThisIsATestReport implements ReportInterface {
 		
 		
 		NoticeData notice1 = new NoticeData();
-		//Product group <storageunit/ProdGroup>::<prodgroup> has a <n>-month supply (<supply>) that is inconsistent with the following products:
-		notice1.setDescription("Product group BagOfCookies::ChocolateChip has a "+n+"-month supply (50 kilograms) that is inconsistent with the following products:");
+		//Product group <storageunit/ProdGroup>::<prodgroup> has a <n>-month 
+		//supply (<supply>) that is inconsistent with the following products:
+		notice1.setDescription("Product group BagOfCookies::ChocolateChip has a "+n+
+				"-month supply (50 kilograms) that is inconsistent with the following products:");
 		
 		//-<productgroup>::<itemname/productgroup> (size: <num> <unit>)
 		notice1.addOffender("-HomeMade::MyHomeMadeCookies (size: 1 count)");
@@ -185,8 +187,10 @@ public class ThisIsATestReport implements ReportInterface {
 		noticeType1.addNotice(notice1);
 		
 		NoticeData notice2 = new NoticeData();
-		//Product group <storageunit/ProdGroup>::<prodgroup> has a <n>-month supply (<supply>) that is inconsistent with the following products:
-		notice2.setDescription("Product group BagOfCookies::StoreBought has a "+n+"-month supply (1 pints) that is inconsistent with the following products:");
+		//Product group <storageunit/ProdGroup>::<prodgroup> has a <n>-month supply 
+		//   (<supply>) that is inconsistent with the following products:
+		notice2.setDescription("Product group BagOfCookies::StoreBought has a "+n
+				  +"-month supply (1 pints) that is inconsistent with the following products:");
 		
 		//-<productgroup>::<itemname/productgroup> (size: <num> <unit>)
 		notice2.addOffender("-StoreBought::ChipsAhoyChocolate (size: 5 kilograms)");
