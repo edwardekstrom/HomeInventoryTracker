@@ -131,7 +131,7 @@ public class PDFBuilder extends ReportBuilder {
 	@Override
 	public void printBlankLine() {
 		try {
-			_document.add(new Paragraph("", _fontCells));
+			_document.add(new Paragraph("\n", _fontCells));
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

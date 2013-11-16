@@ -2,11 +2,6 @@ package visitor;
 
 import java.util.List;
 
-import model.HomeInventory;
-import model.Item;
-import model.Product;
-import model.ProductContainer;
-import model.StorageUnit;
 import model.*;
 import reports.*;
 
@@ -44,13 +39,20 @@ public class NoticesVisitor implements ReportVisitor {
 		if (pc instanceof StorageUnit)
 			return;
 		else{
-			List<Item> items = pc.getAllItems();
+			Notice pcNotice = new Notice((ProductGroup)pc);
+			//List<Item> items = pc.getAllItems();
+			List<Product> products = pc.getProducts();
 			UnitSize type = ((ProductGroup)pc).getThreeMonthSup();
 			String mytype = getTypeGroup(type.getUnit());
-			for(Item i : items){
-				String itemType = getTypeGroup(i);
-				if(!itemType.equals(mytype))
-					_notices.add(new Notice(pc,i));
+			for(Product p : products){
+				String prodType = getTypeGroup(p);
+				if(!prodType.equals(mytype)){
+					if(!_notices.contains(pcNotice)){
+						_notices.add(pcNotice);
+					}
+					pcNotice.addProduct(p);
+				}
+					
 			}
 		}
 		
@@ -67,8 +69,8 @@ public class NoticesVisitor implements ReportVisitor {
 			return "weight";
 	}
 
-	private String getTypeGroup(Item i){
-		Product p = i.getProduct();
+	private String getTypeGroup(Product p){
+		//Product p = i.getProduct();
 		String unit = p.getSizeUnit();
 		return getTypeGroup(unit);
 	}
@@ -80,12 +82,20 @@ public class NoticesVisitor implements ReportVisitor {
 	}
 
 	private class Notice{
-		public ProductContainer _pc;
-		public Item _item;
+		public ProductGroup _pc;
+		public List<Product> _products;
 
-		public Notice(ProductContainer pc,Item item){
-			_item = item;
+		public Notice(ProductGroup pc){
+			_products = new ArrayList<Product>();
 			_pc = pc;
+		}
+		
+		public void addProduct(Product p){
+			_products.add(p);
+		}
+		
+		public List<Product> getProducts(){
+			return _products;
 		}
 	}
 
@@ -95,10 +105,29 @@ public class NoticesVisitor implements ReportVisitor {
 		ReportNotice notice = new ReportNotice("3 Month Supply Warnings");
 		
 		for(Notice n : _notices){
-			NoticeData nd = new NoticeData("Is Inconsitent: "+ n._pc.getName() + " " + n._item.getBarcode().getBarcode());
+			//NoticeData nd = new NoticeData("Is Inconsitent: "+ n._pc.getName()
+			//+ " " + n._item.getBarcode().getBarcode());
+			NoticeData nd = new NoticeData();
+			
+			//Product group <storageunit/ProdGroup>::<prodgroup> has a 3-month supply (<supply>)
+			//that is inconsistent with the following products:
+			nd.setDescription("Product group " + n._pc.getStorageUnit().getName() +"::" + 
+			        n._pc.getName() + " has a 3-month supply ("+
+					n._pc.getThreeMonthSup().getUnit() + " " +
+					n._pc.getThreeMonthSup().getAmount() +
+					") that is inconsistent with the following products:");
+			
+			List<Product> offList = n._products;
+			for(Product p : offList){
+				//-<productgroup>::<itemname/productgroup> (size: <num> <unit>)
+				nd.addOffender("-" + n._pc.getName() + "::" + p.getDescription() +
+						" (size: " + p.getSizeAmount() + " " + p.getSizeUnit() + ")");
+			}
+
 			notice.addNotice(nd);
+			
 		}
-		ret.add(new ReportNotice("3 Month Supply Warnings"));
+		ret.add(notice);
 		return ret;
 	}
 }
