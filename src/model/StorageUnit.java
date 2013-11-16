@@ -11,7 +11,7 @@ import java.util.List;
  * @author nRitchie
  * An implementation of ProductContainer for storage spaces
  */
-public class StorageUnit extends ProductContainer implements Serializable{
+public class StorageUnit extends ProductContainer implements Serializable, Comparable{
 	public StorageUnit(){
 		_name = "DEFAULT NAME";
 		_storageUnit = this;
@@ -30,6 +30,12 @@ public class StorageUnit extends ProductContainer implements Serializable{
 		_items = new ArrayList<Item>();
 		_productGroups = new ArrayList<ProductGroup>();
 		
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		StorageUnit su = (StorageUnit)o;
+		return _name.compareTo(su.getName());
 	}
 
 

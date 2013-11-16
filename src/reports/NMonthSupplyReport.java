@@ -59,7 +59,7 @@ public class NMonthSupplyReport implements ReportInterface{
 			String barcode = p.getBarcode().getBarcode();
 			float supplyNeeded = (float)p.getThreeMonthSupply()/3.0f * _n;
 			String nMonthSupply = supplyNeeded + " " + p.getSizeUnit();
-			String currentSupply = p.getCurrentSupply() + "";
+			String currentSupply = p.getCurrentSupply() + " " + p.getSizeUnit();
 			
 			String[] rowArray = {description,barcode,nMonthSupply,currentSupply};
 			TableRow newRow = new TableRow(rowArray);
@@ -83,7 +83,7 @@ public class NMonthSupplyReport implements ReportInterface{
 			String storageUnit = pg.getStorageUnit().getName();
 			float supplyNeeded = (float)pg.getThreeMonthSup().getAmount()/3.0f * _n;
 			String nMonthSupply = supplyNeeded + " " + pg.getThreeMonthSup().getUnit();
-			String currentSupply = pg.getCurrentSupply() + "";
+			String currentSupply = pg.getCurrentSupply() + " " + pg.getThreeMonthSup().getUnit();
 			
 			String[] rowArray = {productGroup,storageUnit,nMonthSupply,currentSupply};
 			TableRow newRow = new TableRow(rowArray);

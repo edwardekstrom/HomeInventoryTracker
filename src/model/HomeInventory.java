@@ -48,11 +48,21 @@ public class HomeInventory extends ProductContainer implements Serializable{
 	 * @return true if the storage unit was added, false otherwise
 	 */
 	public boolean addStorageUnit(StorageUnit storageUnit){
-		_rootData.addChild(storageUnit.getTagData());
+		
+		//_rootData.addChild(storageUnit.getTagData());
+		//Collections.sort(_storageUnits);
 		return _storageUnits.add(storageUnit);
 	}
 	
 	public ProductContainerData getRootData(){
+		Collections.sort(_storageUnits);
+		
+		_rootData = new ProductContainerData();
+		_rootData.setTag(this);
+		_rootData.setName("root");
+		for(StorageUnit storageUnit:_storageUnits){
+			_rootData.addChild(storageUnit.getTagData());
+		}
 		return _rootData;
 	}
 	

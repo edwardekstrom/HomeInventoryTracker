@@ -52,7 +52,7 @@ public class ExpiredItemsVisitor implements ReportVisitor {
 	}
 	
 	public List<Item> getExpiredList(){
-		Collections.sort(_expiredItems);
+		//Collections.sort(_expiredItems);
 		return _expiredItems;
 	}
 

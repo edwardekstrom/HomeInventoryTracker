@@ -29,13 +29,12 @@ public class NoticesReport implements ReportInterface {
 
 	@Override
 	public String getHeader() {
-		// TODO Auto-generated method stub
-		return null;
+		String header = "Notices";
+		return header;
 	}
 
 	@Override
 	public ArrayList<ReportTable> getTableData() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

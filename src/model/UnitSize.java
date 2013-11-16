@@ -15,6 +15,7 @@ public class UnitSize implements Serializable{
 	
 	private float _amount;
 	private String _unit;
+	private String _measureType;
 	
 	/**@precondition none
 	 * Creates and instance not setting any values.
@@ -115,10 +116,36 @@ public class UnitSize implements Serializable{
 		if(isValid("" + _amount, unit)){
 			//System.out.println("changed");
 			_unit = unit;
+
+			setMeasureType();
+			
 		}else{
 			throw new InvalidUnitException();
 		}
 		
+	}
+	
+	private void setMeasureType(){
+		if(_unit.equals("count")){
+			_measureType = "count";
+		}else if(_unit.equals("pounds") 
+				|| _unit.equals("ounces") 
+				|| _unit.equals("kilograms") 
+				|| _unit.equals("grams")){
+			_measureType = "weight";
+		}else{
+			_measureType = "volume";
+		}
+	}
+	
+	public boolean isSameMeasurementType(UnitSize us){
+		return this._measureType.equals(us._measureType);
+	}
+	
+	public UnitSize addUnitSize(UnitSize us){
+		
+		
+		return null;
 	}
 	
 //	public int getEnumeratedUnit(){

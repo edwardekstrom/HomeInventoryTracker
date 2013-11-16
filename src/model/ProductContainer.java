@@ -86,6 +86,7 @@ public abstract class ProductContainer implements Serializable{
 
 			}catch(Exception e){System.out.println("could not set container");}
 		}
+		Collections.sort(_items);
 	}
 	
 	
@@ -288,18 +289,20 @@ public abstract class ProductContainer implements Serializable{
 			targetProductContainer.addProduct(product);
 			
 //			for (Item itemToTransfer: containerWithProduct.getItems()){
-			int size = containerWithProduct.getItems().size();
-			for (int i = 0; i < containerWithProduct.getItems().size(); i++) {
-				Item itemToTransfer = containerWithProduct.getItems().get(i);
-//				System.out.println(containerWithProduct.getName()+ i +" "+size + "containerWithProduct.getItems().size(): "+ containerWithProduct.getItems().size());
-				if(itemToTransfer.getProduct() == product){
-					targetProductContainer.addItem(itemToTransfer);
-					containerWithProduct.removeItem(itemToTransfer);
-					i--;
+			if (containerWithProduct != targetProductContainer){
+				int size = containerWithProduct.getItems().size();
+				for (int i = 0; i < containerWithProduct.getItems().size(); i++) {
+					Item itemToTransfer = containerWithProduct.getItems().get(i);
+	//				System.out.println(containerWithProduct.getName()+ i +" "+size + "containerWithProduct.getItems().size(): "+ containerWithProduct.getItems().size());
+					if(itemToTransfer.getProduct() == product){
+						targetProductContainer.addItem(itemToTransfer);
+						containerWithProduct.removeItem(itemToTransfer);
+						i--;
+					}
+	
 				}
-
+				System.out.println(containerWithProduct.getName()+ "AFTER" +" "+size);
 			}
-			System.out.println(containerWithProduct.getName()+ "AFTER" +" "+size);
 
 		}else{
 			targetProductContainer.addProduct(product);
