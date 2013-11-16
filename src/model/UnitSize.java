@@ -16,7 +16,12 @@ public class UnitSize implements Serializable{
 	private float _amount;
 	private String _unit;
 	private String _measureType;
-	
+	public UnitSize(){
+		_unit = "count";
+		setAmount(0);
+		setMeasureType();
+
+	}
 	/**@precondition none
 	 * Creates and instance not setting any values.
 	 * @postcondition creates a new unit size with _amount== 1 and _unit == count
@@ -26,6 +31,7 @@ public class UnitSize implements Serializable{
 		if(isValid(amount, unit)){
 			_unit = unit;
 			_amount = Float.parseFloat(amount);
+			setMeasureType();
 		}else{
 			throw new InvalidUnitException();
 		}
@@ -98,6 +104,9 @@ public class UnitSize implements Serializable{
 		}
 	}
 
+	public void setAmount(float amount){
+		_amount = amount;
+	}
 	/**@precondition none
 	 * @postcondition returns the _unit
 	 * @return the _unit
@@ -142,10 +151,100 @@ public class UnitSize implements Serializable{
 		return this._measureType.equals(us._measureType);
 	}
 	
+	private float convertVolumeToPints(UnitSize us){
+		if(us.getUnit().equals("gallons")){
+			return us.getAmount() * 8f;
+		}else if(us.getUnit().equals("quarts")){
+			return us.getAmount() * 2f;
+		}else if(us.getUnit().equals("pints")){
+			return us.getAmount();
+		}else if(us.getUnit().equals("fluid ounces")){
+			return us.getAmount() / 16f;
+		}else if(us.getUnit().equals("liters")){
+			return us.getAmount() * 2.11338f;
+		}else{
+			System.out.println("NOT A VOLUME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			return -1;
+		}
+		
+	}
+	
+	private float convertPintsToUnit(UnitSize us){
+		if(us.getUnit().equals("gallons")){
+			return us.getAmount() / 8f;
+		}else if(us.getUnit().equals("quarts")){
+			return us.getAmount() / 2f;
+		}else if(us.getUnit().equals("pints")){
+			return us.getAmount();
+		}else if(us.getUnit().equals("fluid ounces")){
+			return us.getAmount() * 16f;
+		}else if(us.getUnit().equals("liters")){
+			return us.getAmount() / 2.11338f;
+		}else{
+			System.out.println("NOT A VOLUME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			return -1;
+		}
+	}
+	private float convertWeightToGrams(UnitSize us){
+		if(us.getUnit().equals("pounds")){
+			return us.getAmount() * 453.592f;
+		}else if(us.getUnit().equals("kilograms")){
+			return us.getAmount() * 1000;
+		}if(us.getUnit().equals("grams")){
+			return us.getAmount();
+		}if(us.getUnit().equals("ounces")){
+			return us.getAmount() * 28.3495f;
+		}else{
+			System.out.println("NOT A WEIGHT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			return -1;
+		}
+	}
+	
+	private float convertGramsToUnit(UnitSize us){
+		if(us.getUnit().equals("pounds")){
+			return us.getAmount() / 453.592f;
+		}else if(us.getUnit().equals("kilograms")){
+			return us.getAmount() / 1000;
+		}if(us.getUnit().equals("grams")){
+			return us.getAmount();
+		}if(us.getUnit().equals("ounces")){
+			return us.getAmount() / 28.3495f;
+		}else{
+			System.out.println("NOT A WEIGHT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			return -1;
+		}
+	}
+		
+	
 	public UnitSize addUnitSize(UnitSize us){
+		UnitSize sum = new UnitSize();
+		try {
+			sum.setUnit(_unit);
+		} catch (InvalidUnitException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		if(!this._measureType.equals(us.getMeasureType())){
+//			should throw error
+			System.out.println("Incompatable types!!!!");
+			return null;
+		}
+		if(this._measureType.equals("volume")){
+			sum.setAmount((convertVolumeToPints(this) + convertVolumeToPints(us)));
+			sum.setAmount(convertPintsToUnit(sum));
+		}else if(this._measureType.equals("weight")){
+			sum.setAmount((convertWeightToGrams(this) + convertWeightToGrams(us)));
+			sum.setAmount(convertGramsToUnit(sum));
+		}else{
+			sum.setAmount(this.getAmount() + us.getAmount());
+		}
 		
-		return null;
+		return sum;
+		
+	}
+	public String getMeasureType(){
+		return _measureType;
 	}
 	
 //	public int getEnumeratedUnit(){

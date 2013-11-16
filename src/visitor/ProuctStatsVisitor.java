@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.sun.tools.javac.util.Pair;
 
@@ -16,7 +18,7 @@ import model.ProductContainer;
 
 public class ProuctStatsVisitor implements ReportVisitor {
 	int _months = -1;
-	List<Product> _products = new ArrayList<Product>();
+	HashMap<Product, ProductStat> _productStats = new HashMap<Product, ProductStat>();
 	List<Pair<Item,Integer>> _items = new ArrayList<Pair<Item, Integer>>();
 	
 	public ProuctStatsVisitor(int months){
@@ -36,25 +38,24 @@ public class ProuctStatsVisitor implements ReportVisitor {
 
 	@Override
 	public void visit(Item i) {
-		GregorianCalendar threeMonthsAgo = new GregorianCalendar();
-		threeMonthsAgo.add(Calendar.MONTH, -_months);
-		if(i.getEntryDate().isAfter(new Date(new GregorianCalendar())) 
-				&& i.getEntryDate().isBefore(new Date(new GregorianCalendar()))){
-			
-			Long daysAround = -1l;
-			int daysAroundInt = -1;
-			if(i.getExitTime()!=null){
-				daysAround = i.getExitTime().getDate().getTimeInMillis() - i.getEntryDate().getDate().getTimeInMillis();
-				//daysAroundInt = daysAround
+		if(i.getExitTime() != null){
+			GregorianCalendar start = new GregorianCalendar();
+			start.add(Calendar.MONTH, - _months);
+			if(start.after(i.getExitTime().getDate())){
+				return;
 			}
-			//Pair<Item, Integer> pair = new Pair<Item, Integer>(i, arg1);
-			
 		}
+		ProductStat ps = new ProductStat(i.getProduct(), _months);
+		if(_productStats.containsKey(i.getProduct())){
+			ps = _productStats.get(i.getProduct());
+		}else{
+			_productStats.put(i.getProduct(), ps);
+		}
+		ps.addItem(i);
 	}
 
 	@Override
 	public void visit(Product p) {
-		_products.add(p);
 	}
 
 	@Override
@@ -72,9 +73,13 @@ public class ProuctStatsVisitor implements ReportVisitor {
 		return _items;
 	}
 	
-	public List<Product> getProducts(){
-		Collections.sort(_products);
-		return _products;
+//	public List<Product> getProducts(){
+//		Collections.sort(_products);
+//		return _products;
+//	}
+	
+	public HashMap<Product, ProductStat> getProductStatsMap(){
+		return _productStats;
 	}
 
 }

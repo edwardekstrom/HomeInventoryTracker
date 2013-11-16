@@ -301,7 +301,7 @@ public abstract class ProductContainer implements Serializable{
 					}
 	
 				}
-				System.out.println(containerWithProduct.getName()+ "AFTER" +" "+size);
+//				System.out.println(containerWithProduct.getName()+ "AFTER" +" "+size);
 			}
 
 		}else{
