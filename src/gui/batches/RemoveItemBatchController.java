@@ -185,6 +185,19 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	public void addItem(ItemData id){
 		_items.add(id);
+		Item item = (Item)id.getTag();
+		Product product = item.getProduct();
+		ProductData pd = getProduct(product.getDescription());
+		int count = Integer.parseInt(pd.getCount());
+		pd.setCount(++count + "");
+	}
+
+	private ProductData getProduct(String productName){
+		for (ProductData pd : _products){
+			if (pd.getDescription().equals(productName))
+				return pd;
+		}
+		return null;
 	}
 
 	/**
@@ -192,9 +205,20 @@ public class RemoveItemBatchController extends Controller implements
 	 *  @param product (ProductData ) the ___ to be added to the list
 	 */
 	public boolean addProduct(ProductData pd){
-		boolean containsPD = _products.contains(pd);
-		if (!containsPD)
-			_products.add(pd);
+		
+		ProductData viewProduct = new ProductData();
+		viewProduct.setDescription(pd.getDescription());
+		viewProduct.setSize(pd.getSize());
+		viewProduct.setCount("0");
+		viewProduct.setShelfLife(pd.getShelfLife());
+		viewProduct.setSupply(pd.getSupply());
+		viewProduct.setBarcode(pd.getBarcode());
+		viewProduct.setTag(pd.getTag());
+		boolean containsPD = _products.contains(viewProduct);
+		if (!containsPD){
+			_products.add(viewProduct);
+		}
+		
 		return !containsPD;
 	}
 
@@ -204,6 +228,11 @@ public class RemoveItemBatchController extends Controller implements
 	 */
 	public void removeItem(ItemData id){
 		_items.remove(id);
+		Item item = (Item)id.getTag();
+		Product product = item.getProduct();
+		ProductData pd = getProduct(product.getDescription());
+		int count = Integer.parseInt(pd.getCount());
+		pd.setCount(--count + "");
 	}
 
 	/**
@@ -211,7 +240,8 @@ public class RemoveItemBatchController extends Controller implements
 	 *  @param product (ProductData ) the ___ to be removed from the the list
 	 */
 	public void removeProduct(ProductData pd){
-		_products.remove(pd);
+		ProductData view_pd = getProduct(pd.getDescription());
+		_products.remove(view_pd);
 	}
 
 	/**

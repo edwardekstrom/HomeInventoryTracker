@@ -51,8 +51,9 @@ public class TransferItemCommand extends Command{
 		ItemFacade.getInstance().moveItemInTree(
 			item,
 			(ProductContainer)_targetPCD.getTag());
-		_tibc.addItem(_item);
 		_addedProductToView = _tibc.addProduct(_product);
+		_tibc.addItem(_item);
+		
 	}
 
 	/**
