@@ -1,5 +1,7 @@
 package model;
 
+import hit_exceptions.InvalidUnitException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -81,8 +83,19 @@ public class ProductGroup extends ProductContainer implements Serializable{
 	public float getCurrentSupply(){
 		float totalSupply = 0;
 		for(Item i: this.getItems()){
-			if(i.getProduct().getSizeUnit().equals(this.getThreeMonthSup().getUnit()))
-				totalSupply += i.getProduct().getSizeAmount();
+			UnitSize sum = new UnitSize();
+			
+			String itemMeasure = i.getProduct().getSize().getMeasureType();
+			String thisMeasure = this.getThreeMonthSup().getMeasureType();
+			
+			if(itemMeasure.equals(thisMeasure)){
+				try {
+					sum.setUnit(this.getThreeMonthSup().getUnit());
+				} catch (InvalidUnitException e) {
+					e.printStackTrace();
+				}
+				totalSupply += sum.addUnitSize(i.getProduct().getSize()).getAmount();
+			}
 		}
 		return totalSupply;
 	}

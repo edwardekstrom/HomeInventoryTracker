@@ -3,12 +3,14 @@ package reports;
 import hit_exceptions.InvalidRowException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import model.HomeInventory;
 import model.Product;
 import singletons.Configuration;
 import singletons.ItemsManager;
 import visitor.NMonthSupplyVisitor;
+import visitor.ProductStat;
 import visitor.ProuctStatsVisitor;
 import visitor.ReportVisitor;
 import builder.ReportBuilder;
@@ -51,20 +53,26 @@ public class ProductStatsReport implements ReportInterface {
 				+ "-Month Supply","Supply: Cur/Avg","Supply: Min/Max", "Supply: Used/Added"
 				, "Shelf Life", "Used Age: Avg/Max", "Cur Age: Avg/Max"};
 		productReport.setHeaderRow(productsName);
-		
-		for(Product p : _visitor.getProducts()){
+		HashMap<Product, ProductStat> statMap = _visitor.getProductStatsMap();
+		for(Product p : statMap.keySet()){
+			ProductStat ps = statMap.get(p);
+			
 			String description = p.getDescription();
 			String barcode = p.getBarcode().getBarcode();
 			String size = p.getSizeAmount() + " " + p.getSizeUnit();
 			float supplyNeeded = (float)p.getThreeMonthSupply()/3.0f * _months;
-			String supplyCurAverage = p.getCurrentSupply() + "/" + p.getCurrentSupply()/_months;
-			String supplyMinMax = p.getCurrentSupply() / 2 + "/" + p.getCurrentSupply();
-			String supplyUsedAdded = p.getCurrentSupply() / 2 + "/" + p.getCurrentSupply();
+			
+			String supplyCurAverage = p.getCurrentSupply() + "/" + ps.get_avgSupply();
+			String supplyMinMax = ps.getMinSupply() + "/" + ps.getMaxSupply();
+			String supplyUsedAdded = ps.get_supplyUsed() + "/" + ps.get_supplyAdded();
 			String shelfLife = p.getShelfLife() +"";
-			String usedAgeAvgMax = p.getCurrentSupply() * 97 + " days/ " 
-			                           + p.getCurrentSupply()*111 + " days";
-			String curAgeAvgMax = p.getCurrentSupply() * 47 + " days/ " 
-			                           + p.getCurrentSupply() *61 + " days";
+
+
+			String usedAgeAvgMax = ps.get_avgAgeUsed() + " days/ " + ps.get_usedAgeMax() 
+																				+ " days";
+			String curAgeAvgMax = ps.get_avgAgeCurrent() + " days/ " 
+									+ ps.get_currentAgeMax() + " days";
+
 			
 			
 			String[] rowArray = {description,barcode,size,supplyNeeded + "", supplyCurAverage,

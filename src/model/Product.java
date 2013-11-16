@@ -114,6 +114,10 @@ public class Product implements Serializable, Comparable{
 	public String getSizeUnit() {
 		return _size.getUnit();
 	}
+	
+	public UnitSize getSize(){
+		return _size;
+	}
 
 	/**@precondition a valid unit string is passed in
 	 * @postcondition sets the _size unit to the given unit
