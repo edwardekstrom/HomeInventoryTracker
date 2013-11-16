@@ -34,8 +34,9 @@ public class RemoveItemCommand extends Command{
 	public void execute(){
 
 		ItemFacade.getInstance().removeItem((Item)_item.getTag());
-		_ric.addItem(_item);
 		_addedProductToView = _ric.addProduct(_product);
+		_ric.addItem(_item);
+		
 	}
 
 	/**
