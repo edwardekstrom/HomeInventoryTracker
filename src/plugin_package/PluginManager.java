@@ -28,6 +28,8 @@ public class PluginManager {
 	 * Constructs a new PluginManager with _filename
 	 * set to "" and _classNames set to a new array
 	 * of strings of length 10.
+	 * @precondition none
+	 * @postcondition there is a new PluginManager
 	 */
 	public PluginManager() {
 		_fileName = "";
@@ -40,6 +42,8 @@ public class PluginManager {
 	 *  set to the passed in param classnames.
 	 * @param fileName the filename
 	 * @param classNames the class names
+	 * @precondition none
+	 * @postcondition there is a new PluginManager
 	 */
 	public PluginManager(String fileName, String[] classNames) {
 		_fileName = fileName;
@@ -53,6 +57,8 @@ public class PluginManager {
 	 * can find it on their website, null otherwise.
 	 * @param barcode the product barcode we're looking for
 	 * @return
+	 * @precondition none
+	 * @postcondition none
 	 */
 	public Product getProduct(Barcode barcode){
 		return null;
@@ -63,6 +69,8 @@ public class PluginManager {
 	/**
 	 * Returns the class names arary
 	 * @return _classNames
+	 * @precondition none
+	 * @postcondition none
 	 */
 	private String[] getClassNames(){
 		return _classNames;
@@ -78,6 +86,8 @@ public class PluginManager {
 	 * @param barcode The barcode
 	 * @param classNames The class names
 	 * @return
+	 * @precondition none
+	 * @postcondition none
 	 */
 	private Product runPlugin(Barcode barcode, String[] classNames){
 		return null;
