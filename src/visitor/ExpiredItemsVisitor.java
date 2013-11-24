@@ -14,17 +14,17 @@ public class ExpiredItemsVisitor implements ReportVisitor {
 	
 	List<Item> _expiredItems = new ArrayList<Item>();
 
-	/**gathers the data from the model for the implemented report type
-	 * 
-	 * @return list of data gathered for building the report
-	 * @precondition using the correct report type
-	 * @postcondition gathers the needed data from the model for that report
-	 */
-	@Override
-	public List gatherReportData() {
-		// remove this from the interface.
-		return null;
-	}
+//	/**gathers the data from the model for the implemented report type
+//	 * 
+//	 * @return list of data gathered for building the report
+//	 * @precondition using the correct report type
+//	 * @postcondition gathers the needed data from the model for that report
+//	 */
+//	@Override
+//	public List gatherReportData() {
+//		// remove this from the interface.
+//		return null;
+//	}
 
 	@Override
 	public void visit(Item i) {
@@ -35,20 +35,14 @@ public class ExpiredItemsVisitor implements ReportVisitor {
 	}
 	@Override
 	public void visit(Product p) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void visit(ProductContainer pc) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void visit(HomeInventory hi) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	public List<Item> getExpiredList(){

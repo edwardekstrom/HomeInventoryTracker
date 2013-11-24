@@ -10,17 +10,17 @@ import java.util.ArrayList;
 public class NoticesVisitor implements ReportVisitor {
 	private List<Notice> _notices = new ArrayList<Notice>();
 
-	/**gathers the data from the model for the implemented report type
-	 * 
-	 * @return list of data gathered for building the report
-	 * @precondition using the correct report type
-	 * @postcondition gathers the needed data from the model for that report
-	 */
-	@Override
-	public List gatherReportData() {
-		
-		return null;
-	}
+//	/**gathers the data from the model for the implemented report type
+//	 * 
+//	 * @return list of data gathered for building the report
+//	 * @precondition using the correct report type
+//	 * @postcondition gathers the needed data from the model for that report
+//	 */
+//	@Override
+//	public List gatherReportData() {
+//		
+//		return null;
+//	}
 
 	@Override
 	public void visit(Item i) {
