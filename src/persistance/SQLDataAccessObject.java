@@ -2,7 +2,9 @@ package persistance;
 
 	
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 
 import model.Barcode;
@@ -29,14 +31,25 @@ public class SQLDataAccessObject {
 					"'entry_date','exit_date','expiration_date','removed'" +
 					")VALUES(?,?,?,?,?,?,?,)";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
-			stmt.setInt(1, getProductContainerIdByBarcode(toInsert.getBarcode()));
-			stmt.setInt(2, getProductIdByBarcode(toInsert.getBarcode()));
+			stmt.setInt(1, toInsert.getContainer().getID());
+			stmt.setInt(2, toInsert.getProduct().getID());
 			stmt.setString(3, toInsert.getBarcode().getBarcode());
 			stmt.setDate(4, new java.sql.Date(toInsert.getEntryDate().getDateAsLong()));
 			stmt.setDate(5, new java.sql.Date(toInsert.getExitTime().getDateTimeAsLong()));
 			stmt.setDate(6, new java.sql.Date(toInsert.getExpirationDate().getDateAsLong()));
 			stmt.setBoolean(7, false);
-			
+			if (stmt.executeUpdate() == 1) {
+				Statement keyStmt = SQLTransactionManager.getConnection().createStatement();
+				ResultSet keyRS = keyStmt.executeQuery("select last_insert_rowid()");
+				try {
+					keyRS.next();
+					int id = keyRS.getInt(1);
+					toInsert.setID(id);
+				}
+				finally {
+					keyRS.close();
+				}
+			}	
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -77,7 +90,19 @@ public class SQLDataAccessObject {
 	 * @postcondition The Item is deleted from the database
 	 */
 	public boolean deleteItem(Item toDelete){
-		return false;
+		try {
+			String query = "UPDATE 'items'" +
+					"SET removed=?" +
+					"WHERE barcode=?";
+			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+			stmt.setBoolean(1, true);
+			stmt.setString(2, toDelete.getBarcode().getBarcode());		
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return true;
 	}
 	
 	/**Moves the given item in the Database (modifies references)
@@ -88,7 +113,19 @@ public class SQLDataAccessObject {
 	 * @postcondition The Item is moved in the database
 	 */
 	public boolean moveItem(Item toMove){
-		return false;
+		try {
+			String query = "UPDATE 'items'" +
+					"SET product_container=?" +
+					"WHERE barcode=?";
+			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+			stmt.setInt(1, toMove.getContainer().getID());
+			stmt.setString(2, toMove.getBarcode().getBarcode());		
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return true;
 	}
 	
 	/**Reads the items in the database to populate the model
@@ -200,49 +237,9 @@ public class SQLDataAccessObject {
 		
 	}
 	
-	private int getProductContainerIdByBarcode(Barcode barcode){
-		//TODO:do this
+	public int getItemIdByBarcode(Barcode barcode){
+		//TODO
 		return 0;
 	}
 	
-	private int getProductIdByBarcode(Barcode barcode){
-		//TODO:do this
-		return 0;
-	}
-	
-	/**
-	 * public static Result add(BookDTO book) {
-		
-		Result result = new Result();
-		
-		try {
-			String query = "insert into book (title, author, genre) values (?, ?, ?)";
-			PreparedStatement stmt = TransactionManager.getConnection().prepareStatement(query);
-			stmt.setString(1, book.getTitle());
-			stmt.setString(2, book.getAuthor());
-			stmt.setString(3, convertGenre(book.getGenre()));
-			if (stmt.executeUpdate() == 1) {
-				Statement keyStmt = TransactionManager.getConnection().createStatement();
-				ResultSet keyRS = keyStmt.executeQuery("select last_insert_rowid()");
-				try {
-					keyRS.next();
-					int id = keyRS.getInt(1);
-					book.setID(id);
-					result.setStatus(true);
-				}
-				finally {
-					keyRS.close();
-				}
-			}
-			else {
-				result.setMessage("Could not insert book");
-			}
-		}
-		catch (SQLException e) {
-			result.setMessage(e.getMessage());
-		}
-		
-		return result;	
-	}
-	 */
 }

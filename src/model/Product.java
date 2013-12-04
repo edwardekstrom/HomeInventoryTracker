@@ -27,6 +27,7 @@ public class Product implements Serializable, Comparable{
 	private Integer _threeMonthSupply;
 	private List<ProductContainer> _containersList;
 	private TreeMap<ProductContainer, String> _containersTree;
+	private int _id;
 
 	private ProductData _tagData;
 	
@@ -48,6 +49,14 @@ public class Product implements Serializable, Comparable{
 		_size = new UnitSize(amount,unit);
 		_shelfLife = shelfLife;
 		_threeMonthSupply = threeMonthSupply;
+	}
+	
+	public int getID(){
+		return _id;
+	}
+	
+	public void setID(int id){
+		_id = id;
 	}
 	
 	/**@precondition none

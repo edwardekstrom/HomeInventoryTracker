@@ -23,6 +23,7 @@ public class Item implements Serializable, Comparable{
 	private Date _expirationDate;
 	private ProductContainer _container;
 	private ItemData _tagData;
+	private int _id;
 	
 	/**@precondition none
 	 * @postcondition creates a new Item with the given data
@@ -50,6 +51,14 @@ public class Item implements Serializable, Comparable{
 		// _tagData.setProductGroup(container.getName());
 	}
 
+	public int getID(){
+		return _id;
+	}
+	
+	public void setID(int id){
+		_id = id;
+	}
+	
 	/**@precondition expDate is not null
 	 * @postcondition sets the expiration date using the entryDate
 	 * 
