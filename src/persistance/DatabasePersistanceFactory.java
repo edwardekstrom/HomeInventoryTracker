@@ -12,7 +12,7 @@ public class DatabasePersistanceFactory extends AbstractPerstistanceFactory {
 	public Persistor buildPersistor() {
 
 		DBPersistor persistor = new DBPersistor();
-
+		
 		File f = new File("DBPersistor.sql");
 		if(!f.exists()) { persistor.createTables();} 
 		return persistor;

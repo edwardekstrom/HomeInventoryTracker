@@ -17,6 +17,7 @@ public class DBPersistor implements Persistor {
 
 	public DBPersistor(){
 		SQLTransactionManager.initialize();
+		// SQLTransactionManager.createDB();
 	}
 
 	/* (non-Javadoc)
@@ -162,8 +163,8 @@ public class DBPersistor implements Persistor {
 	 *
 	 */
 	public void createTables(){
-		// CREATE THE DATABASE 
-		// SET UP THE TABLES
+		SQLTransactionManager.begin();
+		SQLTransactionManager.end(true);
 	}
 
 }
