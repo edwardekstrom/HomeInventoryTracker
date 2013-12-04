@@ -7,6 +7,8 @@ import model.Item;
 import model.Product;
 import model.ProductContainer;
 
+import java.io.File;
+
 /**
  * @author Capchu
  *
@@ -149,6 +151,15 @@ public class DBPersistor implements Persistor {
 	public void save() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	/**
+	 *	Called if the sql database is not found. create the files
+	 *
+	 */
+	public void createTables(){
+		// CREATE THE DATABASE 
+		// SET UP THE TABLES
 	}
 
 }
