@@ -68,7 +68,7 @@ public class SQLDataAccessObject {
 	public boolean updateItem(Item toUpdate){
 		try {
 			String query = "UPDATE 'items'" +
-					"SET entry_date=?,'expiration_date'=?" +
+					"SET entry_date=?'expiration_date'=?" +
 					"WHERE barcode=?";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 			stmt.setDate(1, new java.sql.Date(toUpdate.getEntryDate().getDateAsLong()));
@@ -115,7 +115,7 @@ public class SQLDataAccessObject {
 	public boolean moveItem(Item toMove){
 		try {
 			String query = "UPDATE 'items'" +
-					"SET product_container=?" +
+					"SET product_container=?"+
 					"WHERE barcode=?";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 			stmt.setInt(1, toMove.getContainer().getID());
@@ -242,4 +242,24 @@ public class SQLDataAccessObject {
 		return 0;
 	}
 	
+	public void createTables(){
+
+		try {
+			String query = 
+				"DROP TABLE IF EXISTS 'items';"+
+				"CREATE TABLE 'items' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'product_container' INTEGER, 'product' INTEGER, 'barcode' VARCHAR, 'entry_date' DATETIME, 'exit_date' DATETIME, 'expiration_date' DATETIME);"+
+				"DROP TABLE IF EXISTS 'pc_join_p';"+
+				"CREATE TABLE 'pc_join_p' ('product_container' INTEGER, 'product' INTEGER);"+
+				"DROP TABLE IF EXISTS 'product_containers';"+
+				"CREATE TABLE 'product_containers' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'name' VARCHAR, 'parent' INTEGER, 'storage_unit' INTEGER, 'three_month_amount' DOUBLE, 'three_month_unit' VARCHAR);"+
+				"DROP TABLE IF EXISTS 'products';"+
+				"CREATE TABLE 'products' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'description' TEXT, 'three_month_supply' DOUBLE, 'amount' DOUBLE, 'unit' VARCHAR, 'shelf_life' INTEGER, 'barcode' VARCHAR);";
+
+			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+			stmt.executeQuery();	
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }
