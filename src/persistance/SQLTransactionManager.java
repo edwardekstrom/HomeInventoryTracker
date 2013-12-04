@@ -6,16 +6,16 @@ import java.io.File;
 
 public class SQLTransactionManager{
 
-	private static Connection _connection;
+	private static Connection _connection = null;
+	private static String _db_name = "hit";
 
 	public static void initialize() {
 		
 		try {
-			final String driver = "org.apache.derby.jdbc.EmbeddedDriver";
-			Class.forName(driver);
+			final String driver = "org.sqlite.JDBC";
+			Class.forName(driver).newInstance();
 		}
-		catch(ClassNotFoundException e) {
-		}
+		catch(Exception e) {}
 		
 	}
 
@@ -25,8 +25,8 @@ public class SQLTransactionManager{
 
 	public static void begin(){
 
-		String dbName = "db" + File.separator + "bookclub";
-		String connectionURL = "jdbc:derby:" + dbName + ";create=false";
+		String dbName = _db_name + ".db";
+		String connectionURL = "jdbc:sqlite:" + dbName;
 		
 		try {
 			assert (_connection == null);
