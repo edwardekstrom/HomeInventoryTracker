@@ -3,6 +3,11 @@
  */
 package persistance;
 
+import singletons.Configuration;
+
+import com.sun.org.apache.xml.internal.serialize.Serializer;
+
+import model.HomeInventory;
 import model.Item;
 import model.Product;
 import model.ProductContainer;
@@ -137,6 +142,19 @@ public class JavaPersistor implements Persistor {
 	public void readProductContainers() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void loadAll() {
+		HomeInventory hi = model.Serializer.deserializeHIT();
+		Configuration.getInstance().setHomeInventory(hi);
+		model.Serializer.de_storeManagers();
+	}
+
+	@Override
+	public void save() {
+		HomeInventory homeInventory = Configuration.getInstance().getHomeInventory();
+		model.Serializer.serializeHIT(homeInventory);
 	}
 
 }

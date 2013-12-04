@@ -16,8 +16,8 @@ public class Configuration {
 	 */
 	private Configuration(){
 		
-		_homeInventory = Serializer.deserializeHIT();
-		
+		//_homeInventory = Serializer.deserializeHIT();
+		_homeInventory = new HomeInventory();
 	}
 	
 	/**
@@ -43,5 +43,13 @@ public class Configuration {
 	
 	public void setPersistor(Persistor p){
 		_persistor = p;
+	}
+	
+	public Persistor getPersistor(){
+		return _persistor;
+	}
+	
+	public void setHomeInventory(HomeInventory hi){
+		_homeInventory = hi;
 	}
 }

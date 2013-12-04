@@ -1,5 +1,6 @@
 package gui.main;
 
+import persistance.Persistor;
 import model.HomeInventory;
 import model.Serializer;
 import singletons.Configuration;
@@ -47,8 +48,8 @@ public class MainController extends Controller implements IMainController {
 	 */
 	@Override
 	public void exit() {
-		HomeInventory homeInventory = Configuration.getInstance().getHomeInventory();
-		Serializer.serializeHIT(homeInventory);
+		Persistor persistor = Configuration.getInstance().getPersistor();
+		persistor.save();
 	}
 
 	/**

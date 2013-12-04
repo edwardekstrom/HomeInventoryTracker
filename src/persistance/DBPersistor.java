@@ -139,4 +139,16 @@ public class DBPersistor implements Persistor {
 
 	}
 
+	@Override
+	public void loadAll() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void save() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

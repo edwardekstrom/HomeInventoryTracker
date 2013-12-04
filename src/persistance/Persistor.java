@@ -138,4 +138,8 @@ public interface Persistor {
 	 */
 	public void readProductContainers();
 	
+	public void loadAll();
+	
+	public void save();
+	
 }

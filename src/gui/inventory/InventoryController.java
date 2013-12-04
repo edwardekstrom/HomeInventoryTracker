@@ -66,8 +66,8 @@ public class InventoryController extends Controller
 		Configuration config = Configuration.getInstance();
 		config.setPersistor(p);
 		
-		HomeInventory homeInventory = Serializer.deserializeHIT();
-		Serializer.de_storeManagers();
+		
+		p.loadAll();
 		
 		StorageUnitFacade storageUnitFacade = StorageUnitFacade.getInstance();
 		storageUnitFacade.addObserver(this);
