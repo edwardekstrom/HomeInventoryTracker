@@ -10,6 +10,8 @@ import gui.product.*;
 
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 import model.HomeInventory;
 import model.Item;
 import model.Product;
@@ -19,6 +21,9 @@ import model.Serializer;
 import model.StorageUnit;
 
 import org.omg.CORBA._PolicyStub;
+
+import persistance.AbstractPerstistanceFactory;
+import persistance.Persistor;
 
 import com.sun.tools.internal.jxc.gen.config.Config;
 
@@ -43,6 +48,23 @@ public class InventoryController extends Controller
 		super(view);
 		
 		construct();
+		Object[] colours = {"Java Serialization", "Database"};
+
+		int n = JOptionPane.showOptionDialog(null,
+		    "Choose Serialization Type ",
+		    "",
+		    JOptionPane.DEFAULT_OPTION,
+		    JOptionPane.QUESTION_MESSAGE,
+		    null,
+		    colours,
+		    colours[0]);
+		
+		AbstractPerstistanceFactory apf = AbstractPerstistanceFactory.returnFactory(n);
+		
+		Persistor p = apf.buildPersistor();
+		
+		Configuration config = Configuration.getInstance();
+		config.setPersistor(p);
 		
 		HomeInventory homeInventory = Serializer.deserializeHIT();
 		Serializer.de_storeManagers();

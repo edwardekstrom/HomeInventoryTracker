@@ -1,5 +1,6 @@
 package singletons;
 
+import persistance.Persistor;
 import model.HomeInventory;
 import model.Serializer;
 
@@ -8,6 +9,7 @@ public class Configuration {
 	
 	private HomeInventory _homeInventory;
 	private int _dataPersistence = 0;
+	private Persistor _persistor = null;
 	/**
 	 * This method instantiates the instance of Configuration.
 	 * It will only ever be called one time.
@@ -37,5 +39,9 @@ public class Configuration {
 
 	public HomeInventory getHomeInventory(){
 		return _homeInventory;
+	}
+	
+	public void setPersistor(Persistor p){
+		_persistor = p;
 	}
 }

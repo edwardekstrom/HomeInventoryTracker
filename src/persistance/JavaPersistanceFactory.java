@@ -8,5 +8,8 @@ package persistance;
  *
  */
 public class JavaPersistanceFactory extends AbstractPerstistanceFactory {
-
+	@Override
+	public Persistor buildPersistor() {
+		return new JavaPersistor();
+	}
 }
