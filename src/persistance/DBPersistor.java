@@ -15,6 +15,10 @@ import java.io.File;
  */
 public class DBPersistor implements Persistor {
 
+	public DBPersistor(){
+		SQLTransactionManager.initialize();
+	}
+
 	/* (non-Javadoc)
 	 * @see persistance.Persistor#insertItem(model.Item)
 	 */
