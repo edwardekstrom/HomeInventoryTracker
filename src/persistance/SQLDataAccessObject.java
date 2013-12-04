@@ -147,7 +147,35 @@ public class SQLDataAccessObject {
 	 * @postcondition The Product is added to the database
 	 */
 	public boolean insertProduct(Product toInsert){
-		return false;
+		try {
+			
+			String query = "INSERT INTO 'products' ('description','three_month_supply',"+
+					"'amount','unit','shelf_life','barcode'"+
+					")VALUES(?,?,?,?,?,?)";
+			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+			stmt.setString(1, toInsert.getDescription());
+			stmt.setInt(2, toInsert.getThreeMonthSupply());
+			stmt.setDouble(3, toInsert.getSizeAmount());
+			stmt.setString(4, toInsert.getSizeUnit());
+			stmt.setString(6, toInsert.getBarcode().getBarcode());
+			if (stmt.executeUpdate() == 1) {
+				Statement keyStmt = SQLTransactionManager.getConnection().createStatement();
+				ResultSet keyRS = keyStmt.executeQuery("select last_insert_rowid()");
+				try {
+					keyRS.next();
+					int id = keyRS.getInt(1);
+					toInsert.setID(id);
+				}
+				finally {
+					keyRS.close();
+				}
+			}	
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return true;
 	}
 	
 	/**Updates the given Product in the Database
