@@ -81,6 +81,10 @@ public class Date implements Serializable{
 		return sdf.format(dt);
 	}
 	
+	public long getDateAsLong(){
+	    return _date.getTimeInMillis();
+	}
+	
 	public boolean isAfter(Date toCompare){
 		if(this._date.compareTo(toCompare.getDate()) < 0){
 			return true;

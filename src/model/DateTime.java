@@ -21,7 +21,11 @@ public class DateTime implements Serializable{
 	public DateTime(){
 		//make a new date with the current time
 		_exitDate = new GregorianCalendar();
-	}	
+	}
+	
+	public long getDateTimeAsLong(){
+		return _exitDate.getTimeInMillis();
+	}
 	
 	/**@precondition none
 	 * @postconditions gives the date
