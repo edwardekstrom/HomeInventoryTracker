@@ -8,6 +8,7 @@ import model.Product;
 import model.ProductContainer;
 
 import java.io.File;
+import java.util.*;
 
 /**
  * @author Capchu
@@ -171,7 +172,9 @@ public class DBPersistor implements Persistor {
 
 	@Override
 	public void loadAll() {
-	
+		ArrayList<Item> items = _doa.readItems();
+		ArrayList<Product> products = _doa.readProducts();
+		ArrayList<ProductContainer> pcs = _doa.readProductContainers();
 		
 	}
 
