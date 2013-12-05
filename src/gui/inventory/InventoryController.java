@@ -334,6 +334,9 @@ public class InventoryController extends Controller
 		ProductGroupFacade pgFacade = ProductGroupFacade.getInstance();
 		ProductGroup productContainer = (ProductGroup) getSelectedContainer();
 		pgFacade.removeProductGroup(productContainer);
+		
+		Persistor persistor = Configuration.getInstance().getPersistor();
+		persistor.deleteProductContainer(productContainer);
 	}
 
 	private Random rand = new Random();
@@ -428,6 +431,9 @@ public class InventoryController extends Controller
 		ProductContainer pc = getSelectedContainer();
 		Product p = (Product) getView().getSelectedProduct().getTag();
 		ProductFacade.getInstance().removeProduct(p, pc);
+		
+		Persistor persistor = Configuration.getInstance().getPersistor();
+		persistor.deleteProduct(p, pc);
 		
 		getView().selectProductContainer(pc.getTagData());
 		loadProducts();
@@ -583,6 +589,8 @@ public class InventoryController extends Controller
 		pFacade.addProductToContainer(product, container);
 		//System.out.println("moveProductToContainer");
 		
+		Persistor persistor = Configuration.getInstance().getPersistor();
+		persistor.insertProduct(product);
 		
 		getView().selectProductContainer(pcd);
 		update(null, null);
@@ -606,6 +614,11 @@ public class InventoryController extends Controller
 		//(ProductContainer)containerData.getTag());
 		//System.out.println("moveItemToContainer");
 		Item item = (Item)itemData.getTag();
+		
+		Persistor persistor = Configuration.getInstance().getPersistor();
+		persistor.moveItem((Item)itemData.getTag(), item.getContainer()
+                , (ProductContainer)containerData.getTag());
+		
 		itemFacade.dragAndDropItem((Item)itemData.getTag(), item.getContainer()
 				                   , (ProductContainer)containerData.getTag());
 		

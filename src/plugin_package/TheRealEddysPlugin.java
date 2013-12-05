@@ -21,7 +21,7 @@ public class TheRealEddysPlugin extends PluginSuper{
 	}
 
 	@Override
-	public Product getProduct(Barcode barcode) {
+	public String getProductDescription(String barcode) {
 		URL url;
 		String getProductURL = "http://www.searchupc.com/handlers/upcsearch.ashx?";
 		HttpURLConnection connection = null;
@@ -36,7 +36,7 @@ public class TheRealEddysPlugin extends PluginSuper{
 			        URLEncoder.encode("C9766A5F-8C15-4B25-BF85-1A8FE7D1AA32", "UTF-8") +
 			        
 			        "&upc=" + 
-			        barcode.getBarcode();
+			        barcode;
 			
 			
 			
@@ -67,12 +67,29 @@ public class TheRealEddysPlugin extends PluginSuper{
 		      BufferedReader rd = new BufferedReader(new InputStreamReader(is));
 		      String line;
 		      StringBuffer response = new StringBuffer(); 
+
+
+		      int i = 0;
 		      while((line = rd.readLine()) != null) {
+		    	if(i == 1){
 		        response.append(line);
 		        response.append('\r');
+		    	}
+		    	i++;
 		      }
+		      int firstOccurance = response.toString().indexOf('"');
+		      int secondOccurance = response.toString().indexOf('"', response.toString().indexOf('"') + 1);
 		      rd.close();
-		      return null;
+//		      System.out.println(response);
+//		      System.out.println(firstOccurance);
+//		      System.out.println(secondOccurance);
+//		      System.out.println(response.substring(firstOccurance + 1, secondOccurance));
+		      if(!response.toString().equals("")){
+		    	  return response.substring(firstOccurance + 1, secondOccurance);
+		      }else{
+		    	  return "";
+		    	  //return getNextPlugin().getProductDescription(barcode);
+		      }
 
 		    } catch (Exception e) {
 

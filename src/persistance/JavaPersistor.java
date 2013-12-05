@@ -85,7 +85,7 @@ public class JavaPersistor implements Persistor {
 	 * @see persistance.Persistor#deleteProduct(model.Product)
 	 */
 	@Override
-	public void deleteProduct(Product toDelete) {
+	public void deleteProduct(Product toDelete, ProductContainer whereFrom) {
 		// TODO Auto-generated method stub
 
 	}

@@ -1,5 +1,7 @@
 package gui.storageunit;
 
+import persistance.Persistor;
+import singletons.Configuration;
 import model.StorageUnit;
 import facade.StorageUnitFacade;
 import gui.common.*;
@@ -89,7 +91,14 @@ public class AddStorageUnitController extends Controller implements
 	@Override
 	public void addStorageUnit() {
 		String newStorageUnitName = getView().getStorageUnitName();
-		_storageUnitFacade.addStorageUnit(newStorageUnitName);
+		if (_storageUnitFacade.canAddStorageUnit(newStorageUnitName)) {
+			StorageUnit su = new StorageUnit(newStorageUnitName);
+			
+			_storageUnitFacade.addStorageUnit(su);
+
+			Persistor persistor = Configuration.getInstance().getPersistor();
+			persistor.insertProductContainer(su);
+		}
 	}
 
 }

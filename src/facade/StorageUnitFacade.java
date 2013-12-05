@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import persistance.Persistor;
 import model.HomeInventory;
 import model.ProductContainer;
 import model.StorageUnit;
@@ -51,26 +52,28 @@ public class StorageUnitFacade extends Observable {
 		return _instance;
 	}
 	
-	public void addStorageUnit(String toAdd){
+	public void addStorageUnit(StorageUnit toAdd){
 		HomeInventory hi = config.getHomeInventory();
-		
-		if(hi.isValidHomeInventoryName(toAdd)){
-			StorageUnit storageUnit = new StorageUnit(toAdd);
 			
 			
 			ProductContainerData pcData = new ProductContainerData();
-			pcData.setName(toAdd);
-			pcData.setTag(storageUnit);
-			storageUnit.setTagData(pcData);
+			pcData.setName(toAdd.getName());
+			pcData.setTag(toAdd);
+			toAdd.setTagData(pcData);
 			
-			addStorageUnitToTree(storageUnit);
+			addStorageUnitToTree(toAdd);
 			setChanged();
 			notifyObservers(this);
-		}
+		
 	}
 	
 	public void editStorageUnit(StorageUnit storageUnit, String newName){
 		storageUnit.setName(newName);
+		
+		Persistor persistor = Configuration.getInstance().getPersistor();
+		persistor.updateProductContainer(storageUnit);
+		
+		
 		setChanged();
 		notifyObservers(this);
 	}
@@ -89,6 +92,9 @@ public class StorageUnitFacade extends Observable {
 		ProductContainerData pcData = toRemove.getTagData();
 		ProductContainerData root = Configuration.getInstance().getHomeInventory().getRootData();
 		root.removeChildPCData(pcData);
+		
+		Persistor persistor = Configuration.getInstance().getPersistor();
+		persistor.deleteProductContainer(toRemove);
 		
 		setChanged();
 		notifyObservers(this);

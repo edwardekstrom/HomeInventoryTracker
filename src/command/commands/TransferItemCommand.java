@@ -1,13 +1,13 @@
 package command.commands;
 
+import persistance.Persistor;
+import singletons.Configuration;
 import command.Command;
 import model.*;
 import gui.item.ItemData;
 import gui.product.ProductData;
 import gui.inventory.ProductContainerData;
-
 import gui.batches.TransferItemBatchController;
-
 import facade.ItemFacade;
 
 /**
@@ -47,10 +47,17 @@ public class TransferItemCommand extends Command{
 		ProductContainer targetPC = (ProductContainer)_targetPCD.getTag();
 		_addedProductToModel = !targetPC.containsProduct(item.getProduct());
 
+		
+		Persistor persistor = Configuration.getInstance().getPersistor();
+		persistor.moveItem(item, sourcePC, (ProductContainer)_targetPCD.getTag());
 
 		ItemFacade.getInstance().moveItemInTree(
 			item,
 			(ProductContainer)_targetPCD.getTag());
+		
+
+		
+		
 		_addedProductToView = _tibc.addProduct(_product);
 		_tibc.addItem(_item);
 		
@@ -66,10 +73,17 @@ public class TransferItemCommand extends Command{
 			// System.out.println("yo man");
 		}
 		
+		Persistor persistor = Configuration.getInstance().getPersistor();
+		persistor.moveItem((Item)_item.getTag(), 
+						   (ProductContainer)_targetPCD.getTag(), 
+						   (ProductContainer)_sourcePCD.getTag());
+		
 		ItemFacade.getInstance().moveItemInTree(
 			(Item)_item.getTag(),
 			(ProductContainer)_sourcePCD.getTag());
 		_tibc.removeItem(_item);
+		
+		
 
 
 		if (_addedProductToView)
