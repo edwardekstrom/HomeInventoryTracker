@@ -1,95 +1,74 @@
 package plugin_package;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+import java.util.Stack;
 
 import model.Barcode;
 import model.Product;
 
-/**
- * @author edwardekstrom
- *
- */
-/**
- * @author edwardekstrom
- *
- */
-public class PluginManager {
-	
-	
-	/**
-	 * The filename
-	 */
-	private String _fileName;
-	/**
-	 * Class Names
-	 */
-	private String[] _classNames;
 
+public class PluginManager {
+	private String _fileName = "file.txt";
+	private Stack<String> _classNames = new Stack<String>();
+	private PluginSuper _plugin;
 	
-	/**
-	 * Constructs a new PluginManager with _filename
-	 * set to "" and _classNames set to a new array
-	 * of strings of length 10.
-	 * @precondition none
-	 * @postcondition there is a new PluginManager
-	 */
-	public PluginManager() {
-		_fileName = "";
-		_classNames =  new String[10];
+	public PluginManager(){
+		loadClassNames();
+		loadPlugin();
 	}
 	
-	/**
-	 * Constructs a new PluginManager with _filename
-	 * set to the passed in param filename, and _classNames
-	 *  set to the passed in param classnames.
-	 * @param fileName the filename
-	 * @param classNames the class names
-	 * @precondition none
-	 * @postcondition there is a new PluginManager
-	 */
-	public PluginManager(String fileName, String[] classNames) {
-		_fileName = fileName;
-		_classNames =  classNames;
-	}
-	
-	
-	/**
-	 * Returns the product associated with the 
-	 * passed in barcode if one of the plugins
-	 * can find it on their website, null otherwise.
-	 * @param barcode the product barcode we're looking for
-	 * @return
-	 * @precondition none
-	 * @postcondition none
-	 */
 	public Product getProduct(Barcode barcode){
-		return null;
+		return _plugin.getProduct(barcode);
 	}
 	
-	
-	
-	/**
-	 * Returns the class names arary
-	 * @return _classNames
-	 * @precondition none
-	 * @postcondition none
-	 */
-	private String[] getClassNames(){
-		return _classNames;
+	private void loadClassNames(){
+	    try {
+		    BufferedReader br = new BufferedReader(new FileReader(_fileName));
+	        String line = br.readLine();
+
+	        while (line != null) {
+	            _classNames.push(line);
+	            line = br.readLine();
+	        }
+	        br.close();
+	    } catch (IOException e) {
+			e.printStackTrace();
+		} 
 	}
 	
-	
-	
-	/**
-	 * Scrapes the website of each plugin
-	 * in the chain and returns the Product
-	 * associated with the barcode if one of
-	 * them can find it, null otherwise.
-	 * @param barcode The barcode
-	 * @param classNames The class names
-	 * @return
-	 * @precondition none
-	 * @postcondition none
-	 */
-	private Product runPlugin(Barcode barcode, String[] classNames){
-		return null;
+	private void loadPlugin() {
+		Class c = null;
+		try {
+			String className = _classNames.pop();
+			c = Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		_plugin = null;
+		try {
+//			Constructor constructor = c.getConstructors()[0];
+			Constructor constructor = c.getConstructor(_classNames.getClass());
+			_plugin = (PluginSuper) constructor.newInstance(_classNames);
+//			_plugin = (PluginInterface)c.newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}// catch (ALL_THE_EXCEPTIONS! e){
+//			e.printStackTrace();
+//		}
 	}
 }

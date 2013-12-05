@@ -1,12 +1,12 @@
 package command.commands;
 
+import persistance.Persistor;
+import singletons.Configuration;
 import command.Command;
 import model.*;
 import gui.item.ItemData;
 import gui.product.ProductData;
-
 import gui.batches.RemoveItemBatchController;
-
 import facade.ItemFacade;
 
 /**
@@ -32,8 +32,15 @@ public class RemoveItemCommand extends Command{
 	 * Run the Command
 	 */
 	public void execute(){
+		
+		Persistor persistor = Configuration.getInstance().getPersistor();
+		persistor.deleteItem((Item)_item.getTag());
+		
 
 		ItemFacade.getInstance().removeItem((Item)_item.getTag());
+	
+		HomeInventory homeInventory = Configuration.getInstance().getHomeInventory();
+		Serializer.serializeHIT(homeInventory);
 		_addedProductToView = _ric.addProduct(_product);
 		_ric.addItem(_item);
 		
@@ -42,8 +49,13 @@ public class RemoveItemCommand extends Command{
 	/**
 	 * Undo the Command
 	 */
-	public void executeInverse(){
+	public void executeInverse(){		
 		ItemFacade.getInstance().addItem((Item)_item.getTag());
+
+		
+		Persistor persistor = Configuration.getInstance().getPersistor();
+		persistor.insertItem((Item)_item.getTag());
+		
 		_ric.removeItem(_item);
 		if (_addedProductToView)
 			_ric.removeProduct(_product);
