@@ -22,7 +22,7 @@ import org.junit.Test;
 import plugin_package.TheRealEddysPlugin;
 
 
-public class testTheREALEddysPlugin {
+public class TheREALEddysPluginTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -41,7 +41,7 @@ public class testTheREALEddysPlugin {
 	}
 
 	@Test
-	public void test() {
+	public void testEddysPlugin() {
 		Barcode barcode = new Barcode();
 		barcode.setBarcode("5010029020519");
 
