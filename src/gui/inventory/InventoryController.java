@@ -590,7 +590,7 @@ public class InventoryController extends Controller
 		//System.out.println("moveProductToContainer");
 		
 		Persistor persistor = Configuration.getInstance().getPersistor();
-		persistor.insertProduct(product);
+		persistor.moveProduct(product,container);
 		
 		getView().selectProductContainer(pcd);
 		update(null, null);

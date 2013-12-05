@@ -92,7 +92,7 @@ public interface Persistor {
 	 * @precondition passed a valid Product
 	 * @postcondition The Product is moved in the database
 	 */
-	public void moveProduct(Product toMove);
+	public void moveProduct(Product toMove,  ProductContainer whereTo);
 	
 	/**Reads the Products in the database to populate the model
 	 * 
