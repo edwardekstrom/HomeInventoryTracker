@@ -157,6 +157,7 @@ public class SQLDataAccessObject {
 			stmt.setInt(2, toInsert.getThreeMonthSupply());
 			stmt.setDouble(3, toInsert.getSizeAmount());
 			stmt.setString(4, toInsert.getSizeUnit());
+			stmt.setInt(5, toInsert.getShelfLife());
 			stmt.setString(6, toInsert.getBarcode().getBarcode());
 			if (stmt.executeUpdate() == 1) {
 				Statement keyStmt = SQLTransactionManager.getConnection().createStatement();
@@ -186,7 +187,23 @@ public class SQLDataAccessObject {
 	 * @postcondition The Product is modified in the database
 	 */
 	public boolean updateProduct(Product toUpdate){
-		return false;
+		try {
+			String query = "UPDATE 'products'" +
+					"SET description=?, three_month_supply=?, amount=?, unit=?, shelf_life=?" +
+					"WHERE barcode=?";
+			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+			stmt.setString(1, toUpdate.getDescription());
+			stmt.setInt(2, toUpdate.getThreeMonthSupply());
+			stmt.setDouble(3, toUpdate.getSizeAmount());
+			stmt.setString(4, toUpdate.getSizeUnit());
+			stmt.setInt(5, toUpdate.getShelfLife());
+			stmt.setString(6, toUpdate.getBarcode().getBarcode());	
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return true;
 	}
 	
 	/**Deletes the given Product in the Database
@@ -196,8 +213,19 @@ public class SQLDataAccessObject {
 	 * @precondition passed a valid Product
 	 * @postcondition The Product is deleted from the database
 	 */
-	public boolean deleteProduct(Product toDelete){
-		return false;
+	public boolean deleteProduct(Product toDelete, ProductContainer whereFrom){
+		try {
+			String query = "DELETE FROM 'pc_join_p'" +
+					"WHERE product_container_id=? AND product_id=?";
+			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+			stmt.setInt(1, whereFrom.getID());
+			stmt.setInt(2, toDelete.getID());	
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return true;
 	}
 	
 	/**Moves the given Product in the Database (modifies references)
@@ -207,8 +235,20 @@ public class SQLDataAccessObject {
 	 * @precondition passed a valid Product
 	 * @postcondition The Product is moved in the database
 	 */
-	public boolean moveProduct(Product toMove){
-		return false;
+	public boolean moveProduct(Product toMove, ProductContainer whereFrom, ProductContainer whereTo){
+		try {
+			String query = "UPDATE 'pc_join_p' SET product_container_id=?" +
+					"WHERE product_container_id=? AND product_id=?";
+			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+			stmt.setInt(1, whereTo.getID());
+			stmt.setInt(2, whereFrom.getID());
+			stmt.setInt(3, toMove.getID());	
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return true;
 	}
 	
 	/**Reads the Products in the database to populate the model
@@ -263,11 +303,6 @@ public class SQLDataAccessObject {
 	 */
 	public void readProductContainers(){
 		
-	}
-	
-	public int getItemIdByBarcode(Barcode barcode){
-		//TODO
-		return 0;
 	}
 	
 	public void createTables(){
