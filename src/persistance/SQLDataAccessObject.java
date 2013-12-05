@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import model.Barcode;
 import model.Date;
@@ -136,8 +137,8 @@ public class SQLDataAccessObject {
 	 * @precondition model has no items
 	 * @postcondition The Items are added to the model
 	 */
-	public void readItems(){
-		
+	public ArrayList<Item> readItems(){
+		return new ArrayList<Item>();
 	}
 	
 	
@@ -237,13 +238,12 @@ public class SQLDataAccessObject {
 	 * @precondition passed a valid Product
 	 * @postcondition The Product is moved in the database
 	 */
-	public boolean moveProduct(Product toMove, ProductContainer whereFrom, ProductContainer whereTo){
+	public boolean moveProduct(Product toMove, ProductContainer whereTo){
 		try {
-			String query = "UPDATE 'pc_join_p' SET product_container_id=?" +
-					"WHERE product_container_id=? AND product_id=?";
+			String query = "INSERT INTO 'pc_join_p'('product_container_id', 'product_id'" +
+					")VALUES(?,?)";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 			stmt.setInt(1, whereTo.getID());
-			stmt.setInt(2, whereFrom.getID());
 			stmt.setInt(3, toMove.getID());	
 		}
 		catch (SQLException e) {
@@ -259,7 +259,8 @@ public class SQLDataAccessObject {
 	 * @precondition model has no Products
 	 * @postcondition The Products are added to the model
 	 */
-	public void readProducts(){	
+	public ArrayList<Product> readProducts(){	
+		return new ArrayList<Product>();
 	}
 	
 	/**Inserts the given ProductContainer into the Database
@@ -397,8 +398,8 @@ public class SQLDataAccessObject {
 	 * @precondition model has no ProductContainers
 	 * @postcondition The ProductContainers are added to the model
 	 */
-	public void readProductContainers(){
-		
+	public ArrayList<ProductContainer> readProductContainers(){
+		return new ArrayList<ProductContainer>();
 	}
 	
 	public void createTables(){
