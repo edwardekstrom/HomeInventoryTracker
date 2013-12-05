@@ -473,6 +473,9 @@ public class InventoryController extends Controller
 		ItemData id = getView().getSelectedItem();
 		Item item = (Item)id.getTag();
 
+		Persistor persistor = Configuration.getInstance().getPersistor();
+		persistor.deleteItem(item);
+		
 		ItemFacade.getInstance().removeItem(item);
 
 		update(null, null);

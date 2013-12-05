@@ -49,7 +49,7 @@ public class JavaPersistor implements Persistor {
 	 * @see persistance.Persistor#moveItem(model.Item)
 	 */
 	@Override
-	public void moveItem(Item toMove) {
+	public void moveItem(Item toMove, ProductContainer from, ProductContainer to) {
 		// TODO Auto-generated method stub
 
 	}

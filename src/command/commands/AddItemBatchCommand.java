@@ -2,13 +2,15 @@ package command.commands;
 
 import command.Command;
 import model.*;
-import model.Date;
 import gui.batches.AddItemBatchController;
 import gui.item.ItemData;
 import gui.product.ProductData;
 
 import java.util.Map;
 import java.util.ArrayList;
+
+import persistance.Persistor;
+import singletons.Configuration;
 import facade.ItemFacade;
 
 
@@ -48,9 +50,13 @@ public class AddItemBatchCommand extends Command{
 		int _count = (Integer)_args.get("count");
 		for (int i = 0; i < _count; i++){
 			Item item = ItemFacade.getInstance().addItem((Product)_pd.getTag(), entryDate, su);
+
 			ItemData itemData = item.getTagData();
 			_items.add(itemData);
 			_aibc.addItem(itemData);
+			
+			Persistor persistor = Configuration.getInstance().getPersistor();
+			persistor.insertItem(item);
 		}
 
 	}
@@ -61,7 +67,13 @@ public class AddItemBatchCommand extends Command{
 	public void executeInverse(){
 		for (ItemData id : _items){
 			_aibc.removeItem(id);
+			
+			
+			Persistor persistor = Configuration.getInstance().getPersistor();
+			persistor.deleteItem((Item)id.getTag());
+			
 			ItemFacade.getInstance().removeItem((Item)id.getTag());
+
 		}
 	}
 

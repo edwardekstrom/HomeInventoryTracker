@@ -47,7 +47,7 @@ public interface Persistor {
 	 * @precondition passed a valid Item
 	 * @postcondition The Item is moved in the database
 	 */
-	public void moveItem(Item toMove);
+	public void moveItem(Item toMove, ProductContainer from, ProductContainer to);
 	
 	/**Reads the items in the database to populate the model
 	 * 
