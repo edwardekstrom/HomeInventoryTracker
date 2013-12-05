@@ -15,6 +15,7 @@ import model.Product;
 import model.ProductContainer;
 import model.ProductGroup;
 import model.StorageUnit;
+import model.*;
 
 public class SQLDataAccessObject {
 	
@@ -298,8 +299,20 @@ public class SQLDataAccessObject {
 	 * @precondition model has no Products
 	 * @postcondition The Products are added to the model
 	 */
-	public ArrayList<Product> readProducts(){	
-		return new ArrayList<Product>();
+	public ArrayList<Product> readProducts(){
+		ArrayList<Product> products = new ArrayList<Product>();
+
+		try{
+			Statement statement = SQLTransactionManager.getConnection().createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM products");
+
+			while(rs.next()){
+			 	// Product p = new Product(Date(new java.util.Date()), Barcode(rs.getString("barcode"));
+			}
+		}catch (Exception e){System.out.println(e.getMessage());}
+
+
+		return products;
 	}
 	
 	/**Inserts the given ProductContainer into the Database
@@ -455,14 +468,19 @@ public class SQLDataAccessObject {
 		ArrayList<ProductContainer> pcList = new ArrayList<ProductContainer>();
 
 		try{
-		String query = "SELECT * FROM product_containers;";
-		ResultSet rs = SQLTransactionManager.getConnection().prepareStatement(query).executeQuery();
-		while(rs.next()){
-			System.out.println(rs.getString("name"));
-		}
-		}catch(Exception e){
-			
-		}
+
+			Statement statement = SQLTransactionManager.getConnection().createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM product_containers");
+
+			while(rs.next()){
+				String name = rs.getString("name");
+				int id = rs.getInt("id");
+				Double three_month_amount = rs.getDouble("three_month_amount");
+				String three_month_unit = rs.getString("three_month_unit");
+				StorageUnit su = new StorageUnit(name);
+				pcList.add(su);
+			}
+		}catch (Exception e){System.out.println(e.getMessage());}
 
 		return pcList;
 	}
