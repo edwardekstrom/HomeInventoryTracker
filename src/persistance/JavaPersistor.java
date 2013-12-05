@@ -94,7 +94,7 @@ public class JavaPersistor implements Persistor {
 	 * @see persistance.Persistor#moveProduct(model.Product)
 	 */
 	@Override
-	public void moveProduct(Product toMove) {
+	public void moveProduct(Product toMove,  ProductContainer whereTo ) {
 		// TODO Auto-generated method stub
 
 	}
