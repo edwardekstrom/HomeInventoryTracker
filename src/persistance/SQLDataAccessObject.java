@@ -237,13 +237,12 @@ public class SQLDataAccessObject {
 	 * @precondition passed a valid Product
 	 * @postcondition The Product is moved in the database
 	 */
-	public boolean moveProduct(Product toMove, ProductContainer whereFrom, ProductContainer whereTo){
+	public boolean moveProduct(Product toMove, ProductContainer whereTo){
 		try {
-			String query = "UPDATE 'pc_join_p' SET product_container_id=?" +
-					"WHERE product_container_id=? AND product_id=?";
+			String query = "INSERT INTO 'pc_join_p'('product_container_id', 'product_id'" +
+					")VALUES(?,?)";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 			stmt.setInt(1, whereTo.getID());
-			stmt.setInt(2, whereFrom.getID());
 			stmt.setInt(3, toMove.getID());	
 		}
 		catch (SQLException e) {
