@@ -1,4 +1,5 @@
 package plugin_package;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -10,16 +11,14 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Stack;
 
-import model.Barcode;
-import model.Product;
 
+public class TheREALEddysPlugin extends PluginSuper{
 
-public class TheRealEddysPlugin extends PluginSuper{
-
-	public TheRealEddysPlugin(Stack<String> names) {
-		super(names);
+	public TheREALEddysPlugin() {
 	}
 
+	
+	
 	@Override
 	public String getProductDescription(String barcode) {
 		URL url;
