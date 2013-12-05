@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import model.Barcode;
 import model.Date;
@@ -51,10 +52,13 @@ public class SQLDataAccessObject {
 				finally {
 					keyRS.close();
 				}
-			}	
+			}else{
+				return false;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return true;
@@ -75,10 +79,14 @@ public class SQLDataAccessObject {
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 			stmt.setDate(1, new java.sql.Date(toUpdate.getEntryDate().getDateAsLong()));
 			stmt.setDate(2, new java.sql.Date(toUpdate.getExpirationDate().getDateAsLong()));
-			stmt.setString(3, toUpdate.getBarcode().getBarcode());		
+			stmt.setString(3, toUpdate.getBarcode().getBarcode());
+			if(stmt.executeUpdate() != 1){
+				return false;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return true;
@@ -98,10 +106,14 @@ public class SQLDataAccessObject {
 					"WHERE barcode=?";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 			stmt.setBoolean(1, true);
-			stmt.setString(2, toDelete.getBarcode().getBarcode());		
+			stmt.setString(2, toDelete.getBarcode().getBarcode());
+			if(stmt.executeUpdate() != 1){
+				return false;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return true;
@@ -114,17 +126,21 @@ public class SQLDataAccessObject {
 	 * @precondition passed a valid Item
 	 * @postcondition The Item is moved in the database
 	 */
-	public boolean moveItem(Item toMove){
+	public boolean moveItem(Item toMove,ProductContainer destination){
 		try {
 			String query = "UPDATE 'items'" +
 					"SET product_container=?"+
 					"WHERE barcode=?";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
-			stmt.setInt(1, toMove.getContainer().getID());
-			stmt.setString(2, toMove.getBarcode().getBarcode());		
+			stmt.setInt(1, destination.getID());
+			stmt.setString(2, toMove.getBarcode().getBarcode());
+			if(stmt.executeUpdate() != 1){
+				return false;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return true;
@@ -136,8 +152,8 @@ public class SQLDataAccessObject {
 	 * @precondition model has no items
 	 * @postcondition The Items are added to the model
 	 */
-	public void readItems(){
-		
+	public ArrayList<Item> readItems(){
+		return new ArrayList<Item>();
 	}
 	
 	
@@ -172,10 +188,13 @@ public class SQLDataAccessObject {
 				finally {
 					keyRS.close();
 				}
-			}	
+			}else{
+				return false;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return true;
@@ -199,10 +218,14 @@ public class SQLDataAccessObject {
 			stmt.setDouble(3, toUpdate.getSizeAmount());
 			stmt.setString(4, toUpdate.getSizeUnit());
 			stmt.setInt(5, toUpdate.getShelfLife());
-			stmt.setString(6, toUpdate.getBarcode().getBarcode());	
+			stmt.setString(6, toUpdate.getBarcode().getBarcode());
+			if(stmt.executeUpdate() != 1){
+				return false;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return true;
@@ -221,10 +244,14 @@ public class SQLDataAccessObject {
 					"WHERE product_container_id=? AND product_id=?";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 			stmt.setInt(1, whereFrom.getID());
-			stmt.setInt(2, toDelete.getID());	
+			stmt.setInt(2, toDelete.getID());
+			if(stmt.executeUpdate() != 1){
+				return false;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return true;
@@ -237,17 +264,20 @@ public class SQLDataAccessObject {
 	 * @precondition passed a valid Product
 	 * @postcondition The Product is moved in the database
 	 */
-	public boolean moveProduct(Product toMove, ProductContainer whereFrom, ProductContainer whereTo){
+	public boolean moveProduct(Product toMove, ProductContainer whereTo){
 		try {
-			String query = "UPDATE 'pc_join_p' SET product_container_id=?" +
-					"WHERE product_container_id=? AND product_id=?";
+			String query = "INSERT INTO 'pc_join_p'('product_container_id', 'product_id'" +
+					")VALUES(?,?)";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 			stmt.setInt(1, whereTo.getID());
-			stmt.setInt(2, whereFrom.getID());
-			stmt.setInt(3, toMove.getID());	
+			stmt.setInt(3, toMove.getID());
+			if(stmt.executeUpdate() != 1){
+				return false;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return true;
@@ -259,10 +289,9 @@ public class SQLDataAccessObject {
 	 * @precondition model has no Products
 	 * @postcondition The Products are added to the model
 	 */
-	public void readProducts(){
-		
+	public ArrayList<Product> readProducts(){	
+		return new ArrayList<Product>();
 	}
-	
 	
 	/**Inserts the given ProductContainer into the Database
 	 * 
@@ -295,15 +324,18 @@ public class SQLDataAccessObject {
 					finally {
 						keyRS.close();
 					}
-				}	
+				}else{
+					return false;
+				}
 			}
 			catch (SQLException e) {
 				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}else{
 			try {
 				StorageUnit toInsertStor = (StorageUnit) toInsert;
-				String query = "INSERT INTO 'product_containers' ('name','storage_unit',"+
+				String query = "INSERT INTO 'product_containers' ('name','storage_unit'"+
 						")VALUES(?,?)";
 				PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 				stmt.setString(1, toInsertStor.getName());
@@ -319,10 +351,13 @@ public class SQLDataAccessObject {
 					finally {
 						keyRS.close();
 					}
-				}	
+				}else{
+					return false;
+				}
 			}
 			catch (SQLException e) {
 				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}
 		return true;
@@ -346,7 +381,10 @@ public class SQLDataAccessObject {
 				stmt.setString(1, toUpdateProd.getName());
 				stmt.setDouble(2, toUpdateProd.getThreeMonthSup().getAmount());
 				stmt.setString(3, toUpdateProd.getThreeMonthSup().getUnit());
-				stmt.setInt(4, toUpdateProd.getID());	
+				stmt.setInt(4, toUpdateProd.getID());
+				if(stmt.executeUpdate() != 1){
+					return false;
+				}
 			}
 			catch (SQLException e) {
 				System.out.println(e.getMessage());
@@ -363,6 +401,7 @@ public class SQLDataAccessObject {
 			}
 			catch (SQLException e) {
 				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}
 		return true;
@@ -386,9 +425,13 @@ public class SQLDataAccessObject {
 					"WHERE product_container_id=?";
 			PreparedStatement stmt2 = SQLTransactionManager.getConnection().prepareStatement(query2);
 			stmt2.setInt(2, toDelete.getID());	
+			if(stmt.executeUpdate() != 1){
+				return false;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		return true;
 	}
@@ -399,8 +442,16 @@ public class SQLDataAccessObject {
 	 * @precondition model has no ProductContainers
 	 * @postcondition The ProductContainers are added to the model
 	 */
-	public void readProductContainers(){
-		
+	public ArrayList<ProductContainer> readProductContainers(){
+		ArrayList<ProductContainer> pcList = new ArrayList<ProductContainer>();
+
+		String query = "SELECT * FROM product_containers;";
+		ResultSet rs = SQLTransactionManager.getConnection().prepareStatement(query).executeQuery();
+		while(rs.next()){
+			System.out.println(rs.getString("name"));
+		}
+
+		return pcList;
 	}
 	
 	public void createTables(){
@@ -416,7 +467,7 @@ public class SQLDataAccessObject {
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
 			query = "DROP TABLE IF EXISTS 'product_containers';";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
-			query = "CREATE TABLE 'product_containers' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'name' VARCHAR, 'parent' INTEGER, 'storage_unit' INTEGER, 'three_month_amount' DOUBLE, 'three_month_unit' VARCHAR);"+
+			query = "CREATE TABLE 'product_containers' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'name' VARCHAR, 'parent' INTEGER, 'storage_unit' INTEGER, 'three_month_amount' DOUBLE, 'three_month_unit' VARCHAR);";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
 			query = "DROP TABLE IF EXISTS 'products';";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
