@@ -12,6 +12,8 @@ import model.Date;
 import model.Item;
 import model.Product;
 import model.ProductContainer;
+import model.ProductGroup;
+import model.StorageUnit;
 
 public class SQLDataAccessObject {
 	
@@ -270,7 +272,60 @@ public class SQLDataAccessObject {
 	 * @postcondition The ProductContainer is added to the database
 	 */
 	public boolean insertProductContainer(ProductContainer toInsert){
-		return false;
+		if(toInsert.getClass() == ProductGroup.class){
+			try {
+				ProductGroup toInsertProd = (ProductGroup) toInsert;
+				String query = "INSERT INTO 'product_containers' ('name','parent','storage_unit',"+
+						"'three_month_amount','three_month_unit'"+
+						")VALUES(?,?,?,?,?)";
+				PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+				stmt.setString(1, toInsertProd.getName());
+				stmt.setInt(2, toInsertProd.getContainer().getID());
+				stmt.setInt(3, toInsertProd.getStorageUnit().getID());
+				stmt.setDouble(4, toInsertProd.getThreeMonthSup().getAmount());
+				stmt.setString(5, toInsertProd.getThreeMonthSup().getUnit());
+				if (stmt.executeUpdate() == 1) {
+					Statement keyStmt = SQLTransactionManager.getConnection().createStatement();
+					ResultSet keyRS = keyStmt.executeQuery("select last_insert_rowid()");
+					try {
+						keyRS.next();
+						int id = keyRS.getInt(1);
+						toInsertProd.setID(id);
+					}
+					finally {
+						keyRS.close();
+					}
+				}	
+			}
+			catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}else{
+			try {
+				StorageUnit toInsertStor = (StorageUnit) toInsert;
+				String query = "INSERT INTO 'product_containers' ('name','storage_unit',"+
+						")VALUES(?,?)";
+				PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+				stmt.setString(1, toInsertStor.getName());
+				stmt.setInt(2, toInsertStor.getStorageUnit().getID());
+				if (stmt.executeUpdate() == 1) {
+					Statement keyStmt = SQLTransactionManager.getConnection().createStatement();
+					ResultSet keyRS = keyStmt.executeQuery("select last_insert_rowid()");
+					try {
+						keyRS.next();
+						int id = keyRS.getInt(1);
+						toInsertStor.setID(id);
+					}
+					finally {
+						keyRS.close();
+					}
+				}	
+			}
+			catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return true;
 	}
 	
 	/**Updates the given ProductContainer in the Database
@@ -281,7 +336,36 @@ public class SQLDataAccessObject {
 	 * @postcondition The ProductContainer is modified in the database
 	 */
 	public boolean updateProductContainer(ProductContainer toUpdate){
-		return false;
+		if(toUpdate.getClass() == ProductGroup.class){
+			try {
+				ProductGroup toUpdateProd = (ProductGroup) toUpdate;
+				String query = "UPDATE 'product_containers'" +
+						"SET name=?, three_month_amount=?, three_month_unit=?" +
+						"WHERE id=?";
+				PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+				stmt.setString(1, toUpdateProd.getName());
+				stmt.setDouble(2, toUpdateProd.getThreeMonthSup().getAmount());
+				stmt.setString(3, toUpdateProd.getThreeMonthSup().getUnit());
+				stmt.setInt(4, toUpdateProd.getID());	
+			}
+			catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}else{
+			try {
+				StorageUnit toUpdateStor = (StorageUnit) toUpdate;
+				String query = "UPDATE 'product_containers'" +
+						"SET name=?" +
+						"WHERE id=?";
+				PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+				stmt.setString(1, toUpdateStor.getName());
+				stmt.setInt(2, toUpdateStor.getID());	
+			}
+			catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return true;
 	}
 	
 	/**Deletes the given ProductContainer in the Database
@@ -292,7 +376,21 @@ public class SQLDataAccessObject {
 	 * @postcondition The ProductContainer is deleted from the database
 	 */
 	public boolean deleteProductContainer(ProductContainer toDelete){
-		return false;
+		try {
+			String query = "DELETE FROM 'product_containers'" +
+					"WHERE product_container_id=?";
+			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+			stmt.setInt(1, toDelete.getID());
+			
+			String query2 = "DELETE FROM 'pc_join_p'" +
+					"WHERE product_container_id=?";
+			PreparedStatement stmt2 = SQLTransactionManager.getConnection().prepareStatement(query2);
+			stmt2.setInt(2, toDelete.getID());	
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return true;
 	}
 	
 	/**Reads the ProductContainers in the database to populate the model
