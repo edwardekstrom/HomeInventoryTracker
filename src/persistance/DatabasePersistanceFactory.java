@@ -2,7 +2,7 @@
  * 
  */
 package persistance;
-
+import java.io.File;
 /**
  * @author Capchu
  *
@@ -10,6 +10,11 @@ package persistance;
 public class DatabasePersistanceFactory extends AbstractPerstistanceFactory {
 	@Override
 	public Persistor buildPersistor() {
-		return new DBPersistor();
+
+		DBPersistor persistor = new DBPersistor();
+		
+		File f = new File("DBPersistor.sql");
+		if(!f.exists()) { persistor.createTables();} 
+		return persistor;
 	}
 }

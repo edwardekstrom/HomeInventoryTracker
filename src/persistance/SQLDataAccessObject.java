@@ -1,10 +1,21 @@
 package persistance;
 
+	
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+
+import model.Barcode;
+import model.Date;
 import model.Item;
 import model.Product;
 import model.ProductContainer;
 
 public class SQLDataAccessObject {
+	
+	SimpleDateFormat _dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 
 	/**Inserts the given item into the Database
 	 * 
@@ -13,8 +24,38 @@ public class SQLDataAccessObject {
 	 * @precondition passed a valid Item
 	 * @postcondition The Item is added to the database
 	 */
-	public void insertItem(Item toInsert){
+	public boolean insertItem(Item toInsert){
 		
+		try {
+			String query = "INSERT INTO 'items' ('product_container','product','barcode'," +
+					"'entry_date','exit_date','expiration_date','removed'" +
+					")VALUES(?,?,?,?,?,?,?,)";
+			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+			stmt.setInt(1, toInsert.getContainer().getID());
+			stmt.setInt(2, toInsert.getProduct().getID());
+			stmt.setString(3, toInsert.getBarcode().getBarcode());
+			stmt.setDate(4, new java.sql.Date(toInsert.getEntryDate().getDateAsLong()));
+			stmt.setDate(5, new java.sql.Date(toInsert.getExitTime().getDateTimeAsLong()));
+			stmt.setDate(6, new java.sql.Date(toInsert.getExpirationDate().getDateAsLong()));
+			stmt.setBoolean(7, false);
+			if (stmt.executeUpdate() == 1) {
+				Statement keyStmt = SQLTransactionManager.getConnection().createStatement();
+				ResultSet keyRS = keyStmt.executeQuery("select last_insert_rowid()");
+				try {
+					keyRS.next();
+					int id = keyRS.getInt(1);
+					toInsert.setID(id);
+				}
+				finally {
+					keyRS.close();
+				}
+			}	
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return true;
 	}
 	
 	/**Updates the given item in the Database
@@ -24,8 +65,21 @@ public class SQLDataAccessObject {
 	 * @precondition passed a valid Item
 	 * @postcondition The Item is modified in the database
 	 */
-	public void updateItem(Item toUpdate){
+	public boolean updateItem(Item toUpdate){
+		try {
+			String query = "UPDATE 'items'" +
+					"SET entry_date=?'expiration_date'=?" +
+					"WHERE barcode=?";
+			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+			stmt.setDate(1, new java.sql.Date(toUpdate.getEntryDate().getDateAsLong()));
+			stmt.setDate(2, new java.sql.Date(toUpdate.getExpirationDate().getDateAsLong()));
+			stmt.setString(3, toUpdate.getBarcode().getBarcode());		
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 		
+		return true;
 	}
 	
 	/**Deletes the given item in the Database
@@ -35,8 +89,20 @@ public class SQLDataAccessObject {
 	 * @precondition passed a valid Item
 	 * @postcondition The Item is deleted from the database
 	 */
-	public void deleteItem(Item toDelete){
+	public boolean deleteItem(Item toDelete){
+		try {
+			String query = "UPDATE 'items'" +
+					"SET removed=?" +
+					"WHERE barcode=?";
+			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+			stmt.setBoolean(1, true);
+			stmt.setString(2, toDelete.getBarcode().getBarcode());		
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 		
+		return true;
 	}
 	
 	/**Moves the given item in the Database (modifies references)
@@ -46,8 +112,20 @@ public class SQLDataAccessObject {
 	 * @precondition passed a valid Item
 	 * @postcondition The Item is moved in the database
 	 */
-	public void moveItem(Item toMove){
+	public boolean moveItem(Item toMove){
+		try {
+			String query = "UPDATE 'items'" +
+					"SET product_container=?"+
+					"WHERE barcode=?";
+			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+			stmt.setInt(1, toMove.getContainer().getID());
+			stmt.setString(2, toMove.getBarcode().getBarcode());		
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 		
+		return true;
 	}
 	
 	/**Reads the items in the database to populate the model
@@ -68,8 +146,8 @@ public class SQLDataAccessObject {
 	 * @precondition passed a valid Product
 	 * @postcondition The Product is added to the database
 	 */
-	public void insertProduct(Product toInsert){
-		
+	public boolean insertProduct(Product toInsert){
+		return false;
 	}
 	
 	/**Updates the given Product in the Database
@@ -79,8 +157,8 @@ public class SQLDataAccessObject {
 	 * @precondition passed a valid Product
 	 * @postcondition The Product is modified in the database
 	 */
-	public void updateProduct(Product toUpdate){
-		
+	public boolean updateProduct(Product toUpdate){
+		return false;
 	}
 	
 	/**Deletes the given Product in the Database
@@ -90,8 +168,8 @@ public class SQLDataAccessObject {
 	 * @precondition passed a valid Product
 	 * @postcondition The Product is deleted from the database
 	 */
-	public void deleteProduct(Product toDelete){
-		
+	public boolean deleteProduct(Product toDelete){
+		return false;
 	}
 	
 	/**Moves the given Product in the Database (modifies references)
@@ -101,8 +179,8 @@ public class SQLDataAccessObject {
 	 * @precondition passed a valid Product
 	 * @postcondition The Product is moved in the database
 	 */
-	public void moveProduct(Product toMove){
-		
+	public boolean moveProduct(Product toMove){
+		return false;
 	}
 	
 	/**Reads the Products in the database to populate the model
@@ -123,8 +201,8 @@ public class SQLDataAccessObject {
 	 * @precondition passed a valid ProductContainer
 	 * @postcondition The ProductContainer is added to the database
 	 */
-	public void insertProductContainer(ProductContainer toInsert){
-		
+	public boolean insertProductContainer(ProductContainer toInsert){
+		return false;
 	}
 	
 	/**Updates the given ProductContainer in the Database
@@ -134,8 +212,8 @@ public class SQLDataAccessObject {
 	 * @precondition passed a valid ProductContainer
 	 * @postcondition The ProductContainer is modified in the database
 	 */
-	public void updateProductContainer(ProductContainer toUpdate){
-		
+	public boolean updateProductContainer(ProductContainer toUpdate){
+		return false;
 	}
 	
 	/**Deletes the given ProductContainer in the Database
@@ -145,8 +223,8 @@ public class SQLDataAccessObject {
 	 * @precondition passed a valid ProductContainer
 	 * @postcondition The ProductContainer is deleted from the database
 	 */
-	public void deleteProductContainer(ProductContainer toDelete){
-		
+	public boolean deleteProductContainer(ProductContainer toDelete){
+		return false;
 	}
 	
 	/**Reads the ProductContainers in the database to populate the model
@@ -157,5 +235,31 @@ public class SQLDataAccessObject {
 	 */
 	public void readProductContainers(){
 		
+	}
+	
+	public int getItemIdByBarcode(Barcode barcode){
+		//TODO
+		return 0;
+	}
+	
+	public void createTables(){
+
+		try {
+			String query = 
+				"DROP TABLE IF EXISTS 'items';"+
+				"CREATE TABLE 'items' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'product_container' INTEGER, 'product' INTEGER, 'barcode' VARCHAR, 'entry_date' DATETIME, 'exit_date' DATETIME, 'expiration_date' DATETIME);"+
+				"DROP TABLE IF EXISTS 'pc_join_p';"+
+				"CREATE TABLE 'pc_join_p' ('product_container' INTEGER, 'product' INTEGER);"+
+				"DROP TABLE IF EXISTS 'product_containers';"+
+				"CREATE TABLE 'product_containers' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'name' VARCHAR, 'parent' INTEGER, 'storage_unit' INTEGER, 'three_month_amount' DOUBLE, 'three_month_unit' VARCHAR);"+
+				"DROP TABLE IF EXISTS 'products';"+
+				"CREATE TABLE 'products' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'description' TEXT, 'three_month_supply' DOUBLE, 'amount' DOUBLE, 'unit' VARCHAR, 'shelf_life' INTEGER, 'barcode' VARCHAR);";
+
+			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+			stmt.executeQuery();	
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }

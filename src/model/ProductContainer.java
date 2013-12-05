@@ -22,13 +22,20 @@ public abstract class ProductContainer implements Serializable{
 	protected List<Product> _products;
 	protected List<Item> _items;
 	protected List<ProductGroup> _productGroups;
+	protected int _id;
 	
 	protected ProductContainerData _tagData = new ProductContainerData();
 	protected StorageUnit _storageUnit;
 
 	public boolean _changed = true;
 
-
+    public void setID(int id){
+    	_id = id;
+    }
+    
+    public int getID(){
+    	return _id;
+    }
 
 	public boolean changed(){
 		return _changed;
