@@ -58,6 +58,7 @@ public class SQLDataAccessObject {
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return true;
@@ -85,6 +86,7 @@ public class SQLDataAccessObject {
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return true;
@@ -111,6 +113,7 @@ public class SQLDataAccessObject {
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return true;
@@ -137,6 +140,7 @@ public class SQLDataAccessObject {
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return true;
@@ -190,6 +194,7 @@ public class SQLDataAccessObject {
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return true;
@@ -220,6 +225,7 @@ public class SQLDataAccessObject {
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return true;
@@ -245,6 +251,7 @@ public class SQLDataAccessObject {
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return true;
@@ -270,6 +277,7 @@ public class SQLDataAccessObject {
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return true;
@@ -322,11 +330,12 @@ public class SQLDataAccessObject {
 			}
 			catch (SQLException e) {
 				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}else{
 			try {
 				StorageUnit toInsertStor = (StorageUnit) toInsert;
-				String query = "INSERT INTO 'product_containers' ('name','storage_unit',"+
+				String query = "INSERT INTO 'product_containers' ('name','storage_unit'"+
 						")VALUES(?,?)";
 				PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 				stmt.setString(1, toInsertStor.getName());
@@ -348,6 +357,7 @@ public class SQLDataAccessObject {
 			}
 			catch (SQLException e) {
 				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}
 		return true;
@@ -391,6 +401,7 @@ public class SQLDataAccessObject {
 			}
 			catch (SQLException e) {
 				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}
 		return true;
@@ -420,6 +431,7 @@ public class SQLDataAccessObject {
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		return true;
 	}
