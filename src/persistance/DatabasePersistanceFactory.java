@@ -13,8 +13,10 @@ public class DatabasePersistanceFactory extends AbstractPerstistanceFactory {
 
 		DBPersistor persistor = new DBPersistor();
 		
-		File f = new File("DBPersistor.sql");
-		if(!f.exists()) { persistor.createTables();} 
+		File f = new File("hit.sqlite");
+		if(!f.exists()) { 
+			persistor.createTables();
+		} 
 		return persistor;
 	}
 }
