@@ -7,12 +7,12 @@ import model.Date;
 import model.Product;
 import facade.ProductFacade;
 import gui.common.*;
-
 import command.commands.*;
 import command.*;
 
 import java.util.HashMap;
 
+import plugin_package.TheREALEddysPlugin;
 import facade.*;
 import gui.batches.AddItemBatchController;
 
@@ -39,6 +39,8 @@ public class AddProductController extends Controller implements
 		setDefaults(barcode);
 
 		// Ours
+
+		
 		_productFacade = ProductFacade.getInstance();
 		valuesChanged();
 	}
@@ -47,6 +49,8 @@ public class AddProductController extends Controller implements
 	private void setDefaults(String barcode){
 		IAddProductView v = getView();
 		v.setBarcode(barcode);
+		TheREALEddysPlugin trep = new TheREALEddysPlugin();
+		v.setDescription(trep.getProductDescription(barcode));
 		v.setSizeUnit(SizeUnits.Count);
 		v.enableBarcode(false);
 		v.setShelfLife("0");

@@ -12,7 +12,7 @@ import model.Product;
 
 
 public class PluginManager {
-	private String _fileName = "file.txt";
+	private String _fileName = "pluginList.txt";
 	private Stack<String> _classNames = new Stack<String>();
 	private PluginSuper _plugin;
 	
@@ -21,8 +21,8 @@ public class PluginManager {
 		loadPlugin();
 	}
 	
-	public String getProduct(Barcode barcode){
-		return _plugin.getProductDescription(barcode.getBarcode());
+	public String getProduct(String barcode){
+		return _plugin.getProductDescription(barcode);
 	}
 	
 	private void loadClassNames(){
@@ -52,8 +52,10 @@ public class PluginManager {
 		_plugin = null;
 		try {
 //			Constructor constructor = c.getConstructors()[0];
-			Constructor constructor = c.getConstructor(_classNames.getClass());
-			_plugin = (PluginSuper) constructor.newInstance(_classNames);
+//			Constructor constructor = c.getConstructor();
+//			_plugin = (PluginSuper) constructor.newInstance();
+			_plugin = (PluginSuper) c.newInstance();
+			_plugin.setNames(_classNames);
 //			_plugin = (PluginInterface)c.newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
@@ -61,12 +63,12 @@ public class PluginManager {
 			e.printStackTrace();
 		} catch (SecurityException e) {
 			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+//		} catch (NoSuchMethodException e) {
+//			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+//		} catch (InvocationTargetException e) {
+//			e.printStackTrace();
 		}// catch (ALL_THE_EXCEPTIONS! e){
 //			e.printStackTrace();
 //		}
