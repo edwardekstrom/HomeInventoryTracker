@@ -453,5 +453,13 @@ public abstract class ProductContainer implements Serializable{
 		}
 	}
 	
-	
+	public ProductContainer getPCByID(int i) {
+		if(_id == i) return this;
+		for(ProductGroup pg : _productGroups){
+			if(pg.getPCByID(i) !=null){
+				return pg.getPCByID(i);
+			}
+		}
+		return null;
+	}
 }

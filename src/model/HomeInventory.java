@@ -54,6 +54,15 @@ public class HomeInventory extends ProductContainer implements Serializable{
 		return _storageUnits.add(storageUnit);
 	}
 	
+	
+	public ProductContainer getPCByID(int i){
+		for(StorageUnit su : _storageUnits){
+			if(su.getPCByID(i) !=null){
+				return su.getPCByID(i);
+			}
+		}
+		return null;
+	}
 	public ProductContainerData getRootData(){
 		Collections.sort(_storageUnits);
 		
