@@ -103,13 +103,15 @@ public class testTheREALEddysPlugin {
 		      int firstOccurance = response.toString().indexOf('"');
 		      int secondOccurance = response.toString().indexOf('"', response.toString().indexOf('"') + 1);
 		      rd.close();
-		      System.out.println(response);
-		      System.out.println(firstOccurance);
-		      System.out.println(secondOccurance);
-		      System.out.println(response.substring(firstOccurance + 1, secondOccurance));
+//		      System.out.println(response);
+//		      System.out.println(firstOccurance);
+//		      System.out.println(secondOccurance);
+//		      System.out.println(response.substring(firstOccurance + 1, secondOccurance));
 		      
 		      String productDescription = response.substring(firstOccurance + 1, secondOccurance);
-		      Product theProduct = new Product(null, barcode, productDescription, null, null, null, null);
+		      
+		      
+		      assertTrue(productDescription.equals("Alpen Original Muesli 750g"));
 		      
 
 		    } catch (Exception e) {
