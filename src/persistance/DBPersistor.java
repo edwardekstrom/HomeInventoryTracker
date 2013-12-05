@@ -80,13 +80,9 @@ public class DBPersistor implements Persistor {
 	 */
 	@Override
 	public void insertProduct(Product toInsert) {
-<<<<<<< HEAD
 		SQLTransactionManager.begin();
 
 		SQLTransactionManager.end(true);
-=======
->>>>>>> 44a14152f70c0727421d60bc6b74bdb0441af490
-
 	}
 
 	/* (non-Javadoc)
@@ -103,24 +99,22 @@ public class DBPersistor implements Persistor {
 	 * @see persistance.Persistor#deleteProduct(model.Product)
 	 */
 	@Override
-<<<<<<< HEAD
-	public void deleteProduct(Product toDelete) {
-		SQLTransactionManager.begin();
-		_doa.deleteProduct(toDelete);
-		SQLTransactionManager.end(true);
-=======
-	public void deleteProduct(Product toDelete, ProductContainer whereFrom) {
-		// TODO Auto-generated method stub
 
->>>>>>> 44a14152f70c0727421d60bc6b74bdb0441af490
+	public void deleteProduct(Product toDelete, ProductContainer whereFrom) {
+		SQLTransactionManager.begin();
+		_doa.deleteProduct(toDelete,whereFrom);
+		SQLTransactionManager.end(true);
+
 	}
 
 	/* (non-Javadoc)
 	 * @see persistance.Persistor#moveProduct(model.Product)
 	 */
 	@Override
-	public void moveProduct(Product toMove) {
+	public void moveProduct(Product toMove, 
+		ProductContainer whereTo) {
 		SQLTransactionManager.begin();
+		_doa.moveProduct(toMove,whereTo);
 		SQLTransactionManager.end(true);
 	}
 
@@ -130,6 +124,7 @@ public class DBPersistor implements Persistor {
 	@Override
 	public void readProducts() {
 		SQLTransactionManager.begin();
+		_doa.readProducts();
 		SQLTransactionManager.end(true);
 	}
 
@@ -139,6 +134,7 @@ public class DBPersistor implements Persistor {
 	@Override
 	public void insertProductContainer(ProductContainer toInsert) {
 		SQLTransactionManager.begin();
+		_doa.insertProductContainer(toInsert);
 		SQLTransactionManager.end(true);
 	}
 
@@ -148,6 +144,7 @@ public class DBPersistor implements Persistor {
 	@Override
 	public void updateProductContainer(ProductContainer toUpdate) {
 		SQLTransactionManager.begin();
+		_doa.updateProductContainer(toUpdate);
 		SQLTransactionManager.end(true);
 
 	}
@@ -158,6 +155,7 @@ public class DBPersistor implements Persistor {
 	@Override
 	public void deleteProductContainer(ProductContainer toDelete) {
 		SQLTransactionManager.begin();
+		_doa.deleteProductContainer(toDelete);
 		SQLTransactionManager.end(true);
 	}
 
@@ -167,12 +165,13 @@ public class DBPersistor implements Persistor {
 	@Override
 	public void readProductContainers() {
 		SQLTransactionManager.begin();
+		_doa.readProductContainers();
 		SQLTransactionManager.end(true);
 	}
 
 	@Override
 	public void loadAll() {
-		// TODO Auto-generated method stub
+	
 		
 	}
 
