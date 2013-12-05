@@ -18,11 +18,19 @@ public abstract class PluginSuper {
 	protected PluginSuper getNextPlugin(){
 		return _nextPlugin;
 	}
-	public PluginSuper(Stack<String> names){
+
+//	public PluginSuper(Stack<String> names){
+//		_classNames = names;
+//		loadPlugin();
+//	}
+	public void setNames(Stack<String> names){
 		_classNames = names;
-		loadPlugin();
+		if(_classNames.isEmpty()){
+			_nextPlugin = null;
+		}else{
+			loadPlugin();
+		}
 	}
-	
 	private void loadPlugin() {
 		Class c = null;
 		try {
@@ -35,8 +43,9 @@ public abstract class PluginSuper {
 		_nextPlugin = null;
 		try {
 //			Constructor constructor = c.getConstructors()[0];
-			Constructor constructor = c.getConstructor(_classNames.getClass());
-			_nextPlugin = (PluginSuper) constructor.newInstance(_classNames);
+			Constructor constructor = c.getConstructor();
+			_nextPlugin = (PluginSuper) constructor.newInstance();
+			_nextPlugin.setNames(_classNames);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 

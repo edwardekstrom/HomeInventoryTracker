@@ -31,16 +31,15 @@ public class SQLDataAccessObject {
 		
 		try {
 			String query = "INSERT INTO 'items' ('product_container','product','barcode'," +
-					"'entry_date','exit_date','expiration_date','removed'" +
-					")VALUES(?,?,?,?,?,?,?,)";
+					"'entry_date','expiration_date','removed'" +
+					")VALUES(?,?,?,?,?,?)";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 			stmt.setInt(1, toInsert.getContainer().getID());
 			stmt.setInt(2, toInsert.getProduct().getID());
 			stmt.setString(3, toInsert.getBarcode().getBarcode());
 			stmt.setDate(4, new java.sql.Date(toInsert.getEntryDate().getDateAsLong()));
-			stmt.setDate(5, new java.sql.Date(toInsert.getExitTime().getDateTimeAsLong()));
-			stmt.setDate(6, new java.sql.Date(toInsert.getExpirationDate().getDateAsLong()));
-			stmt.setBoolean(7, false);
+			stmt.setDate(5, new java.sql.Date(toInsert.getExpirationDate().getDateAsLong()));
+			stmt.setBoolean(6, false);
 			if (stmt.executeUpdate() == 1) {
 				Statement keyStmt = SQLTransactionManager.getConnection().createStatement();
 				ResultSet keyRS = keyStmt.executeQuery("select last_insert_rowid()");
@@ -153,6 +152,7 @@ public class SQLDataAccessObject {
 	 * @postcondition The Items are added to the model
 	 */
 	public ArrayList<Item> readItems(){
+		
 		return new ArrayList<Item>();
 	}
 	
@@ -270,7 +270,7 @@ public class SQLDataAccessObject {
 					")VALUES(?,?)";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 			stmt.setInt(1, whereTo.getID());
-			stmt.setInt(3, toMove.getID());
+			stmt.setInt(2, toMove.getID());
 			if(stmt.executeUpdate() != 1){
 				return false;
 			}
@@ -424,7 +424,7 @@ public class SQLDataAccessObject {
 			String query2 = "DELETE FROM 'pc_join_p'" +
 					"WHERE product_container_id=?";
 			PreparedStatement stmt2 = SQLTransactionManager.getConnection().prepareStatement(query2);
-			stmt2.setInt(2, toDelete.getID());	
+			stmt2.setInt(1, toDelete.getID());	
 			if(stmt.executeUpdate() != 1){
 				return false;
 			}
@@ -444,12 +444,14 @@ public class SQLDataAccessObject {
 	 */
 	public ArrayList<ProductContainer> readProductContainers(){
 		ArrayList<ProductContainer> pcList = new ArrayList<ProductContainer>();
+
 		try{
 			String query = "SELECT * FROM 'product_containers';";
 			/*ResultSet rs =*/ SQLTransactionManager.getConnection().createStatement().executeQuery(query);
 			// while(rs.next()){
 			// }
 		}catch (Exception e){System.out.println(e.getMessage());}
+
 		return pcList;
 	}
 	
@@ -458,11 +460,11 @@ public class SQLDataAccessObject {
 		try {
 			String query = "DROP TABLE IF EXISTS 'items';";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
-			query =	"CREATE TABLE 'items' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'product_container' INTEGER, 'product' INTEGER, 'barcode' VARCHAR, 'entry_date' DATETIME, 'exit_date' DATETIME, 'expiration_date' DATETIME);";
+			query =	"CREATE TABLE 'items' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'product_container' INTEGER, 'product' INTEGER, 'barcode' VARCHAR, 'entry_date' DATETIME, 'exit_date' DATETIME, 'expiration_date' DATETIME, 'removed' BOOL);";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
 			query = "DROP TABLE IF EXISTS 'pc_join_p';";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
-			query = "CREATE TABLE 'pc_join_p' ('product_container' INTEGER, 'product' INTEGER);";
+			query = "CREATE TABLE 'pc_join_p' ('product_container_id' INTEGER, 'product_id' INTEGER);";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
 			query = "DROP TABLE IF EXISTS 'product_containers';";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
