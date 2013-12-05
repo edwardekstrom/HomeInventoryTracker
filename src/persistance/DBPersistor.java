@@ -3,12 +3,12 @@
  */
 package persistance;
 
-import model.Item;
-import model.Product;
-import model.ProductContainer;
+import model.*;
 
 import java.io.File;
 import java.util.*;
+
+import facade.*;
 
 /**
  * @author Capchu
@@ -175,6 +175,20 @@ public class DBPersistor implements Persistor {
 		ArrayList<Item> items = _doa.readItems();
 		ArrayList<Product> products = _doa.readProducts();
 		ArrayList<ProductContainer> pcs = _doa.readProductContainers();
+
+		for (ProductContainer pc : pcs)
+			if (pc instanceof StorageUnit)
+				StorageUnitFacade.getInstance().addStorageUnit((StorageUnit)pc);
+
+		for (ProductContainer pc : pcs)
+			if (pc instanceof ProductGroup)
+				ProductGroupFacade.getInstance().addProductGroup((ProductGroup)pc);
+
+		for (Product p: products)
+			ProductFacade.getInstance().addProduct(p);
+
+		for (Item i : items)
+			ItemFacade.getInstance().addItem(i);
 		
 	}
 

@@ -415,7 +415,7 @@ public class SQLDataAccessObject {
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
 			query = "DROP TABLE IF EXISTS 'product_containers';";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
-			query = "CREATE TABLE 'product_containers' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'name' VARCHAR, 'parent' INTEGER, 'storage_unit' INTEGER, 'three_month_amount' DOUBLE, 'three_month_unit' VARCHAR);"+
+			query = "CREATE TABLE 'product_containers' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'name' VARCHAR, 'parent' INTEGER, 'storage_unit' INTEGER, 'three_month_amount' DOUBLE, 'three_month_unit' VARCHAR);";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
 			query = "DROP TABLE IF EXISTS 'products';";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
