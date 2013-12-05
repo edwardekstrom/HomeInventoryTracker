@@ -25,7 +25,7 @@ public class SQLTransactionManager{
 
 	public static void begin(){
 
-		String dbName = _db_name + ".db";
+		String dbName = _db_name + ".sqlite";
 		String connectionURL = "jdbc:sqlite:" + dbName;
 		
 		try {

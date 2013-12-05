@@ -24,7 +24,7 @@ CREATE TABLE "product_containers" (
 
 CREATE TABLE "products" (
 "id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "description" TEXT, 
-"three_month_supply" DOUBLE, 
+"three_month_supply" INTEGER, 
 "amount" DOUBLE, 
 "unit" VARCHAR, 
 "shelf_life" INTEGER, 
