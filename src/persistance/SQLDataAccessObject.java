@@ -156,6 +156,7 @@ public class SQLDataAccessObject {
 			String query = "SELECT id, product_container, product, barcode, entry_date, exit_date, expiration_date, removed FROM items;";
 			ResultSet rs = SQLTransactionManager.getConnection().prepareStatement(query).executeQuery();
 			while(rs.next()){
+				Item newItem = new Item(null, null, null, null);
 				System.out.println(rs.getString("barcode"));
 			}
 			}catch(Exception e){
@@ -454,11 +455,14 @@ public class SQLDataAccessObject {
 		ArrayList<ProductContainer> pcList = new ArrayList<ProductContainer>();
 
 		try{
-			String query = "SELECT * FROM 'product_containers';";
-			/*ResultSet rs =*/ SQLTransactionManager.getConnection().createStatement().executeQuery(query);
-			// while(rs.next()){
-			// }
-		}catch (Exception e){System.out.println(e.getMessage());}
+		String query = "SELECT * FROM product_containers;";
+		ResultSet rs = SQLTransactionManager.getConnection().prepareStatement(query).executeQuery();
+		while(rs.next()){
+			System.out.println(rs.getString("name"));
+		}
+		}catch(Exception e){
+			
+		}
 
 		return pcList;
 	}
