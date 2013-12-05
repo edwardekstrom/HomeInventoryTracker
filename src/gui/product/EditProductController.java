@@ -1,5 +1,7 @@
 package gui.product;
 
+import persistance.Persistor;
+import singletons.Configuration;
 import model.Product;
 import facade.ProductFacade;
 import gui.common.*;
@@ -129,6 +131,9 @@ public class EditProductController extends Controller
 		String supply = getView().getSupply();
 		
 		_productfacade.editProduct(_productTarget, desc, sizeValue, sizeUnit, shelfLife, supply);
+		
+		Persistor persistor = Configuration.getInstance().getPersistor();
+		persistor.updateProduct(_productTarget);
 			
 	}
 

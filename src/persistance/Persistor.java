@@ -83,7 +83,7 @@ public interface Persistor {
 	 * @precondition passed a valid Product
 	 * @postcondition The Product is deleted from the database
 	 */
-	public void deleteProduct(Product toDelete);
+	public void deleteProduct(Product toDelete, ProductContainer whereFrom);
 	
 	/**Moves the given Product in the Database (modifies references)
 	 * 

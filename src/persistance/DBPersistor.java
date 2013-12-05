@@ -72,7 +72,6 @@ public class DBPersistor implements Persistor {
 	 */
 	@Override
 	public void insertProduct(Product toInsert) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -89,7 +88,7 @@ public class DBPersistor implements Persistor {
 	 * @see persistance.Persistor#deleteProduct(model.Product)
 	 */
 	@Override
-	public void deleteProduct(Product toDelete) {
+	public void deleteProduct(Product toDelete, ProductContainer whereFrom) {
 		// TODO Auto-generated method stub
 
 	}

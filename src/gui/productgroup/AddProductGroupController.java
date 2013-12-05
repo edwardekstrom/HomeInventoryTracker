@@ -1,5 +1,7 @@
 package gui.productgroup;
 
+import persistance.Persistor;
+import singletons.Configuration;
 import model.ProductContainer;
 import model.ProductGroup;
 import model.UnitSize;
@@ -125,6 +127,9 @@ public class AddProductGroupController extends Controller implements
 		pg.setContainer(_parent);
 		
 		_productGroupFacade.addProductGroup(pg);
+		
+		Persistor persistor = Configuration.getInstance().getPersistor();
+		persistor.insertProductContainer(pg);
 	}
 
 }

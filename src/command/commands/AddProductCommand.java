@@ -8,6 +8,9 @@ import gui.product.*;
 
 import java.util.Map;
 
+import persistance.Persistor;
+import singletons.Configuration;
+
 /**
   *	A Command holding all execution information
   */
@@ -58,6 +61,10 @@ public class AddProductCommand extends Command{
 			pd.setTag(_product);
 			_product.setTagData(pd);
 			ProductFacade.getInstance().addProduct(_product);
+			
+//			Persistor persistor = Configuration.getInstance().getPersistor();
+//			persistor.insertProduct(_product);
+			
 
 		}catch (Exception e){}
 		if(_ipCommand == null)

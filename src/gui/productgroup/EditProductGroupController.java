@@ -1,5 +1,7 @@
 package gui.productgroup;
 
+import persistance.Persistor;
+import singletons.Configuration;
 import model.Item;
 import model.ProductContainer;
 import model.ProductGroup;
@@ -126,6 +128,10 @@ public class EditProductGroupController extends Controller
 		String supplyValue = getView().getSupplyValue();
 		SizeUnits supplyUnit = getView().getSupplyUnit();
 		_target.setName(newProductGroupName);
+		
+		Persistor persistor = Configuration.getInstance().getPersistor();
+		persistor.updateProductContainer(_target);
+		
 		UnitSize tmSupply = null;
 		try{
 		tmSupply = new UnitSize(supplyValue, supplyUnit.toString());

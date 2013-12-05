@@ -13,7 +13,7 @@ public abstract class PluginSuper {
 	
 	//make sure that you call _nextPlugin.getProduct(barcode); at the end 
 	//of this implementation
-	public abstract Product getProduct(Barcode barcode);
+	public abstract String getProductDescription(String barcode);
 	
 	protected PluginSuper getNextPlugin(){
 		return _nextPlugin;

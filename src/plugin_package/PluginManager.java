@@ -21,8 +21,8 @@ public class PluginManager {
 		loadPlugin();
 	}
 	
-	public Product getProduct(Barcode barcode){
-		return _plugin.getProduct(barcode);
+	public String getProduct(Barcode barcode){
+		return _plugin.getProductDescription(barcode.getBarcode());
 	}
 	
 	private void loadClassNames(){
