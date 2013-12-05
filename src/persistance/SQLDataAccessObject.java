@@ -445,10 +445,14 @@ public class SQLDataAccessObject {
 	public ArrayList<ProductContainer> readProductContainers(){
 		ArrayList<ProductContainer> pcList = new ArrayList<ProductContainer>();
 
+		try{
 		String query = "SELECT * FROM product_containers;";
 		ResultSet rs = SQLTransactionManager.getConnection().prepareStatement(query).executeQuery();
 		while(rs.next()){
 			System.out.println(rs.getString("name"));
+		}
+		}catch(Exception e){
+			
 		}
 
 		return pcList;
