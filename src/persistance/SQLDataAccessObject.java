@@ -153,7 +153,15 @@ public class SQLDataAccessObject {
 	 * @postcondition The Items are added to the model
 	 */
 	public ArrayList<Item> readItems(){
-		
+		try{
+			String query = "SELECT id, product_container, product, barcode, entry_date, exit_date, expiration_date, removed FROM items;";
+			ResultSet rs = SQLTransactionManager.getConnection().prepareStatement(query).executeQuery();
+			while(rs.next()){
+				System.out.println(rs.getString("barcode"));
+			}
+			}catch(Exception e){
+				
+			}
 		return new ArrayList<Item>();
 	}
 	
