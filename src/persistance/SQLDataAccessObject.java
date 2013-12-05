@@ -114,13 +114,13 @@ public class SQLDataAccessObject {
 	 * @precondition passed a valid Item
 	 * @postcondition The Item is moved in the database
 	 */
-	public boolean moveItem(Item toMove){
+	public boolean moveItem(Item toMove,ProductContainer destination){
 		try {
 			String query = "UPDATE 'items'" +
 					"SET product_container=?"+
 					"WHERE barcode=?";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
-			stmt.setInt(1, toMove.getContainer().getID());
+			stmt.setInt(1, destination.getID());
 			stmt.setString(2, toMove.getBarcode().getBarcode());		
 		}
 		catch (SQLException e) {
@@ -259,10 +259,8 @@ public class SQLDataAccessObject {
 	 * @precondition model has no Products
 	 * @postcondition The Products are added to the model
 	 */
-	public void readProducts(){
-		
+	public void readProducts(){	
 	}
-	
 	
 	/**Inserts the given ProductContainer into the Database
 	 * 

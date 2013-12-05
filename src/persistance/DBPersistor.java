@@ -27,7 +27,9 @@ public class DBPersistor implements Persistor {
 	 */
 	@Override
 	public void insertItem(Item toInsert) {
-		// TODO Auto-generated method stub
+		SQLTransactionManager.begin();
+		_doa.insertItem(toInsert);
+		SQLTransactionManager.end(true);
 
 	}
 
@@ -36,8 +38,9 @@ public class DBPersistor implements Persistor {
 	 */
 	@Override
 	public void updateItem(Item toUpdate) {
-		// TODO Auto-generated method stub
-
+		SQLTransactionManager.begin();
+		_doa.updateItem(toUpdate);
+		SQLTransactionManager.end(true);
 	}
 
 	/* (non-Javadoc)
@@ -45,7 +48,9 @@ public class DBPersistor implements Persistor {
 	 */
 	@Override
 	public void deleteItem(Item toDelete) {
-		// TODO Auto-generated method stub
+		SQLTransactionManager.begin();
+		_doa.deleteItem(toDelete);
+		SQLTransactionManager.end(true);
 
 	}
 
@@ -54,7 +59,9 @@ public class DBPersistor implements Persistor {
 	 */
 	@Override
 	public void moveItem(Item toMove, ProductContainer from, ProductContainer to) {
-		// TODO Auto-generated method stub
+		SQLTransactionManager.begin();
+		_doa.moveItem(toMove,to);
+		SQLTransactionManager.end(true);
 
 	}
 
@@ -63,8 +70,9 @@ public class DBPersistor implements Persistor {
 	 */
 	@Override
 	public void readItems() {
-		// TODO Auto-generated method stub
-
+		SQLTransactionManager.begin();
+		_doa.readItems();
+		SQLTransactionManager.end(true);
 	}
 
 	/* (non-Javadoc)
@@ -72,7 +80,9 @@ public class DBPersistor implements Persistor {
 	 */
 	@Override
 	public void insertProduct(Product toInsert) {
-		// TODO Auto-generated method stub
+		SQLTransactionManager.begin();
+
+		SQLTransactionManager.end(true);
 
 	}
 
@@ -81,8 +91,9 @@ public class DBPersistor implements Persistor {
 	 */
 	@Override
 	public void updateProduct(Product toUpdate) {
-		// TODO Auto-generated method stub
-
+		SQLTransactionManager.begin();
+		_doa.insertProduct(toUpdate);
+		SQLTransactionManager.end(true);
 	}
 
 	/* (non-Javadoc)
@@ -90,8 +101,9 @@ public class DBPersistor implements Persistor {
 	 */
 	@Override
 	public void deleteProduct(Product toDelete) {
-		// TODO Auto-generated method stub
-
+		SQLTransactionManager.begin();
+		_doa.deleteProduct(toDelete);
+		SQLTransactionManager.end(true);
 	}
 
 	/* (non-Javadoc)
@@ -99,8 +111,8 @@ public class DBPersistor implements Persistor {
 	 */
 	@Override
 	public void moveProduct(Product toMove) {
-		// TODO Auto-generated method stub
-
+		SQLTransactionManager.begin();
+		SQLTransactionManager.end(true);
 	}
 
 	/* (non-Javadoc)
@@ -108,8 +120,8 @@ public class DBPersistor implements Persistor {
 	 */
 	@Override
 	public void readProducts() {
-		// TODO Auto-generated method stub
-
+		SQLTransactionManager.begin();
+		SQLTransactionManager.end(true);
 	}
 
 	/* (non-Javadoc)
@@ -117,8 +129,8 @@ public class DBPersistor implements Persistor {
 	 */
 	@Override
 	public void insertProductContainer(ProductContainer toInsert) {
-		// TODO Auto-generated method stub
-
+		SQLTransactionManager.begin();
+		SQLTransactionManager.end(true);
 	}
 
 	/* (non-Javadoc)
@@ -126,7 +138,8 @@ public class DBPersistor implements Persistor {
 	 */
 	@Override
 	public void updateProductContainer(ProductContainer toUpdate) {
-		// TODO Auto-generated method stub
+		SQLTransactionManager.begin();
+		SQLTransactionManager.end(true);
 
 	}
 
@@ -135,8 +148,8 @@ public class DBPersistor implements Persistor {
 	 */
 	@Override
 	public void deleteProductContainer(ProductContainer toDelete) {
-		// TODO Auto-generated method stub
-
+		SQLTransactionManager.begin();
+		SQLTransactionManager.end(true);
 	}
 
 	/* (non-Javadoc)
@@ -144,8 +157,8 @@ public class DBPersistor implements Persistor {
 	 */
 	@Override
 	public void readProductContainers() {
-		// TODO Auto-generated method stub
-
+		SQLTransactionManager.begin();
+		SQLTransactionManager.end(true);
 	}
 
 	@Override
@@ -156,7 +169,7 @@ public class DBPersistor implements Persistor {
 
 	@Override
 	public void save() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
