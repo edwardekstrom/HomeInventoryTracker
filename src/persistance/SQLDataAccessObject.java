@@ -52,7 +52,9 @@ public class SQLDataAccessObject {
 				finally {
 					keyRS.close();
 				}
-			}	
+			}else{
+				return false;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -76,7 +78,10 @@ public class SQLDataAccessObject {
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 			stmt.setDate(1, new java.sql.Date(toUpdate.getEntryDate().getDateAsLong()));
 			stmt.setDate(2, new java.sql.Date(toUpdate.getExpirationDate().getDateAsLong()));
-			stmt.setString(3, toUpdate.getBarcode().getBarcode());		
+			stmt.setString(3, toUpdate.getBarcode().getBarcode());
+			if(stmt.executeUpdate() != 1){
+				return false;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -99,7 +104,10 @@ public class SQLDataAccessObject {
 					"WHERE barcode=?";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 			stmt.setBoolean(1, true);
-			stmt.setString(2, toDelete.getBarcode().getBarcode());		
+			stmt.setString(2, toDelete.getBarcode().getBarcode());
+			if(stmt.executeUpdate() != 1){
+				return false;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -122,7 +130,10 @@ public class SQLDataAccessObject {
 					"WHERE barcode=?";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 			stmt.setInt(1, destination.getID());
-			stmt.setString(2, toMove.getBarcode().getBarcode());		
+			stmt.setString(2, toMove.getBarcode().getBarcode());
+			if(stmt.executeUpdate() != 1){
+				return false;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -173,7 +184,9 @@ public class SQLDataAccessObject {
 				finally {
 					keyRS.close();
 				}
-			}	
+			}else{
+				return false;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -200,7 +213,10 @@ public class SQLDataAccessObject {
 			stmt.setDouble(3, toUpdate.getSizeAmount());
 			stmt.setString(4, toUpdate.getSizeUnit());
 			stmt.setInt(5, toUpdate.getShelfLife());
-			stmt.setString(6, toUpdate.getBarcode().getBarcode());	
+			stmt.setString(6, toUpdate.getBarcode().getBarcode());
+			if(stmt.executeUpdate() != 1){
+				return false;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -222,7 +238,10 @@ public class SQLDataAccessObject {
 					"WHERE product_container_id=? AND product_id=?";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 			stmt.setInt(1, whereFrom.getID());
-			stmt.setInt(2, toDelete.getID());	
+			stmt.setInt(2, toDelete.getID());
+			if(stmt.executeUpdate() != 1){
+				return false;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -244,7 +263,10 @@ public class SQLDataAccessObject {
 					")VALUES(?,?)";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 			stmt.setInt(1, whereTo.getID());
-			stmt.setInt(3, toMove.getID());	
+			stmt.setInt(3, toMove.getID());
+			if(stmt.executeUpdate() != 1){
+				return false;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -294,7 +316,9 @@ public class SQLDataAccessObject {
 					finally {
 						keyRS.close();
 					}
-				}	
+				}else{
+					return false;
+				}
 			}
 			catch (SQLException e) {
 				System.out.println(e.getMessage());
@@ -318,7 +342,9 @@ public class SQLDataAccessObject {
 					finally {
 						keyRS.close();
 					}
-				}	
+				}else{
+					return false;
+				}
 			}
 			catch (SQLException e) {
 				System.out.println(e.getMessage());
@@ -345,7 +371,10 @@ public class SQLDataAccessObject {
 				stmt.setString(1, toUpdateProd.getName());
 				stmt.setDouble(2, toUpdateProd.getThreeMonthSup().getAmount());
 				stmt.setString(3, toUpdateProd.getThreeMonthSup().getUnit());
-				stmt.setInt(4, toUpdateProd.getID());	
+				stmt.setInt(4, toUpdateProd.getID());
+				if(stmt.executeUpdate() != 1){
+					return false;
+				}
 			}
 			catch (SQLException e) {
 				System.out.println(e.getMessage());
@@ -385,6 +414,9 @@ public class SQLDataAccessObject {
 					"WHERE product_container_id=?";
 			PreparedStatement stmt2 = SQLTransactionManager.getConnection().prepareStatement(query2);
 			stmt2.setInt(2, toDelete.getID());	
+			if(stmt.executeUpdate() != 1){
+				return false;
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -399,7 +431,8 @@ public class SQLDataAccessObject {
 	 * @postcondition The ProductContainers are added to the model
 	 */
 	public ArrayList<ProductContainer> readProductContainers(){
-		return new ArrayList<ProductContainer>();
+		ArrayList<ProductContainer> pcList = new ArrayList<ProductContainer>();
+		return pcList;
 	}
 	
 	public void createTables(){
