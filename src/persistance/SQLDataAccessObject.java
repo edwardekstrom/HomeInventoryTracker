@@ -245,18 +245,23 @@ public class SQLDataAccessObject {
 	public void createTables(){
 
 		try {
-			String query = 
-				"DROP TABLE IF EXISTS 'items';"+
-				"CREATE TABLE 'items' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'product_container' INTEGER, 'product' INTEGER, 'barcode' VARCHAR, 'entry_date' DATETIME, 'exit_date' DATETIME, 'expiration_date' DATETIME);"+
-				"DROP TABLE IF EXISTS 'pc_join_p';"+
-				"CREATE TABLE 'pc_join_p' ('product_container' INTEGER, 'product' INTEGER);"+
-				"DROP TABLE IF EXISTS 'product_containers';"+
-				"CREATE TABLE 'product_containers' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'name' VARCHAR, 'parent' INTEGER, 'storage_unit' INTEGER, 'three_month_amount' DOUBLE, 'three_month_unit' VARCHAR);"+
-				"DROP TABLE IF EXISTS 'products';"+
-				"CREATE TABLE 'products' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'description' TEXT, 'three_month_supply' DOUBLE, 'amount' DOUBLE, 'unit' VARCHAR, 'shelf_life' INTEGER, 'barcode' VARCHAR);";
-
-			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
-			stmt.executeQuery();	
+			String query = "DROP TABLE IF EXISTS 'items';";
+			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
+			query =	"CREATE TABLE 'items' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'product_container' INTEGER, 'product' INTEGER, 'barcode' VARCHAR, 'entry_date' DATETIME, 'exit_date' DATETIME, 'expiration_date' DATETIME);";
+			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
+			query = "DROP TABLE IF EXISTS 'pc_join_p';";
+			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
+			query = "CREATE TABLE 'pc_join_p' ('product_container' INTEGER, 'product' INTEGER);";
+			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
+			query = "DROP TABLE IF EXISTS 'product_containers';";
+			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
+			query = "CREATE TABLE 'product_containers' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'name' VARCHAR, 'parent' INTEGER, 'storage_unit' INTEGER, 'three_month_amount' DOUBLE, 'three_month_unit' VARCHAR);"+
+			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
+			query = "DROP TABLE IF EXISTS 'products';";
+			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
+			query = "CREATE TABLE 'products' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'description' TEXT, 'three_month_supply' DOUBLE, 'amount' DOUBLE, 'unit' VARCHAR, 'shelf_life' INTEGER, 'barcode' VARCHAR);";
+			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
+				
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());

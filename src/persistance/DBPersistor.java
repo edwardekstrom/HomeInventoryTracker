@@ -15,9 +15,11 @@ import java.io.File;
  */
 public class DBPersistor implements Persistor {
 
+	SQLDataAccessObject _doa =null;
+
 	public DBPersistor(){
 		SQLTransactionManager.initialize();
-		// SQLTransactionManager.createDB();
+		_doa = new SQLDataAccessObject();
 	}
 
 	/* (non-Javadoc)
@@ -164,6 +166,7 @@ public class DBPersistor implements Persistor {
 	 */
 	public void createTables(){
 		SQLTransactionManager.begin();
+		_doa.createTables();
 		SQLTransactionManager.end(true);
 	}
 
