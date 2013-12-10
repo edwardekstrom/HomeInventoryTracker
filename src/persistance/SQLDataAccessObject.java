@@ -6,15 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.*;
 
-import model.Barcode;
-import model.Date;
-import model.Item;
-import model.Product;
-import model.ProductContainer;
-import model.ProductGroup;
-import model.StorageUnit;
+
+import java.util.Map;
+
 import model.*;
 
 public class SQLDataAccessObject {
@@ -201,6 +200,16 @@ public class SQLDataAccessObject {
 			}else{
 				return false;
 			}
+			
+			List<ProductContainer> containerList = toInsert.getContainersList();
+			for(ProductContainer pc : containerList){
+				String queryJT = "INSERT INTO 'pc_join_p' ('product_container_id','product_id'"+
+						")VALUES(?,?)";
+				PreparedStatement stmtJT = SQLTransactionManager.getConnection().prepareStatement(queryJT);
+				stmtJT.setInt(1, pc.getID());
+				stmtJT.setInt(2, toInsert.getID());
+				stmtJT.executeUpdate();
+			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -307,7 +316,7 @@ public class SQLDataAccessObject {
 			ResultSet rs = statement.executeQuery("SELECT * FROM products");
 
 			while(rs.next()){
-				Date date = new Date(new java.util.Date());
+				model.Date date = new model.Date(new java.util.Date());
 				Barcode barcode = new Barcode(rs.getString("barcode"));
 				String description = rs.getString("description");
 				Integer shelfLife = rs.getInt("shelf_life");
@@ -481,7 +490,7 @@ public class SQLDataAccessObject {
 	public boolean deleteProductContainer(ProductContainer toDelete){
 		try {
 			String query = "DELETE FROM 'product_containers'" +
-					"WHERE product_container_id=?";
+					"WHERE id=?";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 			stmt.setInt(1, toDelete.getID());
 			

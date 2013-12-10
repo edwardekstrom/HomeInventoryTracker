@@ -96,10 +96,10 @@ public class StorageUnitFacade extends Observable {
 		Persistor persistor = Configuration.getInstance().getPersistor();
 		persistor.deleteProductContainer(toRemove);
 		
+		config.getHomeInventory().removeStorageUnit(toRemove);
+		
 		setChanged();
 		notifyObservers(this);
-		
-		config.getHomeInventory().removeStorageUnit(toRemove);
 	}
 	
 	/**
