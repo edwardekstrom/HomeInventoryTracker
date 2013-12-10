@@ -338,16 +338,16 @@ public class SQLDataAccessObject {
 
 			while(rs.next()){
 				int productId = rs.getInt("product_id");
-				int pcId = rs.getInt("product_container_id");
+				int productContainerId = rs.getInt("product_container_id");
 
-				ArrayList<Integer> pcs = joinTable.get(productId);
-				if (pcs == null){
-					pcs = new ArrayList<Integer>();
-					pcs.add(pcId);
-					joinTable.put(productId,pcs);
+				ArrayList<Integer> productIds = joinTable.get(productContainerId);
+				if (productIds == null){
+					productIds = new ArrayList<Integer>();
+					productIds.add(productId);
+					joinTable.put(productContainerId,productIds);
 				}
 				else
-					pcs.add(pcId);
+					productIds.add(productId);
 			}
 		}catch (Exception e){
 			System.out.println(e.getMessage());

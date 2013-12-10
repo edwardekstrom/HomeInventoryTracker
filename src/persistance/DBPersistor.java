@@ -176,7 +176,7 @@ public class DBPersistor implements Persistor {
 		ArrayList<Product> products = _doa.readProducts();
 		ArrayList<ProductContainer> pcs = _doa.readProductContainers();
 
-		
+		Map<Integer,ArrayList<Integer>> join = _doa.readJoin();
 
 
 		for (ProductContainer pc : pcs)
