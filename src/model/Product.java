@@ -54,6 +54,7 @@ public class Product implements Serializable, Comparable{
 		_tagData.setBarcode(_barcode.getBarcode());
 		_tagData.setDescription(_description);
 		_tagData.setCount("0");
+		_tagData.setTag(this);
 	}
 	
 	public int getID(){

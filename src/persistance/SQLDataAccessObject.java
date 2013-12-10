@@ -184,17 +184,41 @@ public class SQLDataAccessObject {
 	 * @postcondition The Items are added to the model
 	 */
 	public ArrayList<Item> readItems(){
+		ArrayList<Item> items = new ArrayList<Item>();
 		try{
+
+
 			String query = "SELECT id, product_container, product, barcode, entry_date, exit_date, expiration_date, removed FROM items;";
 			ResultSet rs = SQLTransactionManager.getConnection().prepareStatement(query).executeQuery();
 			while(rs.next()){
-				Item newItem = new Item(null, null, null, null);
-				System.out.println(rs.getString("barcode"));
+				int id = rs.getInt("id");
+				int productContainerId = rs.getInt("product_container");
+				int productId = rs.getInt("product");
+				String barcode = rs.getString("barcode");
+				java.util.Date entry = rs.getDate("entry_date");
+				java.util.Date exit  = rs.getDate("exit_date");
+				java.util.Date expiration = rs.getDate("expiration_date");
+				boolean removed = rs.getBoolean("removed");
+
+				Item item = new Item(
+					null,
+					new Barcode(barcode),
+					new model.Date(entry),
+					null,
+					false);
+
+				item.setID(id);
+
+				item.productContainerID = productContainerId;
+				item.productID = productId;
+
+
+				items.add(item);
 			}
 			}catch(Exception e){
-				
+				e.printStackTrace();
 			}
-		return new ArrayList<Item>();
+		return items;
 	}
 	
 	/**Inserts the given Product into the Database
@@ -206,7 +230,6 @@ public class SQLDataAccessObject {
 	 */
 	public boolean insertProduct(Product toInsert){
 		try {
-			System.out.println("HI");
 			
 			String query = "INSERT INTO 'products' ('description','three_month_supply',"+
 					"'amount','unit','shelf_life','barcode'"+

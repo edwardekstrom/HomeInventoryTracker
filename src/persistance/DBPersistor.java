@@ -224,8 +224,20 @@ public class DBPersistor implements Persistor {
 		}
 
 
-		// for (Item i : items)
-		// 	ItemFacade.getInstance().addItem(i);
+		for (Item i : items){
+			for(Product product : products){
+				if(product.getID() == i.productID){
+					i.setProduct(product);
+				}
+			}
+
+			for(ProductContainer productContainer: pcs){
+				if(productContainer.getID() == i.productContainerID){
+					i.setProductContainer(productContainer);
+				}
+			}
+			ItemFacade.getInstance().addItem(i);
+		}
 
 		SQLTransactionManager.end(true);
 		
