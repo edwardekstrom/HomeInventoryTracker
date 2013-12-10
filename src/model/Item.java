@@ -64,8 +64,9 @@ public class Item implements Serializable, Comparable{
 	 * 
 	 */
 	private void setExpirationDate() {
-		assert (_entryDate != null);
-		_expirationDate = _entryDate.generateExperationDate(_product.getShelfLife());
+		if (_entryDate != null){
+			_expirationDate = _entryDate.generateExperationDate(_product.getShelfLife());
+		}
 	}
 	
 	/**@precondition none

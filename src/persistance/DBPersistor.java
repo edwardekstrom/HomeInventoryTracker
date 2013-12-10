@@ -172,11 +172,14 @@ public class DBPersistor implements Persistor {
 	@Override
 	public void loadAll() {
 		SQLTransactionManager.begin();
-		// ArrayList<Item> items = _doa.readItems();
+		ArrayList<Item> items = _doa.readItems();
 		ArrayList<Product> products = _doa.readProducts();
 		ArrayList<ProductContainer> pcs = _doa.readProductContainers();
 
 		Map<Integer,ArrayList<Integer>> join = _doa.readJoin();
+
+
+
 
 
 		for (ProductContainer pc : pcs)
@@ -204,6 +207,20 @@ public class DBPersistor implements Persistor {
 
 		for (Product p: products){
 			ProductFacade.getInstance().addProduct(p);
+		}
+
+
+
+		for (ProductContainer pc : pcs){
+			ArrayList<Integer> productIds = join.get(pc.getID());
+			if(productIds != null){
+				for (Integer i : productIds){
+					for(Product p: products){
+						if(i == p.getID())
+							pc.addProduct(p);
+					}
+				}
+			}
 		}
 
 
