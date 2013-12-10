@@ -82,7 +82,7 @@ public class DBPersistor implements Persistor {
 	@Override
 	public void insertProduct(Product toInsert) {
 		SQLTransactionManager.begin();
-
+		_doa.insertProduct(toInsert);
 		SQLTransactionManager.end(true);
 	}
 
@@ -125,7 +125,6 @@ public class DBPersistor implements Persistor {
 	@Override
 	public void readProducts() {
 		SQLTransactionManager.begin();
-		_doa.readProducts();
 		SQLTransactionManager.end(true);
 	}
 
@@ -173,23 +172,43 @@ public class DBPersistor implements Persistor {
 	@Override
 	public void loadAll() {
 		SQLTransactionManager.begin();
-		ArrayList<Item> items = _doa.readItems();
+		// ArrayList<Item> items = _doa.readItems();
 		ArrayList<Product> products = _doa.readProducts();
 		ArrayList<ProductContainer> pcs = _doa.readProductContainers();
+
+		
+
 
 		for (ProductContainer pc : pcs)
 			if (pc instanceof StorageUnit)
 				StorageUnitFacade.getInstance().addStorageUnit((StorageUnit)pc);
 
+		// Setting the parents of all the product groups
+		for (ProductContainer pc : pcs)
+			if (pc instanceof ProductGroup){
+				for (ProductContainer parent : pcs){
+					if(pc._parent_id == parent.getID()){
+						((ProductGroup)pc).setContainer(parent);
+					}
+				}
+			}
+
+
 		for (ProductContainer pc : pcs)
 			if (pc instanceof ProductGroup)
 				ProductGroupFacade.getInstance().addProductGroup((ProductGroup)pc);
 
-		for (Product p: products)
-			ProductFacade.getInstance().addProduct(p);
 
-		for (Item i : items)
-			ItemFacade.getInstance().addItem(i);
+
+
+
+		for (Product p: products){
+			ProductFacade.getInstance().addProduct(p);
+		}
+
+
+		// for (Item i : items)
+		// 	ItemFacade.getInstance().addItem(i);
 
 		SQLTransactionManager.end(true);
 		

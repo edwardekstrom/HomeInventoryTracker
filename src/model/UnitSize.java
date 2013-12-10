@@ -33,7 +33,7 @@ public class UnitSize implements Serializable{
 			_amount = Float.parseFloat(amount);
 			setMeasureType();
 		}else{
-			throw new InvalidUnitException();
+			throw new InvalidUnitException("invalid unitsize");
 		}
 		
 	}

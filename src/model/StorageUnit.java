@@ -37,10 +37,4 @@ public class StorageUnit extends ProductContainer implements Serializable, Compa
 		StorageUnit su = (StorageUnit)o;
 		return _name.compareTo(su.getName());
 	}
-
-
-
-
-
-
 }

@@ -7,7 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.*;
+
+
+import java.util.Map;
 
 import model.*;
 
@@ -160,7 +165,6 @@ public class SQLDataAccessObject {
 		return new ArrayList<Item>();
 	}
 	
-	
 	/**Inserts the given Product into the Database
 	 * 
 	 * @param toInsert - the Product to be inserted
@@ -170,6 +174,7 @@ public class SQLDataAccessObject {
 	 */
 	public boolean insertProduct(Product toInsert){
 		try {
+			System.out.println("HI");
 			
 			String query = "INSERT INTO 'products' ('description','three_month_supply',"+
 					"'amount','unit','shelf_life','barcode'"+
@@ -244,7 +249,7 @@ public class SQLDataAccessObject {
 		
 		return true;
 	}
-	
+	 
 	/**Deletes the given Product in the Database
 	 * 
 	 * @param toDelete - the Products to be deleted
@@ -311,12 +316,54 @@ public class SQLDataAccessObject {
 			ResultSet rs = statement.executeQuery("SELECT * FROM products");
 
 			while(rs.next()){
-			 	// Product p = new Product(Date(new java.util.Date()), Barcode(rs.getString("barcode"));
-			}
-		}catch (Exception e){System.out.println(e.getMessage());}
+				model.Date date = new model.Date(new java.util.Date());
+				Barcode barcode = new Barcode(rs.getString("barcode"));
+				String description = rs.getString("description");
+				Integer shelfLife = rs.getInt("shelf_life");
+				Double threeMonthSupply = rs.getDouble("three_month_supply");
+				String amount  = rs.getString("amount");
+				String unit = rs.getString("unit");
 
+				Product p = new Product(date,barcode,description,shelfLife,
+					new Integer(threeMonthSupply.intValue()),
+					amount,unit);
+				p.setID(rs.getInt("id"));
+
+		 		products.add(p);
+			}
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+			e.printStackTrace();}
 
 		return products;
+	}
+
+	public Map<Integer,ArrayList<Integer>> readJoin(){
+		Map<Integer,ArrayList<Integer>> joinTable = new HashMap<Integer,ArrayList<Integer>>();
+
+		try{
+			Statement statement = SQLTransactionManager.getConnection().createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM pc_join_p");
+
+			while(rs.next()){
+				int productId = rs.getInt("product_id");
+				int pcId = rs.getInt("product_container_id");
+
+				ArrayList<Integer> pcs = joinTable.get(productId);
+				if (pcs == null){
+					pcs = new ArrayList<Integer>();
+					pcs.add(pcId);
+					joinTable.put(productId,pcs);
+				}
+				else
+					pcs.add(pcId);
+			}
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+			e.printStackTrace();}
+
+		return joinTable;
+
 	}
 	
 	/**Inserts the given ProductContainer into the Database
@@ -481,10 +528,25 @@ public class SQLDataAccessObject {
 				int id = rs.getInt("id");
 				Double three_month_amount = rs.getDouble("three_month_amount");
 				String three_month_unit = rs.getString("three_month_unit");
-				StorageUnit su = new StorageUnit(name);
-				pcList.add(su);
+				Integer parent = rs.getInt("parent");
+
+
+
+				ProductContainer pc = null;
+				if (parent == 0)
+					pc = new StorageUnit(name);
+				else{
+					pc = new ProductGroup(name);
+					UnitSize us = new UnitSize(three_month_amount + "",three_month_unit);
+					((ProductGroup)pc).setThreeMonthSup(us);
+				}
+				pc.setID(id);
+				pc._parent_id = parent;
+				pcList.add(pc);
 			}
-		}catch (Exception e){System.out.println(e.getMessage());}
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+			e.printStackTrace();}
 
 		return pcList;
 	}

@@ -62,8 +62,8 @@ public class AddProductCommand extends Command{
 			_product.setTagData(pd);
 			ProductFacade.getInstance().addProduct(_product);
 			
-//			Persistor persistor = Configuration.getInstance().getPersistor();
-//			persistor.insertProduct(_product);
+			Persistor persistor = Configuration.getInstance().getPersistor();
+			persistor.insertProduct(_product);
 			
 
 		}catch (Exception e){}
@@ -78,5 +78,9 @@ public class AddProductCommand extends Command{
 	public void executeInverse(){
 		_ipCommand.executeInverse();
 		ProductFacade.getInstance().recursiveRemoveProduct(_product);
+
+		Persistor persistor = Configuration.getInstance().getPersistor();
+		persistor.deleteProduct(_product, _product.getContainersList().get(0));
+
 	}
 }
