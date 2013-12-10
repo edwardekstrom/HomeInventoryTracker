@@ -51,9 +51,41 @@ public class SQLDataAccessObject {
 				finally {
 					keyRS.close();
 				}
+				
+				String queryPcP = "select count(*) from pc_join_p where product_container_id=?"+
+																	" and product_id=?";
+				PreparedStatement pcpStmt = 
+						SQLTransactionManager.getConnection().prepareStatement(queryPcP);
+				pcpStmt.setInt(1, toInsert.getContainer().getID());
+				pcpStmt.setInt(2, toInsert.getProduct().getID());
+				ResultSet pcpRS = pcpStmt.executeQuery();
+				//System.out.println("checking pc_join_p");
+				
+				int numThisData = -1;
+				try{
+					pcpRS.next();
+					numThisData = pcpRS.getInt(1);
+				}finally{
+					pcpRS.close();
+				}
+				
+				if(numThisData == 0){
+				
+					String queryJT = "INSERT INTO 'pc_join_p' ('product_container_id','product_id'"
+							+")VALUES(?,?)";
+					PreparedStatement stmtJT = 
+						SQLTransactionManager.getConnection().prepareStatement(queryJT);
+					stmtJT.setInt(1, toInsert.getContainer().getID());
+					stmtJT.setInt(2, toInsert.getProduct().getID());
+					stmtJT.executeUpdate();
+					//System.out.println("Added to pc_join_p");
+				}
+				
 			}else{
 				return false;
 			}
+			
+			
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -201,15 +233,6 @@ public class SQLDataAccessObject {
 				return false;
 			}
 			
-			List<ProductContainer> containerList = toInsert.getContainersList();
-			for(ProductContainer pc : containerList){
-				String queryJT = "INSERT INTO 'pc_join_p' ('product_container_id','product_id'"+
-						")VALUES(?,?)";
-				PreparedStatement stmtJT = SQLTransactionManager.getConnection().prepareStatement(queryJT);
-				stmtJT.setInt(1, pc.getID());
-				stmtJT.setInt(2, toInsert.getID());
-				stmtJT.executeUpdate();
-			}
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
