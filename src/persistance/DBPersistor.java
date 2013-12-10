@@ -181,6 +181,17 @@ public class DBPersistor implements Persistor {
 			if (pc instanceof StorageUnit)
 				StorageUnitFacade.getInstance().addStorageUnit((StorageUnit)pc);
 
+		// Setting the parents of all the product groups
+		for (ProductContainer pc : pcs)
+			if (pc instanceof ProductGroup){
+				for (ProductContainer parent : pcs){
+					if(pc._parent_id == parent.getID()){
+						((ProductGroup)pc).setContainer(parent);
+					}
+				}
+			}
+
+
 		for (ProductContainer pc : pcs)
 			if (pc instanceof ProductGroup)
 				ProductGroupFacade.getInstance().addProductGroup((ProductGroup)pc);

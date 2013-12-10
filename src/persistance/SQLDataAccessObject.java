@@ -309,7 +309,9 @@ public class SQLDataAccessObject {
 			while(rs.next()){
 			 	// Product p = new Product(Date(new java.util.Date()), Barcode(rs.getString("barcode"));
 			}
-		}catch (Exception e){System.out.println(e.getMessage());}
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+			e.printStackTrace();}
 
 
 		return products;
@@ -477,10 +479,25 @@ public class SQLDataAccessObject {
 				int id = rs.getInt("id");
 				Double three_month_amount = rs.getDouble("three_month_amount");
 				String three_month_unit = rs.getString("three_month_unit");
-				StorageUnit su = new StorageUnit(name);
-				pcList.add(su);
+				Integer parent = rs.getInt("parent");
+
+
+			
+				ProductContainer pc = null;
+				if (parent == 0)
+					pc = new StorageUnit(name);
+				else{
+					pc = new ProductGroup(name);
+					UnitSize us = new UnitSize(three_month_amount + "",three_month_unit);
+					((ProductGroup)pc).setThreeMonthSup(us);
+				}
+				pc.setID(id);
+				pc._parent_id = parent;
+				pcList.add(pc);
 			}
-		}catch (Exception e){System.out.println(e.getMessage());}
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+			e.printStackTrace();}
 
 		return pcList;
 	}
