@@ -7,14 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
-import model.Barcode;
-import model.Date;
-import model.Item;
-import model.Product;
-import model.ProductContainer;
-import model.ProductGroup;
-import model.StorageUnit;
 import model.*;
 
 public class SQLDataAccessObject {
@@ -200,6 +194,16 @@ public class SQLDataAccessObject {
 				}
 			}else{
 				return false;
+			}
+			
+			List<ProductContainer> containerList = toInsert.getContainersList();
+			for(ProductContainer pc : containerList){
+				String queryJT = "INSERT INTO 'pc_join_p' ('product_container_id','product_id'"+
+						")VALUES(?,?)";
+				PreparedStatement stmtJT = SQLTransactionManager.getConnection().prepareStatement(queryJT);
+				stmtJT.setInt(1, pc.getID());
+				stmtJT.setInt(2, toInsert.getID());
+				stmtJT.executeUpdate();
 			}
 		}
 		catch (SQLException e) {
@@ -439,7 +443,7 @@ public class SQLDataAccessObject {
 	public boolean deleteProductContainer(ProductContainer toDelete){
 		try {
 			String query = "DELETE FROM 'product_containers'" +
-					"WHERE product_container_id=?";
+					"WHERE id=?";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 			stmt.setInt(1, toDelete.getID());
 			

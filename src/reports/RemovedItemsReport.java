@@ -42,7 +42,7 @@ public class RemovedItemsReport implements ReportInterface {
 	public String getHeader() {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
 		
-		return "Items Removed Since"+ _visitor.getDateAsString(sdf);
+		return "Items Removed Since "+ _visitor.getDateAsString(sdf);
 	}
 
 	@Override

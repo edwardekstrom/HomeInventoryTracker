@@ -76,6 +76,9 @@ public class UnitSize implements Serializable{
 			if( unit.equals("count") && amt.intValue() != amt.floatValue()){
 				return false;
 			}
+			if(amt <= 0){
+				return false;
+			}
 
 		}catch(NumberFormatException nfe){
 			return false;
