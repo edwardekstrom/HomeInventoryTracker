@@ -191,7 +191,7 @@ public class ItemFacade extends Observable{
 	 * @see java.util.Observable#setChanged()
 	 */
 	@Override
-	protected synchronized void setChanged() {
+	public synchronized void setChanged() {
 		// TODO Auto-generated method stub
 		super.setChanged();
 	}

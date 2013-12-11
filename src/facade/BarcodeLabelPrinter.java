@@ -66,7 +66,15 @@ public class BarcodeLabelPrinter {
         String description = item.getProduct().getDescription();
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
         String entry = item.getEntryDate().getDateAsString(sdf);
-        String exit  = item.getExpirationDate().getDateAsString(sdf);
+        
+        String exit = "";
+        if(item.getExpirationDate().getDate().getTimeInMillis() == 0){
+        	exit  = "";
+        }else{
+        	exit  = item.getExpirationDate().getDateAsString(sdf);
+        }
+        
+        
         String barcode = item.getBarcode().getBarcode();
  		
         PdfPCell cell;
@@ -76,7 +84,12 @@ public class BarcodeLabelPrinter {
 
 
         Phrase desc = new Phrase(description,font);
-        Phrase dates = new Phrase(entry + " exp "+ exit,font);
+        Phrase dates = new Phrase();
+        if(exit.equals("")){
+        	dates = new Phrase(entry,font);
+        }else{
+        	dates = new Phrase(entry + " exp "+ exit,font);
+        }
         
         cell = new PdfPCell(desc);
         cell.setBorder(PdfPCell.NO_BORDER);

@@ -6,6 +6,7 @@ import hit_exceptions.NullEntryDateException;
 import hit_exceptions.NullExitDateException;
 
 import java.io.Serializable;
+import java.util.GregorianCalendar;
 
 import visitor.ReportVisitor;
 
@@ -52,13 +53,19 @@ public class Item implements Serializable, Comparable{
 		_tagData.setTag(this);
 		_tagData.setBarcode(barcode.getBarcode());
 		_tagData.setEntryDate(new java.util.Date(entryDate.getDate().getTimeInMillis()));
-		_tagData.setExpirationDate(new java.util.Date(_expirationDate.getDate().getTimeInMillis()));
+		if(_expirationDate.getDate().getTimeInMillis() == 0){
+			_tagData.setExpirationDate(null);
+		}else{
+			_tagData.setExpirationDate(new java.util.Date(
+					_expirationDate.getDate().getTimeInMillis()));
+		}
 		//TODO Make sure these work
 		_tagData.setStorageUnit(container.getStorageUnit().getName());
 		// _tagData.setProductGroup(container.getName());
 	}
 
-	public Item(Product product, Barcode barcode, Date entryDate, ProductContainer container, boolean t) {
+	public Item(Product product, Barcode barcode, Date entryDate, ProductContainer container,
+																				boolean t) {
 		_product = product;
 		_barcode = barcode;
 		_entryDate = entryDate;
@@ -95,7 +102,12 @@ public class Item implements Serializable, Comparable{
 	 * 
 	 */
 	private void setExpirationDate() {
-		if (_entryDate != null){
+		assert (_entryDate != null);
+		if(_product.getShelfLife() == 0){
+			GregorianCalendar noDate = new GregorianCalendar();
+			noDate.setTimeInMillis(0);
+			_expirationDate = new Date(noDate);
+		}else{
 			_expirationDate = _entryDate.generateExperationDate(_product.getShelfLife());
 		}
 	}
