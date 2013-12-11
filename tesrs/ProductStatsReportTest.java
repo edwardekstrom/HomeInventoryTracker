@@ -43,25 +43,24 @@ public class ProductStatsReportTest {
 	       Integer shelfLife, Integer threeMonthSupply,String amount,
 	        String unit
 	        */
-		Product p1 = new Product(new Date(), new Barcode("12345"), "description", 2, 10, "1", "count");
+//		Product p1 = new Product(new Date(), new Barcode("12345"), "description", 2, 10, "1", "count");
+		Product p1 = new Product(new Date(new java.util.Date()), new Barcode("1"), "description", 0, 0, "1", "count");
+		Item item1 = new Item(p1,new Barcode("2"),new Date(new java.util.Date()),su );
 //		Product p2 = new Product(new Date(), new Barcode(), "description 22 22", 0, 0, "1", "count");
 //		Product p3 = new Product(new Date(), new Barcode(), "description 33333", 0, 0, "1", "count");
-		try{
-		Item item1 = new Item(p1, new Barcode("2"), new Date(new java.util.Date()), pg);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+
 //		Item item2 = new Item(p2, new Barcode(), new Date(), pg);
 //		Item item3 = new Item(p3, new Barcode(), new Date(), pg);
 //		
 //		
 //		
-//		root.addStorageUnit(su);
-//		su.addProductGroup(pg);
-//		
-//		pg.addItem(item1);
+		root.addStorageUnit(su);
+		su.addProductGroup(pg);
+		
+		pg.addItem(item1);
 //		pg.addItem(item2);
 //		pg.addItem(item3);
+		
 	}
 
 	@After
