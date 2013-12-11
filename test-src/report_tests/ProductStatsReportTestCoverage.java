@@ -1,3 +1,5 @@
+package report_tests;
+
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -6,12 +8,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.sun.source.tree.AssertTree;
 
 import reports.ProductStatsReport;
 
 
-public class ProductStatsReportTest {
+public class ProductStatsReportTestCoverage {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -30,9 +31,12 @@ public class ProductStatsReportTest {
 	}
 
 	@Test
-	public void test() {
-		//ProductStatsReport pStatsReport = new ProductStatsReport(0);
-		assertTrue(true);
+	public void testGeneralCoverage() {
+		ProductStatsReport pStatsReport = new ProductStatsReport(1);
+		assertTrue(pStatsReport.getNumTables() == 1);
+		assertTrue(pStatsReport.getNumColumns() == 10);
+		assertTrue(pStatsReport.getNotices() == null);
+		assertTrue(pStatsReport.getHeader().equals("Product Report (1 Months)"));
 	}
 
 }
