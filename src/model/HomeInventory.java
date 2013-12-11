@@ -175,6 +175,7 @@ public class HomeInventory extends ProductContainer implements Serializable{
 	public void saveLastRemovedItemsDate(Date date){
 		_lastRemovedItemsDate = date;
 	}
+	
 	public Date getLastRemovedItemsDate(){
 		return _lastRemovedItemsDate;
 	}

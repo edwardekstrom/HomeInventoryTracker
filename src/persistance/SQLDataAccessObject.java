@@ -596,6 +596,82 @@ public class SQLDataAccessObject {
 
 		return pcList;
 	}
+
+
+	public void save(java.util.Date lastRan){
+		try{
+
+			Statement statement = SQLTransactionManager.getConnection().createStatement();
+
+			String query = "SELECT COUNT(*) from 'configuration'";
+			ResultSet rs = statement.executeQuery(query);
+
+			rs.next();
+			int count = rs.getInt(1);
+			
+			// Insert
+			if (count == 0){
+				query = "INSERT INTO 'configuration' ('last_ran_removed_items')VALUES(?)";
+				PreparedStatement stmt = 
+					SQLTransactionManager.getConnection().prepareStatement(query);
+				stmt.setDate(1, new java.sql.Date(lastRan.getTime()));
+
+				stmt.executeUpdate();
+			}	
+			// Update
+			else{
+
+				query = "UPDATE 'configuration' SET 'last_ran_removed_items'=?";
+				PreparedStatement stmt = 
+					SQLTransactionManager.getConnection().prepareStatement(query);
+				stmt.setDate(1, new java.sql.Date(lastRan.getTime()));
+
+				stmt.executeUpdate();
+			}
+
+
+
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+			e.printStackTrace();}
+
+
+
+	}
+
+	public java.util.Date readLastRan(){
+		try{
+
+			Statement statement = SQLTransactionManager.getConnection().createStatement();
+
+			String query = "SELECT COUNT(*) from 'configuration'";
+			ResultSet rs = statement.executeQuery(query);
+
+			rs.next();
+			int count = rs.getInt(1);
+			
+			// no date return null
+			if (count == 0){
+				return null;
+			}	
+			// Update
+			else{
+
+				query = "SELECT * FROM 'configuration'";
+				statement = SQLTransactionManager.getConnection().createStatement();
+				rs = statement.executeQuery(query);
+
+				rs.next();
+				return rs.getDate("last_ran_removed_items");
+			}
+
+
+
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+			e.printStackTrace();}
+		return null;
+	}
 	
 	public void createTables(){
 
@@ -616,7 +692,10 @@ public class SQLDataAccessObject {
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
 			query = "CREATE TABLE 'products' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'description' TEXT, 'three_month_supply' DOUBLE, 'amount' DOUBLE, 'unit' VARCHAR, 'shelf_life' INTEGER, 'barcode' VARCHAR);";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
-				
+			query = "DROP TABLE IF EXISTS 'configuration';";
+			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
+			query = "CREATE TABLE 'configuration' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'last_ran_removed_items' DATETIME);";
+			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();		
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
