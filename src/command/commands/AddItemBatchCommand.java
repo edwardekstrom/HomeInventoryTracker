@@ -57,6 +57,7 @@ public class AddItemBatchCommand extends Command{
 			
 			Persistor persistor = Configuration.getInstance().getPersistor();
 			persistor.insertItem(item);
+			
 		}
 
 	}
@@ -71,6 +72,7 @@ public class AddItemBatchCommand extends Command{
 			
 			Persistor persistor = Configuration.getInstance().getPersistor();
 			persistor.deleteItem((Item)id.getTag());
+			
 			
 			ItemFacade.getInstance().removeItem((Item)id.getTag());
 

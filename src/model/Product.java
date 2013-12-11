@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.TreeMap;
 
+
 import singletons.ItemsManager;
 import visitor.ReportVisitor;
 import gui.product.*;
@@ -49,6 +50,11 @@ public class Product implements Serializable, Comparable{
 		_size = new UnitSize(amount,unit);
 		_shelfLife = shelfLife;
 		_threeMonthSupply = threeMonthSupply;
+		_tagData = new ProductData();
+		_tagData.setBarcode(_barcode.getBarcode());
+		_tagData.setDescription(_description);
+		_tagData.setCount("0");
+		_tagData.setTag(this);
 	}
 	
 	public int getID(){

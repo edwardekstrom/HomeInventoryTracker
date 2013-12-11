@@ -23,6 +23,7 @@ public abstract class ProductContainer implements Serializable{
 	protected List<Item> _items;
 	protected List<ProductGroup> _productGroups;
 	protected int _id;
+	public int _parent_id;
 	
 	protected ProductContainerData _tagData = new ProductContainerData();
 	protected StorageUnit _storageUnit;
@@ -32,6 +33,7 @@ public abstract class ProductContainer implements Serializable{
     public void setID(int id){
     	_id = id;
     }
+
     
     public int getID(){
     	return _id;
@@ -237,7 +239,7 @@ public abstract class ProductContainer implements Serializable{
 	 * @precondition none
 	 * @postcondition product will be in _products
 	 */
-	private void addProduct(Product product){
+	public void addProduct(Product product){
 		_products.add(product);
 		
 		

@@ -30,6 +30,7 @@ public class AddProductGroupController extends Controller implements
 		construct();
 		_productGroupFacade  = ProductGroupFacade.getInstance();
 		_parent = (ProductContainer) container.getTag();
+		getView().setSupplyValue(0+"");
 		valuesChanged();
 	}
 

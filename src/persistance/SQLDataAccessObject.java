@@ -7,14 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.*;
 
-import model.Barcode;
-import model.Date;
-import model.Item;
-import model.Product;
-import model.ProductContainer;
-import model.ProductGroup;
-import model.StorageUnit;
+
+import java.util.Map;
+
+import model.*;
 
 public class SQLDataAccessObject {
 	
@@ -51,9 +51,41 @@ public class SQLDataAccessObject {
 				finally {
 					keyRS.close();
 				}
+				
+				String queryPcP = "select count(*) from pc_join_p where product_container_id=?"+
+																	" and product_id=?";
+				PreparedStatement pcpStmt = 
+						SQLTransactionManager.getConnection().prepareStatement(queryPcP);
+				pcpStmt.setInt(1, toInsert.getContainer().getID());
+				pcpStmt.setInt(2, toInsert.getProduct().getID());
+				ResultSet pcpRS = pcpStmt.executeQuery();
+				//System.out.println("checking pc_join_p");
+				
+				int numThisData = -1;
+				try{
+					pcpRS.next();
+					numThisData = pcpRS.getInt(1);
+				}finally{
+					pcpRS.close();
+				}
+				
+				if(numThisData == 0){
+				
+					String queryJT = "INSERT INTO 'pc_join_p' ('product_container_id','product_id'"
+							+")VALUES(?,?)";
+					PreparedStatement stmtJT = 
+						SQLTransactionManager.getConnection().prepareStatement(queryJT);
+					stmtJT.setInt(1, toInsert.getContainer().getID());
+					stmtJT.setInt(2, toInsert.getProduct().getID());
+					stmtJT.executeUpdate();
+					//System.out.println("Added to pc_join_p");
+				}
+				
 			}else{
 				return false;
 			}
+			
+			
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -152,10 +184,42 @@ public class SQLDataAccessObject {
 	 * @postcondition The Items are added to the model
 	 */
 	public ArrayList<Item> readItems(){
-		
-		return new ArrayList<Item>();
+		ArrayList<Item> items = new ArrayList<Item>();
+		try{
+
+
+			String query = "SELECT id, product_container, product, barcode, entry_date, exit_date, expiration_date, removed FROM items;";
+			ResultSet rs = SQLTransactionManager.getConnection().prepareStatement(query).executeQuery();
+			while(rs.next()){
+				int id = rs.getInt("id");
+				int productContainerId = rs.getInt("product_container");
+				int productId = rs.getInt("product");
+				String barcode = rs.getString("barcode");
+				java.util.Date entry = rs.getDate("entry_date");
+				java.util.Date exit  = rs.getDate("exit_date");
+				java.util.Date expiration = rs.getDate("expiration_date");
+				boolean removed = rs.getBoolean("removed");
+
+				Item item = new Item(
+					null,
+					new Barcode(barcode),
+					new model.Date(entry),
+					null,
+					false);
+
+				item.setID(id);
+
+				item.productContainerID = productContainerId;
+				item.productID = productId;
+
+
+				items.add(item);
+			}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		return items;
 	}
-	
 	
 	/**Inserts the given Product into the Database
 	 * 
@@ -191,6 +255,7 @@ public class SQLDataAccessObject {
 			}else{
 				return false;
 			}
+			
 		}
 		catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -230,7 +295,7 @@ public class SQLDataAccessObject {
 		
 		return true;
 	}
-	
+	 
 	/**Deletes the given Product in the Database
 	 * 
 	 * @param toDelete - the Products to be deleted
@@ -289,8 +354,62 @@ public class SQLDataAccessObject {
 	 * @precondition model has no Products
 	 * @postcondition The Products are added to the model
 	 */
-	public ArrayList<Product> readProducts(){	
-		return new ArrayList<Product>();
+	public ArrayList<Product> readProducts(){
+		ArrayList<Product> products = new ArrayList<Product>();
+
+		try{
+			Statement statement = SQLTransactionManager.getConnection().createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM products");
+
+			while(rs.next()){
+				model.Date date = new model.Date(new java.util.Date());
+				Barcode barcode = new Barcode(rs.getString("barcode"));
+				String description = rs.getString("description");
+				Integer shelfLife = rs.getInt("shelf_life");
+				Double threeMonthSupply = rs.getDouble("three_month_supply");
+				String amount  = rs.getString("amount");
+				String unit = rs.getString("unit");
+
+				Product p = new Product(date,barcode,description,shelfLife,
+					new Integer(threeMonthSupply.intValue()),
+					amount,unit);
+				p.setID(rs.getInt("id"));
+
+		 		products.add(p);
+			}
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+			e.printStackTrace();}
+
+		return products;
+	}
+
+	public Map<Integer,ArrayList<Integer>> readJoin(){
+		Map<Integer,ArrayList<Integer>> joinTable = new HashMap<Integer,ArrayList<Integer>>();
+
+		try{
+			Statement statement = SQLTransactionManager.getConnection().createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM pc_join_p");
+
+			while(rs.next()){
+				int productId = rs.getInt("product_id");
+				int productContainerId = rs.getInt("product_container_id");
+
+				ArrayList<Integer> productIds = joinTable.get(productContainerId);
+				if (productIds == null){
+					productIds = new ArrayList<Integer>();
+					productIds.add(productId);
+					joinTable.put(productContainerId,productIds);
+				}
+				else
+					productIds.add(productId);
+			}
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+			e.printStackTrace();}
+
+		return joinTable;
+
 	}
 	
 	/**Inserts the given ProductContainer into the Database
@@ -417,7 +536,7 @@ public class SQLDataAccessObject {
 	public boolean deleteProductContainer(ProductContainer toDelete){
 		try {
 			String query = "DELETE FROM 'product_containers'" +
-					"WHERE product_container_id=?";
+					"WHERE id=?";
 			PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
 			stmt.setInt(1, toDelete.getID());
 			
@@ -446,11 +565,34 @@ public class SQLDataAccessObject {
 		ArrayList<ProductContainer> pcList = new ArrayList<ProductContainer>();
 
 		try{
-			String query = "SELECT * FROM 'product_containers';";
-			/*ResultSet rs =*/ SQLTransactionManager.getConnection().createStatement().executeQuery(query);
-			// while(rs.next()){
-			// }
-		}catch (Exception e){System.out.println(e.getMessage());}
+
+			Statement statement = SQLTransactionManager.getConnection().createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM product_containers");
+
+			while(rs.next()){
+				String name = rs.getString("name");
+				int id = rs.getInt("id");
+				Double three_month_amount = rs.getDouble("three_month_amount");
+				String three_month_unit = rs.getString("three_month_unit");
+				Integer parent = rs.getInt("parent");
+
+
+
+				ProductContainer pc = null;
+				if (parent == 0)
+					pc = new StorageUnit(name);
+				else{
+					pc = new ProductGroup(name);
+					UnitSize us = new UnitSize(three_month_amount + "",three_month_unit);
+					((ProductGroup)pc).setThreeMonthSup(us);
+				}
+				pc.setID(id);
+				pc._parent_id = parent;
+				pcList.add(pc);
+			}
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+			e.printStackTrace();}
 
 		return pcList;
 	}
