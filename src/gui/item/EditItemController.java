@@ -117,6 +117,9 @@ public class EditItemController extends Controller
 			item.setEntryDate(entry);
 			_target.setEntryDate(entryDate);
 			_target.setExpirationDate(item.getExpirationDate().getUtilDate());
+			ItemFacade ifacade = ItemFacade.getInstance();
+			ifacade.setChanged();
+			ifacade.notifyObservers();
 		}catch(Exception e){}
 
 
