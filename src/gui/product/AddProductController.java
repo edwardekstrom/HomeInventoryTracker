@@ -39,21 +39,29 @@ public class AddProductController extends Controller implements
 
 		setDefaults(barcode);
 
-		// Ours
+		callPlugins();
 
 		
 		_productFacade = ProductFacade.getInstance();
 		valuesChanged();
+		
+		
 	}
 
-
+	private void callPlugins(){
+		IAddProductView v = getView();
+		PluginManager pluginMan = new PluginManager();
+		v.setDescription(pluginMan.getProduct(v.getBarcode()));
+		v.enableDescription(true);
+	}
+	
 	private void setDefaults(String barcode){
 		IAddProductView v = getView();
+		v.setDescription("Identifying Product - Please Wait");
+		v.enableDescription(false);
 		v.setBarcode(barcode);
 //		TheREALEddysPlugin trep = new TheREALEddysPlugin();
-		PluginManager pluginMan = new PluginManager();
-		
-		v.setDescription(pluginMan.getProduct(barcode));
+
 		v.setSizeUnit(SizeUnits.Count);
 		v.enableBarcode(false);
 		v.setShelfLife("0");
@@ -111,6 +119,7 @@ public class AddProductController extends Controller implements
 	 */
 	@Override
 	protected void loadValues() {
+		
 	}
 
 	//

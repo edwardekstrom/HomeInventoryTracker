@@ -249,6 +249,7 @@ public class AddItemBatchView extends ItemBatchView implements
 		AddProductView dialogView = new AddProductView(_parent, dialogBox,
 				getBarcode());
 		dialogBox.display(dialogView, false);
+		//
 	}
 
 	@Override
