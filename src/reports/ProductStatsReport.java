@@ -47,6 +47,8 @@ public class ProductStatsReport implements ReportInterface {
 
 	@Override
 	public String getHeader() {
+		averagePerDay(_months);
+		
 		return "Product Report (" + _months +" Months)";
 	}
 
@@ -86,8 +88,9 @@ public class ProductStatsReport implements ReportInterface {
 			try{
 				productReport.addRow(newRow);
 			}catch(InvalidRowException ire){
-				System.out.println("This was for you Chris");
+				// System.out.println("This was for you Chris");
 			}
+
 		}
 		
 		list.add(productReport);
