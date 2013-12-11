@@ -316,6 +316,7 @@
 				<include name="facade/**"/>
 				<include name="command/**"/>
 				<include name="singletons/**"/>
+				<include name="reports/**"/>
 			</packageset>
 			<taglet name="tools.PreTaglet" path="${build}"/>
 			<taglet name="tools.PostTaglet" path="${build}"/>
