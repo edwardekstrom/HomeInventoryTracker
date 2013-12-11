@@ -1,7 +1,7 @@
 /**
  * 
  */
-package data_structures_tests;
+//package data_structures_tests;
 
 import static org.junit.Assert.*;
 import hit_exceptions.InvalidAmountException;
@@ -59,7 +59,7 @@ public class UnitSizeTest {
 	public void makeUnitSizeTest() {
 		try {
 			_testUnitSize = new UnitSize("1", "count");
-		} catch (InvalidAmountException | InvalidUnitException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -72,7 +72,7 @@ public class UnitSizeTest {
 	public void changeAmountCountTest() {
 		try {
 			_testUnitSize = new UnitSize("1", "count");
-		} catch (InvalidAmountException | InvalidUnitException e1) {
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
@@ -98,7 +98,7 @@ public class UnitSizeTest {
 	public void changeUnitTest() {
 		try {
 			_testUnitSize = new UnitSize("1", "count");
-		} catch (InvalidAmountException | InvalidUnitException e1) {
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			System.out.println("fail");
 			e1.printStackTrace();
@@ -198,7 +198,7 @@ public class UnitSizeTest {
 	public void changeAmountOtherTest() {
 		try {
 			_testUnitSize = new UnitSize("1", "count");
-		} catch (InvalidAmountException | InvalidUnitException e1) {
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
@@ -251,7 +251,7 @@ public class UnitSizeTest {
 
 		try {
 			_testUnitSize = new UnitSize("1", "count");
-		} catch (InvalidAmountException | InvalidUnitException e1) {
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}

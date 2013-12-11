@@ -1,4 +1,4 @@
-package singletons_tests;
+
 
 import static org.junit.Assert.*;
 import hit_exceptions.IllegalNameException;

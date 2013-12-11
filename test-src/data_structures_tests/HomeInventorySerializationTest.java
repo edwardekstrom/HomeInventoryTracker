@@ -1,4 +1,4 @@
-package data_structures_tests;
+//package data_structures_tests;
 
 import static org.junit.Assert.*;
 import hit_exceptions.InvalidAmountException;
@@ -42,7 +42,7 @@ public class HomeInventorySerializationTest {
 			// Check to make sure the old thing is still there
 			//assertTrue(readOffDisk.getStorageUnitsCount() == oldStorageUnitCount);
 			
-		} catch (InvalidUnitException | InvalidAmountException e) {
+		} catch (Exception e) {
 
 		}
 		
