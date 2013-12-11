@@ -56,14 +56,16 @@ public class Item implements Serializable, Comparable{
 		if(_expirationDate.getDate().getTimeInMillis() == 0){
 			_tagData.setExpirationDate(null);
 		}else{
-			_tagData.setExpirationDate(new java.util.Date(_expirationDate.getDate().getTimeInMillis()));
+			_tagData.setExpirationDate(new java.util.Date(
+					_expirationDate.getDate().getTimeInMillis()));
 		}
 		//TODO Make sure these work
 		_tagData.setStorageUnit(container.getStorageUnit().getName());
 		// _tagData.setProductGroup(container.getName());
 	}
 
-	public Item(Product product, Barcode barcode, Date entryDate, ProductContainer container, boolean t) {
+	public Item(Product product, Barcode barcode, Date entryDate, ProductContainer container,
+																				boolean t) {
 		_product = product;
 		_barcode = barcode;
 		_entryDate = entryDate;

@@ -188,8 +188,10 @@ public class SQLDataAccessObject {
 		try{
 
 
-			String query = "SELECT id, product_container, product, barcode, entry_date, exit_date, expiration_date, removed FROM items;";
-			ResultSet rs = SQLTransactionManager.getConnection().prepareStatement(query).executeQuery();
+			String query = "SELECT id, product_container, product, barcode, entry_date, exit_date,"
+					+ " expiration_date, removed FROM items;";
+			ResultSet rs = SQLTransactionManager.getConnection().prepareStatement(query)
+					.executeQuery();
 			while(rs.next()){
 				int id = rs.getInt("id");
 				int productContainerId = rs.getInt("product_container");
@@ -426,7 +428,8 @@ public class SQLDataAccessObject {
 				String query = "INSERT INTO 'product_containers' ('name','parent','storage_unit',"+
 						"'three_month_amount','three_month_unit'"+
 						")VALUES(?,?,?,?,?)";
-				PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+				PreparedStatement stmt = SQLTransactionManager.getConnection()
+						.prepareStatement(query);
 				stmt.setString(1, toInsertProd.getName());
 				stmt.setInt(2, toInsertProd.getContainer().getID());
 				stmt.setInt(3, toInsertProd.getStorageUnit().getID());
@@ -456,7 +459,8 @@ public class SQLDataAccessObject {
 				StorageUnit toInsertStor = (StorageUnit) toInsert;
 				String query = "INSERT INTO 'product_containers' ('name','storage_unit'"+
 						")VALUES(?,?)";
-				PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+				PreparedStatement stmt = SQLTransactionManager.getConnection()
+						.prepareStatement(query);
 				stmt.setString(1, toInsertStor.getName());
 				stmt.setInt(2, toInsertStor.getStorageUnit().getID());
 				if (stmt.executeUpdate() == 1) {
@@ -496,7 +500,8 @@ public class SQLDataAccessObject {
 				String query = "UPDATE 'product_containers'" +
 						"SET name=?, three_month_amount=?, three_month_unit=?" +
 						"WHERE id=?";
-				PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+				PreparedStatement stmt = SQLTransactionManager.getConnection()
+						.prepareStatement(query);
 				stmt.setString(1, toUpdateProd.getName());
 				stmt.setDouble(2, toUpdateProd.getThreeMonthSup().getAmount());
 				stmt.setString(3, toUpdateProd.getThreeMonthSup().getUnit());
@@ -514,7 +519,8 @@ public class SQLDataAccessObject {
 				String query = "UPDATE 'product_containers'" +
 						"SET name=?" +
 						"WHERE id=?";
-				PreparedStatement stmt = SQLTransactionManager.getConnection().prepareStatement(query);
+				PreparedStatement stmt = SQLTransactionManager.getConnection()
+						.prepareStatement(query);
 				stmt.setString(1, toUpdateStor.getName());
 				stmt.setInt(2, toUpdateStor.getID());	
 			}
@@ -542,7 +548,8 @@ public class SQLDataAccessObject {
 			
 			String query2 = "DELETE FROM 'pc_join_p'" +
 					"WHERE product_container_id=?";
-			PreparedStatement stmt2 = SQLTransactionManager.getConnection().prepareStatement(query2);
+			PreparedStatement stmt2 = SQLTransactionManager.getConnection()
+					.prepareStatement(query2);
 			stmt2.setInt(1, toDelete.getID());	
 			if(stmt.executeUpdate() != 1){
 				return false;
@@ -678,23 +685,32 @@ public class SQLDataAccessObject {
 		try {
 			String query = "DROP TABLE IF EXISTS 'items';";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
-			query =	"CREATE TABLE 'items' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'product_container' INTEGER, 'product' INTEGER, 'barcode' VARCHAR, 'entry_date' DATETIME, 'exit_date' DATETIME, 'expiration_date' DATETIME, 'removed' BOOL);";
+			query =	"CREATE TABLE 'items' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL "
+					+ ", 'product_container' INTEGER, 'product' INTEGER, 'barcode' VARCHAR,"
+					+ " 'entry_date' DATETIME, 'exit_date' DATETIME, 'expiration_date' DATETIME,"
+					+ " 'removed' BOOL);";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
 			query = "DROP TABLE IF EXISTS 'pc_join_p';";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
-			query = "CREATE TABLE 'pc_join_p' ('product_container_id' INTEGER, 'product_id' INTEGER);";
+			query = "CREATE TABLE 'pc_join_p' ('product_container_id' INTEGER, 'product_id'"
+					+ " INTEGER);";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
 			query = "DROP TABLE IF EXISTS 'product_containers';";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
-			query = "CREATE TABLE 'product_containers' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'name' VARCHAR, 'parent' INTEGER, 'storage_unit' INTEGER, 'three_month_amount' DOUBLE, 'three_month_unit' VARCHAR);";
+			query = "CREATE TABLE 'product_containers' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT"
+					+ "  NOT NULL , 'name' VARCHAR, 'parent' INTEGER, 'storage_unit' INTEGER,"
+					+ " 'three_month_amount' DOUBLE, 'three_month_unit' VARCHAR);";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
 			query = "DROP TABLE IF EXISTS 'products';";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
-			query = "CREATE TABLE 'products' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'description' TEXT, 'three_month_supply' DOUBLE, 'amount' DOUBLE, 'unit' VARCHAR, 'shelf_life' INTEGER, 'barcode' VARCHAR);";
+			query = "CREATE TABLE 'products' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL"
+					+ " , 'description' TEXT, 'three_month_supply' DOUBLE, 'amount' DOUBLE, "
+					+ "'unit' VARCHAR, 'shelf_life' INTEGER, 'barcode' VARCHAR);";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
 			query = "DROP TABLE IF EXISTS 'configuration';";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();	
-			query = "CREATE TABLE 'configuration' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 'last_ran_removed_items' DATETIME);";
+			query = "CREATE TABLE 'configuration' ('id' INTEGER PRIMARY KEY  AUTOINCREMENT  "
+					+ "NOT NULL , 'last_ran_removed_items' DATETIME);";
 			SQLTransactionManager.getConnection().prepareStatement(query).executeUpdate();		
 		}
 		catch (SQLException e) {
