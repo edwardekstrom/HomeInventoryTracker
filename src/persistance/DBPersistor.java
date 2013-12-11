@@ -10,6 +10,8 @@ import java.util.*;
 
 import facade.*;
 
+import singletons.Configuration;
+
 /**
  * @author Capchu
  *
@@ -178,7 +180,7 @@ public class DBPersistor implements Persistor {
 
 		Map<Integer,ArrayList<Integer>> join = _doa.readJoin();
 
-
+		java.util.Date lastRan = _doa.readLastRan();
 
 
 
@@ -239,13 +241,22 @@ public class DBPersistor implements Persistor {
 			ItemFacade.getInstance().addItem(i);
 		}
 
+		if(lastRan != null)
+			Configuration.getHIT().saveLastRemovedItemsDate(new model.Date(lastRan));
+
+
 		SQLTransactionManager.end(true);
 		
 	}
 
 	@Override
 	public void save() {
-		
+		model.Date lastRan = Configuration.getHIT().getLastRemovedItemsDate();
+		if (lastRan != null){
+			SQLTransactionManager.begin();
+			_doa.save(lastRan.getUtilDate());
+			SQLTransactionManager.end(true);
+		}
 		
 	}
 
