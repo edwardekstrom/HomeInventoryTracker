@@ -1,7 +1,7 @@
 /**
  * 
  */
-package data_structures_tests;
+//package data_structures_tests;
 
 import static org.junit.Assert.*;
 import hit_exceptions.InvalidAmountException;

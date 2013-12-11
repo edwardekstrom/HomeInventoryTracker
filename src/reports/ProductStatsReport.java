@@ -16,7 +16,7 @@ import visitor.ReportVisitor;
 import builder.ReportBuilder;
 
 public class ProductStatsReport implements ReportInterface {
-	
+	private HomeInventory _root = null;
 	ProuctStatsVisitor _visitor = new ProuctStatsVisitor(-1);
 	int _months = -1;
 
@@ -24,6 +24,12 @@ public class ProductStatsReport implements ReportInterface {
 	public ProductStatsReport(int months){
 		_months = months;
 		_visitor =  new ProuctStatsVisitor(_months);
+		_root = Configuration.getHIT();
+	}
+	public ProductStatsReport(int months, HomeInventory root){
+		_months = months;
+		_visitor =  new ProuctStatsVisitor(_months);
+		_root = root;
 	}
 	/**generates the needed report using the correct visitor and builder
 	 * 
@@ -34,14 +40,15 @@ public class ProductStatsReport implements ReportInterface {
 	 */
 	@Override
 	public void generateReport(ReportBuilder build) {
-		HomeInventory hi = Configuration.getHIT();
-		hi.accept(_visitor);
+		_root.accept(_visitor);
 		ItemsManager.getInstance().acceptRemovedItemsVisitor(_visitor);
 		build.buildReport(this);
 	}
 
 	@Override
 	public String getHeader() {
+		averagePerDay(_months);
+		
 		return "Product Report (" + _months +" Months)";
 	}
 
@@ -81,8 +88,9 @@ public class ProductStatsReport implements ReportInterface {
 			try{
 				productReport.addRow(newRow);
 			}catch(InvalidRowException ire){
-				System.out.println("This was for you Chris");
+				// System.out.println("This was for you Chris");
 			}
+
 		}
 		
 		list.add(productReport);

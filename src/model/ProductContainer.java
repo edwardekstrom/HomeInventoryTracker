@@ -239,7 +239,7 @@ public abstract class ProductContainer implements Serializable{
 	 * @precondition none
 	 * @postcondition product will be in _products
 	 */
-	private void addProduct(Product product){
+	public void addProduct(Product product){
 		_products.add(product);
 		
 		

@@ -10,6 +10,8 @@ import java.util.*;
 
 import facade.*;
 
+import singletons.Configuration;
+
 /**
  * @author Capchu
  *
@@ -172,11 +174,14 @@ public class DBPersistor implements Persistor {
 	@Override
 	public void loadAll() {
 		SQLTransactionManager.begin();
-		// ArrayList<Item> items = _doa.readItems();
+		ArrayList<Item> items = _doa.readItems();
 		ArrayList<Product> products = _doa.readProducts();
 		ArrayList<ProductContainer> pcs = _doa.readProductContainers();
 
 		Map<Integer,ArrayList<Integer>> join = _doa.readJoin();
+
+		java.util.Date lastRan = _doa.readLastRan();
+
 
 
 		for (ProductContainer pc : pcs)
@@ -207,8 +212,38 @@ public class DBPersistor implements Persistor {
 		}
 
 
-		// for (Item i : items)
-		// 	ItemFacade.getInstance().addItem(i);
+
+		for (ProductContainer pc : pcs){
+			ArrayList<Integer> productIds = join.get(pc.getID());
+			if(productIds != null){
+				for (Integer i : productIds){
+					for(Product p: products){
+						if(i == p.getID())
+							pc.addProduct(p);
+					}
+				}
+			}
+		}
+
+
+		for (Item i : items){
+			for(Product product : products){
+				if(product.getID() == i.productID){
+					i.setProduct(product);
+				}
+			}
+
+			for(ProductContainer productContainer: pcs){
+				if(productContainer.getID() == i.productContainerID){
+					i.setProductContainer(productContainer);
+				}
+			}
+			ItemFacade.getInstance().addItem(i);
+		}
+
+		if(lastRan != null)
+			Configuration.getHIT().saveLastRemovedItemsDate(new model.Date(lastRan));
+
 
 		SQLTransactionManager.end(true);
 		
@@ -216,7 +251,12 @@ public class DBPersistor implements Persistor {
 
 	@Override
 	public void save() {
-		
+		model.Date lastRan = Configuration.getHIT().getLastRemovedItemsDate();
+		if (lastRan != null){
+			SQLTransactionManager.begin();
+			_doa.save(lastRan.getUtilDate());
+			SQLTransactionManager.end(true);
+		}
 		
 	}
 

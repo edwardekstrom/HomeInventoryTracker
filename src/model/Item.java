@@ -26,6 +26,13 @@ public class Item implements Serializable, Comparable{
 	private ItemData _tagData;
 	private int _id;
 	
+
+	// IN HACKS WE TRUST
+	public int productContainerID;
+	public int productID;
+	public java.util.Date exit;
+
+
 	/**@precondition none
 	 * @postcondition creates a new Item with the given data
 	 * 
@@ -56,6 +63,19 @@ public class Item implements Serializable, Comparable{
 		// _tagData.setProductGroup(container.getName());
 	}
 
+	public Item(Product product, Barcode barcode, Date entryDate, ProductContainer container, boolean t) {
+		_product = product;
+		_barcode = barcode;
+		_entryDate = entryDate;
+		_container = container;
+		
+		_tagData = new ItemData();
+		_tagData.setTag(this);
+		_tagData.setBarcode(barcode.getBarcode());
+		_tagData.setEntryDate(new java.util.Date(entryDate.getDate().getTimeInMillis()));
+		
+	}
+
 	public int getID(){
 		return _id;
 	}
@@ -64,6 +84,17 @@ public class Item implements Serializable, Comparable{
 		_id = id;
 	}
 	
+	public void setProduct(Product product){
+		_product = product;
+		setExpirationDate();
+		_tagData.setExpirationDate(new java.util.Date(_expirationDate.getDate().getTimeInMillis()));
+	}
+
+	public void setProductContainer(ProductContainer pc){
+		_container = pc;
+		_tagData.setStorageUnit(_container.getStorageUnit().getName());
+	}
+
 	/**@precondition expDate is not null
 	 * @postcondition sets the expiration date using the entryDate
 	 * 
