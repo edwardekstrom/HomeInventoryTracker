@@ -43,8 +43,11 @@ public abstract class PluginSuper {
 		_nextPlugin = null;
 		try {
 //			Constructor constructor = c.getConstructors()[0];
-			Constructor constructor = c.getConstructor();
-			_nextPlugin = (PluginSuper) constructor.newInstance();
+//			Constructor constructor = c.getConstructor();
+//			_nextPlugin = (PluginSuper) constructor.newInstance();
+			
+			_nextPlugin = (PluginSuper)c.newInstance();
+
 			_nextPlugin.setNames(_classNames);
 		} catch (Exception e) {
 			e.printStackTrace();

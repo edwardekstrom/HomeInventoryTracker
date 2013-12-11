@@ -12,6 +12,7 @@ import command.*;
 
 import java.util.HashMap;
 
+import plugin_package.PluginManager;
 import plugin_package.TheREALEddysPlugin;
 import facade.*;
 import gui.batches.AddItemBatchController;
@@ -49,8 +50,10 @@ public class AddProductController extends Controller implements
 	private void setDefaults(String barcode){
 		IAddProductView v = getView();
 		v.setBarcode(barcode);
-		TheREALEddysPlugin trep = new TheREALEddysPlugin();
-		v.setDescription(trep.getProductDescription(barcode));
+//		TheREALEddysPlugin trep = new TheREALEddysPlugin();
+		PluginManager pluginMan = new PluginManager();
+		
+		v.setDescription(pluginMan.getProduct(barcode));
 		v.setSizeUnit(SizeUnits.Count);
 		v.enableBarcode(false);
 		v.setShelfLife("0");
